@@ -43,27 +43,37 @@ public class GridAdapter extends BaseAdapter {
             holder.title = view.findViewById(R.id.menuEntry);
             holder.title.setText(text);
             holder.cardView = view.findViewById(R.id.menuCardView);
-            if (text.equals(sp.getString("icon_01", context.getResources().getString(R.string.color_red)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.red, null));
-            else if (text.equals(sp.getString("icon_02", context.getResources().getString(R.string.color_pink)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.pink, null));
-            else if (text.equals(sp.getString("icon_03", context.getResources().getString(R.string.color_purple)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.purple, null));
-            else if (text.equals(sp.getString("icon_04", context.getResources().getString(R.string.color_blue)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blue, null));
-            else if (text.equals(sp.getString("icon_05", context.getResources().getString(R.string.color_teal)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.teal, null));
-            else if (text.equals(sp.getString("icon_06", context.getResources().getString(R.string.color_green)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.green, null));
-            else if (text.equals(sp.getString("icon_07", context.getResources().getString(R.string.color_lime)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.lime, null));
-            else if (text.equals(sp.getString("icon_08", context.getResources().getString(R.string.color_yellow)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.yellow, null));
-            else if (text.equals(sp.getString("icon_09", context.getResources().getString(R.string.color_orange)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.orange, null));
-            else if (text.equals(sp.getString("icon_10", context.getResources().getString(R.string.color_brown)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.brown, null));
+            if (text.equals(sp.getString("icon_01", context.getResources().getString(R.string.color_red)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.red, null));
+            else if (text.equals(sp.getString("icon_02", context.getResources().getString(R.string.color_pink)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.pink, null));
+            else if (text.equals(sp.getString("icon_03", context.getResources().getString(R.string.color_purple)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.purple, null));
+            else if (text.equals(sp.getString("icon_04", context.getResources().getString(R.string.color_blue)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.blue, null));
+            else if (text.equals(sp.getString("icon_05", context.getResources().getString(R.string.color_teal)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.teal, null));
+            else if (text.equals(sp.getString("icon_06", context.getResources().getString(R.string.color_green)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.green, null));
+            else if (text.equals(sp.getString("icon_07", context.getResources().getString(R.string.color_lime)))) {
+                view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.lime, null));
+
+
+                holder.title.setPadding(10,0,10, 0);
+            }
+            else if (text.equals(sp.getString("icon_08", context.getResources().getString(R.string.color_yellow)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.yellow, null));
+            else if (text.equals(sp.getString("icon_09", context.getResources().getString(R.string.color_orange)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.orange, null));
+            else if (text.equals(sp.getString("icon_10", context.getResources().getString(R.string.color_brown)))) {
+                view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.brown, null));
+
+
+                holder.title.setPadding(10,0,10, 0);
+            }
             else if (text.equals(sp.getString("icon_11", context.getResources().getString(R.string.color_grey)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.grey, null));
             else if (text.equals(sp.getString("icon_12", context.getResources().getString(R.string.setting_theme_system)))) {
                 TypedValue typedValue = new TypedValue();
                 context.getTheme().resolveAttribute(R.attr.colorSurfaceVariant, typedValue, true);
                 int color = typedValue.data;
-                holder.cardView.setCardBackgroundColor(color);}
+                view.setBackgroundColor(color);}
             else {
                 TypedValue typedValue = new TypedValue();
                 context.getTheme().resolveAttribute(android.R.color.transparent, typedValue, true);
                 int color = typedValue.data;
-                holder.cardView.setCardBackgroundColor(color);}
+                view.setBackgroundColor(color);}
             view.setTag(holder);
         }
         return view;

@@ -168,7 +168,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private boolean isNightMode;
     private boolean orientationChanged;
     private boolean searchOnSite;
-    private int colorSecondary;
     private ValueCallback<Uri[]> filePathCallback = null;
     private AlbumController currentAlbumController = null;
     private ValueCallback<Uri[]> mFilePathCallback;
@@ -239,11 +238,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         }
 
         HelperUnit.initTheme(activity);
-
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(R.attr.colorSecondary, typedValue, true);
-        colorSecondary = typedValue.data;
 
         OrientationEventListener mOrientationListener = new OrientationEventListener(getApplicationContext()) {
             @Override
@@ -807,13 +801,16 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         progressBar = findViewById(R.id.main_progress_bar);
         bottomAppBar = findViewById(R.id.bottomAppBar);
 
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
+        int colorSecondary = typedValue.data;
+
         badgeDrawable = BadgeDrawable.create(context);
         badgeDrawable.setBadgeGravity(BadgeDrawable.TOP_END);
         badgeDrawable.setVerticalOffset(20);
         badgeDrawable.setHorizontalOffset(20);
-        badgeDrawable.setNumber(BrowserContainer.size());
         badgeDrawable.setBackgroundColor(colorSecondary);
-        BadgeUtils.attachBadgeDrawable(badgeDrawable, omniBox_tab, findViewById(R.id.layout));
 
         Button omnibox_overflow = findViewById(R.id.omnibox_overflow);
         omnibox_overflow.setOnClickListener(v -> showOverflow());
@@ -870,11 +867,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
     @SuppressLint({"UnsafeOptInUsageError"})
     private void updateOmniBox() {
-
-        BadgeDrawable badge = bottom_navigation.getOrCreateBadge(R.id.page_0);
-        badge.setVisible(true);
-        badge.setNumber(BrowserContainer.size());
-        badge.setBackgroundColor(colorSecondary);
 
         badgeDrawable.setNumber(BrowserContainer.size());
         BadgeUtils.attachBadgeDrawable(badgeDrawable, omniBox_tab, findViewById(R.id.layout));
@@ -1905,8 +1897,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         GridAdapter gridAdapter = new GridAdapter(context, gridList);
         menu_grid.setNumColumns(2);
-        menu_grid.setHorizontalSpacing(20);
-        menu_grid.setVerticalSpacing(20);
+        menu_grid.setHorizontalSpacing(10);
+        menu_grid.setVerticalSpacing(10);
+
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
@@ -1915,15 +1908,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             dialog.cancel();
             bottom_navigation.setSelectedItemId(R.id.page_2);
         });
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(HelperUnit.convertDpToPixel(20f, context),
-                HelperUnit.convertDpToPixel(10f, context),
-                HelperUnit.convertDpToPixel(20f, context),
-                HelperUnit.convertDpToPixel(10f, context));
-        menu_grid.setLayoutParams(params);
     }
 
     // Voids

@@ -7,17 +7,18 @@
 
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.Material3.CardView.Filled"
+        android:backgroundTint="@android:color/transparent"
         android:id="@+id/menuCardView"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall" >
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp" >
 
         <TextView
             android:id="@+id/menuEntry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"

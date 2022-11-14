@@ -1,3 +1,10 @@
+### v 9.4 (WIP)
+
+- fix: can't open URL from outside, if it was closed before
+- fix: Active button colors on OLED theme #1006
+- new: hebrew translation
+
+
 ### v 9.4
 
 - new: "post on website" in sharing menu

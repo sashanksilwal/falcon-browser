@@ -28,6 +28,7 @@ android {
         checkReleaseBuilds false
         disable 'MissingTranslation'
     }
+    namespace 'de.baumann.browser'
 
     return void
 }

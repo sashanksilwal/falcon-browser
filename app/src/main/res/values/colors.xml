@@ -1,18 +1,19 @@
 <resources>
-    <color name="md_theme_light_primary">#afb42b</color>
+    <color name="seed">#8BC34A</color>
+    <color name="md_theme_light_primary">#3E6A00</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
-    <color name="md_theme_light_primaryContainer">#dce775</color>
-    <color name="md_theme_light_onPrimaryContainer">#1B1D00</color>
-    <color name="md_theme_light_secondary">#afb42b</color>
+    <color name="md_theme_light_primaryContainer">#B9F474</color>
+    <color name="md_theme_light_onPrimaryContainer">#0F2000</color>
+    <color name="md_theme_light_secondary">#576249</color>
     <color name="md_theme_light_onSecondary">#FFFFFF</color>
-    <color name="md_theme_light_secondaryContainer">#dce775</color>
-    <color name="md_theme_light_onSecondaryContainer">#827717</color>
-    <color name="md_theme_light_tertiary">#3D6658</color>
+    <color name="md_theme_light_secondaryContainer">#DBE7C8</color>
+    <color name="md_theme_light_onSecondaryContainer">#151E0B</color>
+    <color name="md_theme_light_tertiary">#386663</color>
     <color name="md_theme_light_onTertiary">#FFFFFF</color>
-    <color name="md_theme_light_tertiaryContainer">#cddc39</color>
-    <color name="md_theme_light_onTertiaryContainer">#002117</color>
-    <color name="md_theme_light_error">#BA1B1B</color>
-    <color name="md_theme_light_errorContainer">#FFDAD4</color>
+    <color name="md_theme_light_tertiaryContainer">#BBECE8</color>
+    <color name="md_theme_light_onTertiaryContainer">#00201E</color>
+    <color name="md_theme_light_error">#BA1A1A</color>
+    <color name="md_theme_light_errorContainer">#FFDAD6</color>
     <color name="md_theme_light_onError">#FFFFFF</color>
     <color name="md_theme_light_onErrorContainer">#410001</color>
     <color name="md_theme_light_background">#FFFCF3</color>
@@ -52,7 +53,6 @@
     <color name="md_theme_dark_inverseOnSurface">#1C1C16</color>
     <color name="md_theme_dark_inverseSurface">#E5E2D9</color>
     <color name="md_theme_dark_primaryInverse">#5F6300</color>
-    <color name="seed">#AFB42B</color>
     <color name="error">#BA1B1B</color>
 
     <color name="blue">#402196f3</color>

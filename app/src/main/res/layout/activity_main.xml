@@ -37,14 +37,15 @@
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
-        style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
+
         app:contentInsetEnd="0dp"
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp">
+        app:contentInsetStart="0dp"
+        app:backgroundTint="?attr/colorSurface">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -83,7 +84,7 @@
                         android:src="@drawable/icon_profile_standard"
                         app:elevation="2dp"
                         app:fabSize="mini"
-                        app:backgroundTint="?attr/colorSurfaceVariant"/>
+                        app:backgroundTint="?attr/colorSecondaryContainer"/>
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/omnibox_overview"
@@ -93,7 +94,7 @@
                         android:layout_marginStart="5dp"
                         app:elevation="2dp"
                         app:fabSize="mini"
-                        app:backgroundTint="?attr/colorSurfaceVariant" />
+                        app:backgroundTint="?attr/colorSecondaryContainer" />
 
                     <Button
                         android:id="@+id/omnibox_overflow"
@@ -134,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:indeterminate="true"
-                app:indicatorColor="?attr/colorSecondary" />
+                app:indicatorColor="?attr/colorAccent" />
 
             <RelativeLayout
                 android:id="@+id/searchBox"
@@ -206,9 +207,7 @@
             android:layout_above="@+id/bottom_navigation"
             android:divider="@null"
             android:fastScrollEnabled="true"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:stackFromBottom="true" />
+            android:stackFromBottom="true"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -221,9 +220,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:stackFromBottom="true"
-                android:visibility="gone"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"/>
+                android:visibility="gone"/>
 
         </ScrollView>
 
@@ -232,7 +229,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            app:menu="@menu/menu_bottom_overview" />
+            app:menu="@menu/menu_bottom_overview"
+            app:itemBackground="?attr/colorSurface"/>
 
     </RelativeLayout>
 
