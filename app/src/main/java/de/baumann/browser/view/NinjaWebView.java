@@ -207,6 +207,8 @@ public class NinjaWebView extends WebView implements AlbumController {
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowFileAccessFromFileURLs(true);
         webSettings.setAllowUniversalAccessFromFileURLs(true);
+
+
     }
 
     public synchronized void initCookieManager(String url) {

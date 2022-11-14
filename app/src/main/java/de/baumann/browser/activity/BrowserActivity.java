@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 import static android.webkit.WebView.HitTestResult.IMAGE_TYPE;
 import static android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE;
 import static android.webkit.WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
+import static java.security.AccessController.getContext;
 import static de.baumann.browser.database.RecordAction.BOOKMARK_ITEM;
 import static de.baumann.browser.database.RecordAction.STARTSITE_ITEM;
 
