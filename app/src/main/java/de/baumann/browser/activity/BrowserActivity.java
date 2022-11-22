@@ -419,8 +419,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 else if (ninjaWebView.canGoBack()) {
                     WebBackForwardList mWebBackForwardList = ninjaWebView.copyBackForwardList();
                     String historyUrl = mWebBackForwardList.getItemAtIndex(mWebBackForwardList.getCurrentIndex() - 1).getUrl();
-                    ninjaWebView.initPreferences(historyUrl);
-                    goBack_skipRedirects(); }
+                    goBack_skipRedirects(historyUrl); }
                 else removeAlbum(currentAlbumController);
                 return true;
         }
@@ -484,7 +483,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     @Override
     public synchronized void updateProgress(int progress) {
         progressBar.setProgressCompat(progress, true);
-        if (progress != BrowserUnit.LOADING_STOPPED) updateOmniBox();
+        if (progress != BrowserUnit.LOADING_STOPPED) {
+            updateOmniBox();
+        }
         if (progress < BrowserUnit.PROGRESS_MAX) progressBar.setVisibility(View.VISIBLE);
     }
 
@@ -881,6 +882,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             progressBar.setVisibility(View.GONE);
             ninjaWebView.setProfileIcon(omniBox_tab);
             ninjaWebView.initCookieManager(url);
+            ninjaWebView.toggleWidescreen(Objects.requireNonNull(ninjaWebView.getUrl()));
             listTrusted = new List_trusted(context);
 
             if (Objects.requireNonNull(ninjaWebView.getTitle()).isEmpty())
@@ -1961,10 +1963,12 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             else getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN); }
     }
 
-    public void goBack_skipRedirects() {
+    public void goBack_skipRedirects(String historyUrl) {
         if (ninjaWebView.canGoBack()) {
             ninjaWebView.setIsBackPressed(true);
-            ninjaWebView.goBack(); }
+            ninjaWebView.initPreferences(historyUrl);
+            ninjaWebView.initCookieManager(historyUrl);
+            ninjaWebView.loadUrl(historyUrl); }
     }
 
     private void printPDF() {
@@ -2086,6 +2090,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     WebBackForwardList mWebBackForwardList = ninjaWebView.copyBackForwardList();
                     String historyUrl = mWebBackForwardList.getItemAtIndex(mWebBackForwardList.getCurrentIndex() + 1).getUrl();
                     ninjaWebView.initPreferences(historyUrl);
+                    ninjaWebView.initCookieManager(historyUrl);
                     ninjaWebView.goForward(); }
                 else NinjaToast.show(this, R.string.toast_webview_forward);
                 break;
@@ -2093,8 +2098,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 if (ninjaWebView.canGoBack()) {
                     WebBackForwardList mWebBackForwardList = ninjaWebView.copyBackForwardList();
                     String historyUrl = mWebBackForwardList.getItemAtIndex(mWebBackForwardList.getCurrentIndex() - 1).getUrl();
-                    ninjaWebView.initPreferences(historyUrl);
-                    goBack_skipRedirects(); }
+                    goBack_skipRedirects(historyUrl); }
                 else removeAlbum(currentAlbumController);
                 break;
             case "04":
