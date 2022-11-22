@@ -612,7 +612,6 @@ public class NinjaWebView extends WebView implements AlbumController {
         String newUserAgent = getUserAgent(desktopMode);
         getSettings().setUserAgentString(newUserAgent);
         getSettings().setUseWideViewPort(desktopMode);
-        getSettings().setSupportZoom(desktopMode);
         getSettings().setLoadWithOverviewMode(desktopMode);
         if (reload) reload();
     }
@@ -623,11 +622,9 @@ public class NinjaWebView extends WebView implements AlbumController {
                 url.contains(".png")||
                 url.contains(".webg")){
             getSettings().setUseWideViewPort(true);
-            getSettings().setSupportZoom(true);
             getSettings().setLoadWithOverviewMode(true);
         } else {
             getSettings().setUseWideViewPort(desktopMode);
-            getSettings().setSupportZoom(desktopMode);
             getSettings().setLoadWithOverviewMode(desktopMode);
         }
     }
