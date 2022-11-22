@@ -4,6 +4,7 @@
 - fix: cookie manager, when going back in history
 - fix: buttons not reachable on some dialogs
 - fix: Auth-request dialog
+- fix: download dialog
 
 
 ### v 9.5

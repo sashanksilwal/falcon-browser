@@ -50,6 +50,7 @@ public class NinjaDownloadListener implements DownloadListener {
         GridItem item_01 = new GridItem(context.getString(R.string.app_ok), 0);
         GridItem item_02 = new GridItem( context.getString(R.string.menu_share_link), 0);
         GridItem item_03 = new GridItem( context.getString(R.string.menu_save_as), 0);
+        GridItem item_04 = new GridItem( context.getString(R.string.app_cancel), 0);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         builder.setTitle(R.string.app_warning);
@@ -69,26 +70,16 @@ public class NinjaDownloadListener implements DownloadListener {
         gridList.add(gridList.size(), item_01);
         gridList.add(gridList.size(), item_02);
         gridList.add(gridList.size(), item_03);
+        gridList.add(gridList.size(), item_04);
         GridAdapter gridAdapter = new GridAdapter(context, gridList);
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
+            dialog.cancel();
             switch (position) {
                 case 0:
                     try {
                         Activity activity = (Activity) context;
-
-                        /*if (url.startsWith("blob:")) {
-
-                            String data = url.substring(url.indexOf(",") + 1);
-                            byte[] imageBytes=Base64.decode(data, Base64.DEFAULT);
-                            //InputStream is = new ByteArrayInputStream(imageBytes);
-                            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "hh.pdf");
-                            FileOutputStream fos = new FileOutputStream(file);
-                            fos.write(imageBytes);
-
-                        }*/
-
                         if (url.startsWith("data:")) {
                             DataURIParser dataURIParser = new DataURIParser(url);
                             if (BackupUnit.checkPermissionStorage(context)) {
@@ -116,7 +107,6 @@ public class NinjaDownloadListener implements DownloadListener {
                         System.out.println("Error Downloading File: " + e);
                         Toast.makeText(context, context.getString(R.string.app_error) + e.toString().substring(e.toString().indexOf(":")), Toast.LENGTH_LONG).show();
                         e.printStackTrace();}
-                    dialog.cancel();
                     break;
                 case 1:
                     try {
@@ -128,13 +118,12 @@ public class NinjaDownloadListener implements DownloadListener {
                         System.out.println("Error Downloading File: " + e);
                         Toast.makeText(context, context.getString(R.string.app_error) + e.toString().substring(e.toString().indexOf(":")), Toast.LENGTH_LONG).show();
                         e.printStackTrace();}
-
-                    dialog.cancel();
                     break;
                 case 2:
                     Activity activity = (Activity) context;
                     HelperUnit.saveAs(activity, url);
-                    dialog.cancel();
+                    break;
+                case 3:
                     break;
             }
         });
