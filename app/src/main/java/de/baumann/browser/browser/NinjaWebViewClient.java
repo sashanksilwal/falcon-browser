@@ -2,6 +2,7 @@ package de.baumann.browser.browser;
 
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayInputStream;
 import java.util.Objects;
@@ -489,6 +491,7 @@ public class NinjaWebViewClient extends WebViewClient {
         HelperUnit.setupDialog(context, dialog);
     }
 
+    @SuppressLint("WebViewClientOnReceivedSslError")
     @Override
     public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {
         String message;
@@ -531,6 +534,12 @@ public class NinjaWebViewClient extends WebViewClient {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
 
         View dialogView = View.inflate(context, R.layout.dialog_edit, null);
+
+        TextInputLayout editTopLayout = dialogView.findViewById(R.id.editTopLayout);
+        editTopLayout.setHint(this.context.getString(R.string.dialog_sign_in_username));
+        TextInputLayout editBottomLayout = dialogView.findViewById(R.id.editBottomLayout);
+        editBottomLayout.setHint(this.context.getString(R.string.dialog_sign_in_password));
+
         EditText editTop = dialogView.findViewById(R.id.editTop);
         EditText editBottom = dialogView.findViewById(R.id.editBottom);
         editTop.setText("");
