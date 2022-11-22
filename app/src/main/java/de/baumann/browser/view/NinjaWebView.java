@@ -487,6 +487,8 @@ public class NinjaWebView extends WebView implements AlbumController {
     @Override
     public synchronized void loadUrl(@NonNull String url) {
         String urlToLoad = BrowserUnit.redirectURL(this, sp, url).trim();
+        toggleWidescreen(url);
+        initCookieManager(url);
         initPreferences(BrowserUnit.queryWrapper(context, urlToLoad));
         InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
@@ -613,6 +615,20 @@ public class NinjaWebView extends WebView implements AlbumController {
         getSettings().setSupportZoom(desktopMode);
         getSettings().setLoadWithOverviewMode(desktopMode);
         if (reload) reload();
+    }
+
+    public void toggleWidescreen(String url) {
+        if (url.endsWith(".jpg")||
+                url.endsWith(".jpeg")||
+                url.endsWith(".png")){
+            getSettings().setUseWideViewPort(true);
+            getSettings().setSupportZoom(true);
+            getSettings().setLoadWithOverviewMode(true);
+        } else {
+            getSettings().setUseWideViewPort(desktopMode);
+            getSettings().setSupportZoom(desktopMode);
+            getSettings().setLoadWithOverviewMode(desktopMode);
+        }
     }
 
     public void toggleNightMode() {

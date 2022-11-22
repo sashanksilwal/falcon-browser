@@ -1,4 +1,10 @@
-### v 9.4
+### v 9.6 (WIP)
+
+- fix: loading images fit screen width
+- fix: cookie manager, when going back in history
+
+
+### v 9.5
 
 - fix: can't open URL from outside, if it was closed before
 - fix: Active button colors on OLED theme #1006

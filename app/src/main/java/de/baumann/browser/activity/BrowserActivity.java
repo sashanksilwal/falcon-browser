@@ -578,8 +578,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 ninjaWebView.requestFocusNodeHref(msg);
                 String url = (String) msg.getData().get("url");
                 showContextMenuLink(url, url, SRC_ANCHOR_TYPE, true); }
-            else if (result.getType() == IMAGE_TYPE)
+            else if (result.getType() == IMAGE_TYPE) {
                 showContextMenuLink(result.getExtra(), result.getExtra(), IMAGE_TYPE, true);
+            }
             else showContextMenuLink(result.getExtra(), result.getExtra(), 0, true); }
     }
 
