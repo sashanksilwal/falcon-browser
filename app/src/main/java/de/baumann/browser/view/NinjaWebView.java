@@ -618,9 +618,10 @@ public class NinjaWebView extends WebView implements AlbumController {
     }
 
     public void toggleWidescreen(String url) {
-        if (url.endsWith(".jpg")||
-                url.endsWith(".jpeg")||
-                url.endsWith(".png")){
+        if (url.contains(".jpg")||
+                url.contains(".jpeg")||
+                url.contains(".png")||
+                url.contains(".webg")){
             getSettings().setUseWideViewPort(true);
             getSettings().setSupportZoom(true);
             getSettings().setLoadWithOverviewMode(true);

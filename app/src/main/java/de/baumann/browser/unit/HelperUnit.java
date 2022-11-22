@@ -151,7 +151,6 @@ public class HelperUnit {
 
             builder.setView(dialogView);
             builder.setTitle(R.string.menu_save_as);
-            builder.setMessage(url);
 
             AlertDialog dialog = builder.create();
             dialog.show();
@@ -340,7 +339,6 @@ public class HelperUnit {
 
         builder.setView(dialogView);
         builder.setTitle(R.string.menu_save_as);
-        builder.setMessage(dataUriParser.toString());
 
         AlertDialog dialog = builder.create();
         dialog.show();

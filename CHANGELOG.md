@@ -2,6 +2,7 @@
 
 - fix: loading images fit screen width
 - fix: cookie manager, when going back in history
+- fix: buttons not reachable on some dialogs
 
 
 ### v 9.5
