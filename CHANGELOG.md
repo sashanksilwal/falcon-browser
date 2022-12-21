@@ -1,10 +1,12 @@
 ### v 9.6 (WIP)
 
+- fix: Redirect error from YouTube #991
 - fix: loading images fit screen width
 - fix: cookie manager, when going back in history
 - fix: buttons not reachable on some dialogs
 - fix: Auth-request dialog
 - fix: download dialog
+- fix: startsite is now the wiki #997
 
 
 ### v 9.5

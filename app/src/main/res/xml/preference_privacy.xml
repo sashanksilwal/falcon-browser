@@ -57,7 +57,7 @@
     <PreferenceCategory android:title="@string/privacy_redirect">
 
         <de.baumann.browser.preferences.EditTextSwitchPreference
-            android:defaultValue="https://invidious.snopyta.org/"
+            android:defaultValue="https://yewtu.be/"
             android:key="sp_youTube_string"
             android:selectable="true"
             android:title="@string/privacy_redirect_youTube"

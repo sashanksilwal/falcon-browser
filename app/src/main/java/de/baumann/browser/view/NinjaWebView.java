@@ -487,8 +487,8 @@ public class NinjaWebView extends WebView implements AlbumController {
     @Override
     public synchronized void loadUrl(@NonNull String url) {
         String urlToLoad = BrowserUnit.redirectURL(this, sp, url).trim();
-        toggleWidescreen(url);
-        initCookieManager(url);
+        toggleWidescreen(BrowserUnit.queryWrapper(context, urlToLoad));
+        initCookieManager(BrowserUnit.queryWrapper(context, urlToLoad));
         initPreferences(BrowserUnit.queryWrapper(context, urlToLoad));
         InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
