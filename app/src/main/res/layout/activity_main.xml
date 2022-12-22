@@ -76,21 +76,21 @@
                     android:layout_centerVertical="true">
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        style="@style/Widget.Material3.FloatingActionButton.Primary"
                         android:id="@+id/omniBox_tab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="10dp"
-                        app:fabCustomSize="45dp" />
+                        app:fabCustomSize="45dp"
+                        app:backgroundTint="?attr/colorSecondaryContainer" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        style="@style/Widget.Material3.FloatingActionButton.Primary"
                         android:id="@+id/omnibox_overview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:fabCustomSize="45dp" />
+                        app:fabCustomSize="45dp"
+                        app:backgroundTint="?attr/colorSecondaryContainer" />
 
                     <Button
                         android:id="@+id/omnibox_overflow"
