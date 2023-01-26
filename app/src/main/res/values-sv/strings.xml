@@ -3,12 +3,12 @@
     <!-- App -->
     <string name="app_name">FOSS webbläsare</string>
     <string name="app_ok">Ok</string>
-    <string name="app_help">Help</string>
+    <string name="app_help">Hjälp</string>
     <string name="app_cancel">Avbryt</string>
-    <string name="app_done">Done</string>
-    <string name="app_error">Error</string>
-    <string name="app_warning">Warning</string>
-    <string name="app_permission">To use this feature you must grant permission. After that restart the app.</string>
+    <string name="app_done">Klar</string>
+    <string name="app_error">Fel</string>
+    <string name="app_warning">Varning</string>
+    <string name="app_permission">För att använda denna funktion måste du ge behörighet. Starta om appen efter det.</string>
     <string name="list_empty">Listan är tom</string>
     <string name="album_title_bookmarks">Bokmärken</string>
     <string name="album_title_history">Historik</string>
@@ -28,7 +28,7 @@
     <string name="color_grey">Grå</string>
     <!-- Menu -->
     <string name="main_menu_new_tab">Ny flik (bakgrund)</string>
-    <string name="main_menu_new_tabProfile">New tab (with profile …)</string>
+    <string name="main_menu_new_tabProfile">Ny flik (med profil …)</string>
     <string name="main_menu_new_tabOpen">Ny flik (förgrund)</string>
     <string name="main_omnibox_input_hint">Sök eller skriv URL</string>
     <string name="menu_open_with">Öppna länk med …</string>
@@ -37,35 +37,35 @@
     <string name="menu_delete">Radera</string>
     <string name="menu_edit">Redigera</string>
     <string name="menu_closeTab">Stäng flik</string>
-    <string name="menu_download">Open downloads</string>
+    <string name="menu_download">Öppna nedladdningar</string>
     <string name="menu_fav">Set as start site</string>
-    <string name="menu_sc">Shortcut on home screen</string>
+    <string name="menu_sc">Genväg på hemskärmen</string>
     <string name="menu_sort">Sort by …</string>
     <string name="menu_filter">Filter by …</string>
-    <string name="menu_share_link">Share link</string>
+    <string name="menu_share_link">Dela länk</string>
     <string name="menu_save_home">Save at Home</string>
-    <string name="menu_save_bookmark">Save as bookmark</string>
-    <string name="menu_save_as">Save as …</string>
-    <string name="menu_save_pdf">Save as PDF</string>
-    <string name="menu_shareClipboard">Copy to clipboard</string>
-    <string name="menu_other_searchSite">Search on site</string>
+    <string name="menu_save_bookmark">Spara som bokmärke</string>
+    <string name="menu_save_as">Spara som …</string>
+    <string name="menu_save_pdf">Spara som PDF</string>
+    <string name="menu_shareClipboard">Kopiera till urklipp</string>
+    <string name="menu_other_searchSite">Sök på sida</string>
     <!-- Dialog -->
-    <string name="dialog_title_hint">Title:</string>
+    <string name="dialog_title_hint">Titel:</string>
     <string name="dialog_URL_hint">URL:</string>
     <string name="dialog_extension_hint">Extension (for example: \".jpg\"):</string>
-    <string name="dialog_sign_in_username">Username</string>
-    <string name="dialog_sign_in_password">Password</string>
-    <string name="dialog_title_download">Download the file?</string>
-    <string name="dialog_content_resubmission">Resubmit your data?</string>
-    <string name="dialog_content_ssl_error">The certificate of the site is not trusted. Proceed anyway?</string>
-    <string name="dialog_sortName">Sort by name</string>
-    <string name="dialog_sortIcon">Sort by icon</string>
-    <string name="dialog_sortDate">Sort by date</string>
+    <string name="dialog_sign_in_username">Användarnamn</string>
+    <string name="dialog_sign_in_password">Lösenord</string>
+    <string name="dialog_title_download">Ladda ner filen?</string>
+    <string name="dialog_content_resubmission">Skicka data på nytt?</string>
+    <string name="dialog_content_ssl_error">Certifikatet för webbplatsen är inte betrott. Fortsätt ändå?</string>
+    <string name="dialog_sortName">Sortera efter namn</string>
+    <string name="dialog_sortIcon">Sortera efter ikon</string>
+    <string name="dialog_sortDate">Sortera efter datum</string>
     <!-- Settings -->
-    <string name="setting_label">Settings</string>
+    <string name="setting_label">Inställningar</string>
     <!-- browser setting -->
-    <string name="setting_title_browser">Browser Settings</string>
-    <string name="setting_title_search_engine">Search Engine</string>
+    <string name="setting_title_browser">Webbläsarinställningar</string>
+    <string name="setting_title_search_engine">Sökmotor</string>
     <string name="setting_summary_search_engine_google">Google</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
     <string name="setting_summary_search_engine_startpage">StartPage</string>
@@ -76,8 +76,8 @@
     <string name="setting_summary_search_engine_qwant">Qwant</string>
     <string name="setting_summary_search_engine_ecosia">Ecosia</string>
     <string name="setting_summary_search_engine_metager">Metager</string>
-    <string name="setting_title_font">Font size</string>
-    <string name="setting_title_dom">DOM Storage</string>
+    <string name="setting_title_font">Teckenstorlek</string>
+    <string name="setting_title_dom">DOM-lagring</string>
     <string name="privacy_redirect">Redirect</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
