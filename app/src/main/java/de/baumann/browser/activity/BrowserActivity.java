@@ -1917,13 +1917,13 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     // Voids
 
     private void doubleTapsQuit() {
-        if (!sp.getBoolean("sp_close_browser_confirm", true)) finish();
+        if (!sp.getBoolean("sp_close_browser_confirm", true)) finishAndRemoveTask();
         else {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
             builder.setTitle(R.string.setting_title_confirm_exit);
             builder.setIcon(R.drawable.icon_alert);
             builder.setMessage(R.string.toast_quit);
-            builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> finish());
+            builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> finishAndRemoveTask());
             builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> dialog.cancel());
             AlertDialog dialog = builder.create();
             dialog.show();
