@@ -2,7 +2,9 @@ package de.baumann.browser.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,11 +39,14 @@ public class CustomRedirectsDialog extends DialogFragment {
         View dialogView = View.inflate(getContext(), R.layout.custom_redirects_list, null);
         RecyclerView recyclerView = dialogView.findViewById(R.id.redirects_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
         ArrayList<CustomRedirect> redirects = new ArrayList<>();
         try {
-            redirects = CustomRedirectsHelper.getRedirects(requireContext());
-        } catch (JSONException ignored) {}
+            redirects = CustomRedirectsHelper.getRedirects(sp);
+        } catch (JSONException e) {
+            Log.e("Redirects parsing", e.toString());
+        }
 
         adapter = new AdapterCustomRedirect(redirects);
         recyclerView.setAdapter(adapter);

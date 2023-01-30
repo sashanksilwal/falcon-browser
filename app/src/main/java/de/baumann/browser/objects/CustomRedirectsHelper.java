@@ -16,9 +16,8 @@ public class CustomRedirectsHelper {
 
     public final static String CUSTOM_REDIRECTS_KEY = "customRedirects";
 
-    public static ArrayList<CustomRedirect> getRedirects(Context context) throws JSONException {
+    public static ArrayList<CustomRedirect> getRedirects(SharedPreferences preferences) throws JSONException {
         ArrayList<CustomRedirect> redirects = new ArrayList<>();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String redirectsPref = preferences.getString(CUSTOM_REDIRECTS_KEY, "[]");
 
         assert redirectsPref != null;
