@@ -1134,7 +1134,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 action.close(); }
             else if (position == 3) printPDF();
             else if (position == 4) HelperUnit.createShortcut(context, ninjaWebView.getTitle(), ninjaWebView.getOriginalUrl());
-            else if (position == 5) HelperUnit.saveAs(activity, url); });
+            else if (position == 5) HelperUnit.saveAs(activity, url, null); });
 
         // Share
         GridItem item_11 = new GridItem( getString(R.string.menu_share_link), 0);
@@ -1314,7 +1314,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     if (url.startsWith("data:")) {
                         DataURIParser dataURIParser = new DataURIParser(url);
                         HelperUnit.saveDataURI(activity, dataURIParser);
-                    } else HelperUnit.saveAs(activity, url);
+                    } else HelperUnit.saveAs(activity, url, null);
                     break;
                 case 7:
                     save_atHome(title, url);
