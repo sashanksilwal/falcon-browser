@@ -246,6 +246,10 @@
     <string name="setting_title_screenOn">Keep screen on</string>
     <string name="setting_title_audioBackground">Play audio on background</string>
 
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load "%1$s"</string>
+    <string name="retry">Retry</string>
+
     <!-- License changelog -->
 
 </resources>

@@ -14,14 +14,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -34,8 +38,10 @@ import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -116,12 +122,55 @@ public class NinjaWebView extends WebView implements AlbumController {
         this.listStandard = new List_standard(this.context);
         this.listProtected = new List_protected(this.context);
         this.album = new AdapterTabs(this.context, this, browserController);
-        this.webViewClient = new NinjaWebViewClient(this);
+        this.webViewClient = new NinjaWebViewClient(this) {
+            @Override
+            public void onReceivedError(WebView webview, WebResourceRequest request, WebResourceError error) {
+                Context context = webview.getContext();
+                String description = error.getDescription().toString();
+                String failingUrl = request.getUrl().toString();
+                String htmlData = getErrorHTML(context, description, failingUrl);
+
+                webview.loadUrl("about:blank");
+                webview.loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8",null);
+                webview.invalidate();
+            }
+        };
         this.webChromeClient = new NinjaWebChromeClient(this);
         this.downloadListener = new NinjaDownloadListener(this.context);
 
         initWebView();
         initAlbum();
+    }
+
+    private String getErrorHTML(Context context, String description, String failingUrl) {
+        int primary = MaterialColors.getColor(context, R.attr.colorPrimary, Color.GREEN);
+        int background = MaterialColors.getColor(context, android.R.attr.colorBackground, Color.BLACK);
+        String primaryHex = String.format("#%06X", (0xFFFFFF & primary));;
+        String backgroundHex = String.format("#%06X", (0xFFFFFF & background));
+        String errorSvgPath = "";
+        try {
+            InputStream inputStream = context.getResources().openRawResource(R.raw.error);
+            byte[] b = new byte[inputStream.available()];
+            inputStream.read(b);
+            errorSvgPath = new String(b);
+        } catch (Exception ignored) {}
+
+        return "<html><body>" +
+                errorSvgPath +
+                "<div align=\"center\">" +
+                description +
+                "<hr style=\"height: 1rem; visibility:hidden;\" />" +
+                context.getString(R.string.error_loading, failingUrl) +
+                "\n</div>" +
+                "<a href=\"" + failingUrl + "\">" + context.getString(R.string.retry) + "</a>" +
+                "</body></html>" +
+                "<style>" +
+                "html { background: " + backgroundHex + ";" + "color: " + primaryHex + "; }" +
+                "body { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center }" +
+                "svg { transform: scale(3); margin-bottom: 4rem; fill: " + primaryHex + "; }" +
+                "a { margin-top: 1rem; text-decoration: none; padding: 0.7rem 1rem; border-radius: 1rem; background: " + primaryHex + ";" + "color: " + backgroundHex + "; }" +
+                "p { line-height: 150%; }" +
+                "</style>";
     }
 
     @Override
