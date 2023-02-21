@@ -809,9 +809,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         int colorSecondary = typedValue.data;
 
         badgeDrawable = BadgeDrawable.create(context);
-        badgeDrawable.setBadgeGravity(BadgeDrawable.TOP_END);
-        badgeDrawable.setVerticalOffset(20);
-        badgeDrawable.setHorizontalOffset(20);
         badgeDrawable.setBackgroundColor(colorSecondary);
 
         Button omnibox_overflow = findViewById(R.id.omnibox_overflow);
