@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 import static android.webkit.WebView.HitTestResult.IMAGE_TYPE;
 import static android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE;
 import static android.webkit.WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
-import static java.security.AccessController.getContext;
 import static de.baumann.browser.database.RecordAction.BOOKMARK_ITEM;
 import static de.baumann.browser.database.RecordAction.STARTSITE_ITEM;
 
@@ -280,7 +279,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 builder.setTitle(R.string.menu_download);
                 builder.setIcon(R.drawable.icon_alert);
                 builder.setMessage(R.string.toast_downloadComplete);
-                builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS)));
+                builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> startActivity(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null)));
                 builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> dialog.cancel());
                 Dialog dialog = builder.create();
                 dialog.show();
@@ -363,7 +362,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             builder.setTitle(R.string.menu_download);
             builder.setIcon(R.drawable.icon_alert);
             builder.setMessage(R.string.toast_downloadComplete);
-            builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS)));
+            builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> startActivity(new Intent(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null))));
             builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> dialog.cancel());
             AlertDialog dialog = builder.create();
             dialog.show();
@@ -1184,7 +1183,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             else if (position == 1) {
                 Uri webpage = Uri.parse("https://github.com/scoute-dich/browser/wiki");
                 BrowserUnit.intentURL(this, webpage); }
-            else if (position == 2) startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+            else if (position == 2) {
+                startActivity(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null));
+            }
             else if (position == 3) {
                 Intent settings = new Intent(BrowserActivity.this, Settings_Activity.class);
                 startActivity(settings); }
