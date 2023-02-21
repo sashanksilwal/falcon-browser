@@ -878,7 +878,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             progressBar.setVisibility(View.GONE);
             ninjaWebView.setProfileIcon(omniBox_tab);
             ninjaWebView.initCookieManager(url);
-            ninjaWebView.toggleWidescreen(Objects.requireNonNull(ninjaWebView.getUrl()));
             listTrusted = new List_trusted(context);
 
             if (Objects.requireNonNull(ninjaWebView.getTitle()).isEmpty())
