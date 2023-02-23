@@ -13,14 +13,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
@@ -287,9 +285,21 @@ public class NinjaWebView extends WebView implements AlbumController {
                 break;
         }
 
-        if (listTrusted.isWhite(url)) omniBox_tab.setImageResource(R.drawable.icon_profile_trusted);
-        else if (listStandard.isWhite(url)) omniBox_tab.setImageResource(R.drawable.icon_profile_standard);
-        else if (listProtected.isWhite(url)) omniBox_tab.setImageResource(R.drawable.icon_profile_protected);
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorError, typedValue, true);
+        int color = typedValue.data;
+
+        if (listTrusted.isWhite(url)) {
+            omniBox_tab.setImageResource(R.drawable.icon_profile_trusted);
+            omniBox_tab.getDrawable().mutate().setTint(color);
+        } else if (listStandard.isWhite(url)) {
+            omniBox_tab.setImageResource(R.drawable.icon_profile_standard);
+            omniBox_tab.getDrawable().mutate().setTint(color);
+        } else if (listProtected.isWhite(url)) {
+            omniBox_tab.setImageResource(R.drawable.icon_profile_protected);
+            omniBox_tab.getDrawable().mutate().setTint(color);
+        }
     }
 
     public void setProfileDefaultValues() {

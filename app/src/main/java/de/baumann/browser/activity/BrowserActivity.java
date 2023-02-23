@@ -449,8 +449,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         else {
             closeTabConfirmation(() -> {
                 AlbumController predecessor;
-                if (controller == currentAlbumController)
-                    predecessor = ((NinjaWebView) controller).getPredecessor();
+                if (controller == currentAlbumController) predecessor = ((NinjaWebView) controller).getPredecessor();
                 else predecessor = currentAlbumController;
                 //if not the current TAB is being closed return to current TAB
                 tab_container.removeView(controller.getAlbumView());
@@ -458,10 +457,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 BrowserContainer.remove(controller);
                 if ((predecessor != null) && (BrowserContainer.indexOf(predecessor) != -1)) {
                     //if predecessor is stored and has not been closed in the meantime
-                    showAlbum(predecessor); }
-                else {
+                    showAlbum(predecessor);
+                } else {
                     if (index >= BrowserContainer.size()) index = BrowserContainer.size() - 1;
-                    showAlbum(BrowserContainer.get(index)); }
+                    showAlbum(BrowserContainer.get(index));
+                }
             });
         }
     }

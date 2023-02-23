@@ -12,6 +12,7 @@
 - fix: kill the app on pressing quit thanks to @Bnyro thanks to @Bnyro
 - fix: theme settings
 - fix: suppress DRM notice #1019
+- fix: profile icons - red for attached profiles #999
 - new: circular progress - press to stop loading
 - new: Swedish translation
 - new: material dialogs in the preferences thanks to @Bnyro
