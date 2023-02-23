@@ -7,14 +7,14 @@ import android.os.Bundle;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceGroup;
 
 import java.util.Objects;
 
 import de.baumann.browser.R;
+import de.baumann.browser.preferences.BasePreferenceFragment;
 
-public class Fragment_settings_UI extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class Fragment_settings_UI extends BasePreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
