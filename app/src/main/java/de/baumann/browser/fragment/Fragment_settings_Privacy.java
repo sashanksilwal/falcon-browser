@@ -27,6 +27,7 @@ import de.baumann.browser.R;
 import de.baumann.browser.activity.ProfilesList;
 import de.baumann.browser.activity.Settings_Profile;
 import de.baumann.browser.browser.AdBlock;
+import de.baumann.browser.dialogs.CustomRedirectsDialog;
 import de.baumann.browser.preferences.BasePreferenceFragment;
 import de.baumann.browser.view.GridAdapter;
 import de.baumann.browser.view.GridItem;
@@ -118,6 +119,13 @@ public class Fragment_settings_Privacy extends BasePreferenceFragment implements
             sp.edit().putString("listToLoad", "protected").apply();
             Intent intent = new Intent(getActivity(), ProfilesList.class);
             requireActivity().startActivity(intent);
+            return false;
+        });
+        Preference custom_redirects = findPreference("custom_redirects");
+        assert custom_redirects != null;
+        custom_redirects.setOnPreferenceClickListener(preference -> {
+            CustomRedirectsDialog dialog = new CustomRedirectsDialog();
+            dialog.show(getChildFragmentManager(), null);
             return false;
         });
     }
