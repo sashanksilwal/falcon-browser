@@ -63,7 +63,6 @@ public class NinjaWebView extends WebView implements AlbumController {
     private OnScrollChangeListener onScrollChangeListener;
     private Context context;
     private boolean desktopMode;
-    private boolean nightMode;
     private boolean stopped;
     private AdapterTabs album;
     private AlbumController predecessor = null;
@@ -94,7 +93,6 @@ public class NinjaWebView extends WebView implements AlbumController {
         this.context = context;
         this.foreground = false;
         this.desktopMode = false;
-        this.nightMode = false;
         this.isBackPressed = false;
         this.fingerPrintProtection = sp.getBoolean(profile + "_fingerPrintProtection", true);
         this.history = sp.getBoolean(profile + "_history", true);
@@ -538,10 +536,6 @@ public class NinjaWebView extends WebView implements AlbumController {
         return desktopMode;
     }
 
-    public boolean isNightMode() {
-        return nightMode;
-    }
-
     public boolean isFingerPrintProtection() {
         return fingerPrintProtection;
     }
@@ -606,15 +600,9 @@ public class NinjaWebView extends WebView implements AlbumController {
     }
 
     public void toggleNightMode() {
-        nightMode = !nightMode;
-        if (nightMode) {
-            if(WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                WebSettingsCompat.setAlgorithmicDarkeningAllowed(this.getSettings(), true);
-            }
-        } else {
-            if(WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                WebSettingsCompat.setAlgorithmicDarkeningAllowed(this.getSettings(), false);
-            }
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+            WebSettings s = this.getSettings();
+            WebSettingsCompat.setAlgorithmicDarkeningAllowed(this.getSettings(), !WebSettingsCompat.isAlgorithmicDarkeningAllowed(s));
         }
     }
 

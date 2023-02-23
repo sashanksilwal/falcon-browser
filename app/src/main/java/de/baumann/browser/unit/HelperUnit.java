@@ -168,7 +168,7 @@ public class HelperUnit {
                 String extension1 = editBottom.getText().toString().trim();
                 String filename1 = title + extension1;
 
-                if (title.isEmpty() || extension1.isEmpty() || !extension1.startsWith(".")) {
+                if (title.isEmpty() || !extension1.startsWith(".")) {
                     NinjaToast.show(activity, activity.getString(R.string.toast_input_empty));
                 } else {
                     if (BackupUnit.checkPermissionStorage(activity)) {
@@ -249,22 +249,37 @@ public class HelperUnit {
 
     public static void initTheme(Activity context) {
         sp = PreferenceManager.getDefaultSharedPreferences(context);
-        switch (Objects.requireNonNull(sp.getString("sp_theme", "1"))) {
-            case "2":
-                context.setTheme(R.style.AppTheme_day);
-                break;
-            case "3":
-                context.setTheme(R.style.AppTheme_night);
-                break;
-            case "4":
-                context.setTheme(R.style.AppTheme_wallpaper);
-                break;
-            case "5":
-                context.setTheme(R.style.AppTheme_OLED);
-                break;
-            default:
-                context.setTheme(R.style.AppTheme);
-                break;
+
+        if (sp.getBoolean("useDynamicColor", true)) {
+            switch (Objects.requireNonNull(sp.getString("sp_theme", "1"))) {
+                case "2":
+                    context.setTheme(R.style.AppTheme_wallpaper_day);
+                    break;
+                case "3":
+                    context.setTheme(R.style.AppTheme_wallpaper_night);
+                    break;
+                case "5":
+                    context.setTheme(R.style.AppTheme_OLED);
+                    break;
+                default:
+                    context.setTheme(R.style.AppTheme_wallpaper);
+                    break;
+            }
+        } else {
+            switch (Objects.requireNonNull(sp.getString("sp_theme", "1"))) {
+                case "2":
+                    context.setTheme(R.style.AppTheme_day);
+                    break;
+                case "3":
+                    context.setTheme(R.style.AppTheme_night);
+                    break;
+                case "5":
+                    context.setTheme(R.style.AppTheme_OLED);
+                    break;
+                default:
+                    context.setTheme(R.style.AppTheme);
+                    break;
+            }
         }
     }
 
@@ -356,7 +371,7 @@ public class HelperUnit {
             String extension1 = editBottom.getText().toString().trim();
             String filename1 = title + extension1;
 
-            if (title.isEmpty() || extension1.isEmpty() || !extension1.startsWith(".")) {
+            if (title.isEmpty() || !extension1.startsWith(".")) {
                 NinjaToast.show(activity, activity.getString(R.string.toast_input_empty));
             } else {
                 if (BackupUnit.checkPermissionStorage(activity)) {

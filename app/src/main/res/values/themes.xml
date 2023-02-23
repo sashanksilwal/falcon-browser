@@ -30,6 +30,8 @@
     </style>
 
     <style name="AppTheme_wallpaper" parent="Theme.Material3.DynamicColors.DayNight" />
+    <style name="AppTheme_wallpaper_day" parent="Theme.Material3.DynamicColors.Light" />
+    <style name="AppTheme_wallpaper_night" parent="Theme.Material3.DynamicColors.Dark" />
 
     <style name="AppTheme_OLED" parent="Theme.Material3.Dark">
         <item name="elevationOverlayColor">#000000</item>
