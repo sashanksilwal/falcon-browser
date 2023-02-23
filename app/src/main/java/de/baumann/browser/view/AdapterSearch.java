@@ -1,6 +1,7 @@
 package de.baumann.browser.view;
 
 import static de.baumann.browser.database.RecordAction.BOOKMARK_ITEM;
+import static de.baumann.browser.database.RecordAction.CLIPBOARD_ITEM;
 import static de.baumann.browser.database.RecordAction.HISTORY_ITEM;
 import static de.baumann.browser.database.RecordAction.STARTSITE_ITEM;
 
@@ -108,8 +109,11 @@ public class AdapterSearch extends BaseAdapter implements Filterable {
             holder.iconView.setImageResource(R.drawable.icon_web);
         } else if (item.getType() == HISTORY_ITEM) {  //Item from history
             holder.iconView.setImageResource(R.drawable.icon_history);
-        } else if (item.getType() == BOOKMARK_ITEM)
-            holder.iconView.setImageResource(R.drawable.icon_bookmark);  //Item from bookmarks
+        } else if (item.getType() == BOOKMARK_ITEM) { //Item from bookmarks
+            holder.iconView.setImageResource(R.drawable.icon_bookmark);
+        } else if (item.getType() == CLIPBOARD_ITEM) {
+            holder.iconView.setImageResource(R.drawable.icon_paste);
+        }
 
         FaviconHelper faviconHelper = new FaviconHelper(context);
         Bitmap bitmap = faviconHelper.getFavicon(item.url);
