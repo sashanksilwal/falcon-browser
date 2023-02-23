@@ -8,7 +8,16 @@
 - fix: download dialog
 - fix: startsite is now the wiki #997
 - fix: crash when open downloads, while default file manager not installed
-- improved: theme settings
+- fix: issues with the file name when downloading thanks to @Bnyro
+- fix: kill the app on pressing quit thanks to @Bnyro thanks to @Bnyro
+- fix: theme settings
+- new: circular progress - press to stop loading
+- new: Swedish translation
+- new: material dialogs in the preferences thanks to @Bnyro
+- new: monochrome icon for Android 13+ thanks to @Bnyro
+- new: custom redirects thanks to @Bnyro
+- new: last Clipboard record as search suggestion thanks to @Bnyro
+- new: Custom error pages  thanks to @Bnyro
 
 
 ### v 9.5

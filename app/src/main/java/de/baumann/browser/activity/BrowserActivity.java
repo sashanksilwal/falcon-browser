@@ -91,6 +91,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -145,7 +146,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private BadgeDrawable badgeDrawable;
 
     // Layouts
-    private LinearProgressIndicator progressBar;
+    private CircularProgressIndicator progressBar;
     private RelativeLayout searchPanel;
     private FrameLayout contentFrame;
     private LinearLayout tab_container;
@@ -788,6 +789,10 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         });
 
         progressBar = findViewById(R.id.main_progress_bar);
+        progressBar.setOnClickListener(v -> {
+            ninjaWebView.stopLoading();
+            progressBar.setVisibility(View.GONE);
+        });
         bottomAppBar = findViewById(R.id.bottomAppBar);
 
         TypedValue typedValue = new TypedValue();
