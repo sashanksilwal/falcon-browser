@@ -14,7 +14,6 @@ import androidx.cardview.widget.CardView;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceManager;
 
@@ -29,10 +28,11 @@ import de.baumann.browser.activity.ProfilesList;
 import de.baumann.browser.activity.Settings_Profile;
 import de.baumann.browser.browser.AdBlock;
 import de.baumann.browser.dialogs.CustomRedirectsDialog;
+import de.baumann.browser.preferences.BasePreferenceFragment;
 import de.baumann.browser.view.GridAdapter;
 import de.baumann.browser.view.GridItem;
 
-public class Fragment_settings_Privacy extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class Fragment_settings_Privacy extends BasePreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

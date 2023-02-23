@@ -73,7 +73,7 @@ public class NinjaWebViewClient extends WebViewClient {
             RecordAction action = new RecordAction(ninjaWebView.getContext());
             action.open(true);
             if (action.checkUrl(ninjaWebView.getUrl(), RecordUnit.TABLE_HISTORY)) action.deleteURL(ninjaWebView.getUrl(), RecordUnit.TABLE_HISTORY);
-            action.addHistory(new Record(ninjaWebView.getTitle(), ninjaWebView.getUrl(), System.currentTimeMillis(), 0, 0, ninjaWebView.isDesktopMode(), ninjaWebView.isNightMode(), 0));
+            action.addHistory(new Record(ninjaWebView.getTitle(), ninjaWebView.getUrl(), System.currentTimeMillis(), 0, 0, ninjaWebView.isDesktopMode(), false, 0));
             action.close();
         }
     }
@@ -445,7 +445,15 @@ public class NinjaWebViewClient extends WebViewClient {
         else {
             // handle the url by implementing your logic
 
-            if (url.startsWith("http://") || url.startsWith("https://")) return false;
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                android.webkit.CookieManager cookieManager = android.webkit.CookieManager.getInstance();
+                cookieManager.setAcceptCookie(true);
+                cookieManager.acceptCookie();
+                cookieManager.getCookie(url);
+                ninjaWebView.initPreferences(url);
+
+                return false;
+            }
 
             try {
                 Intent intent;

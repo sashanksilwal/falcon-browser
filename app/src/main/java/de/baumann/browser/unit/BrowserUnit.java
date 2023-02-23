@@ -223,7 +223,7 @@ public class BrowserUnit {
                 (domain.contains("youtube.") || domain.contains("youtu."))) {
             ninjaWebView.stopLoading();
             String substring = url.substring(url.indexOf("watch?v=") + 8);
-            url = sp.getString("sp_youTube_string", "https://invidious.snopyta.org/") + substring;
+            url = sp.getString("sp_youTube_string", "https://yewtu.be/") + substring;
             return url;
         }
 

@@ -44,7 +44,7 @@ public class NinjaDownloadListener implements DownloadListener {
     @Override
     public void onDownloadStart(final String url, String userAgent, final String contentDisposition, final String mimeType, long contentLength) {
 
-        String filename = URLUtil.guessFileName(url, null, null); // Maybe unexpected filename.
+        String filename = URLUtil.guessFileName(url, contentDisposition, mimeType);
         String text = context.getString(R.string.dialog_title_download) + " - " + filename;
 
         GridItem item_01 = new GridItem(context.getString(R.string.app_ok), 0);
@@ -95,10 +95,10 @@ public class NinjaDownloadListener implements DownloadListener {
                             request.addRequestHeader("cookie", cookies);
                             //------------------------COOKIE!!------------------------
                             request.setDescription(context.getString(R.string.dialog_title_download));
-                            request.setTitle(URLUtil.guessFileName(url, null, null));
+                            request.setTitle(filename);
                             request.allowScanningByMediaScanner();
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, null, null));
+                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
                             DownloadManager dm = (DownloadManager) activity.getSystemService(DOWNLOAD_SERVICE);
                             assert dm != null;
                             if (BackupUnit.checkPermissionStorage(context)) dm.enqueue(request);
@@ -121,7 +121,7 @@ public class NinjaDownloadListener implements DownloadListener {
                     break;
                 case 2:
                     Activity activity = (Activity) context;
-                    HelperUnit.saveAs(activity, url);
+                    HelperUnit.saveAs(activity, url, filename);
                     break;
                 case 3:
                     break;
