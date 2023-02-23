@@ -1414,8 +1414,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                     Chip chip_desktopMode = dialogViewSubMenu.findViewById(R.id.editDesktopMode);
                     chip_desktopMode.setChecked(recordList.get(location).getDesktopMode());
-                    Chip chip_nightMode = dialogViewSubMenu.findViewById(R.id.editNightMode);
-                    chip_nightMode.setChecked(!recordList.get(location).getNightMode());
 
                     MaterialCardView ib_icon = dialogViewSubMenu.findViewById(R.id.editIcon);
                     if (!overViewTab.equals(getString(R.string.album_title_bookmarks))) ib_icon.setVisibility(View.GONE);
@@ -1475,7 +1473,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                             RecordAction action = new RecordAction(context);
                             action.open(true);
                             action.deleteURL(url, RecordUnit.TABLE_BOOKMARK);
-                            action.addBookmark(new Record(editTop.getText().toString(), editBottom.getText().toString(), 0, 0, BOOKMARK_ITEM, chip_desktopMode.isChecked(), chip_nightMode.isChecked(), newIcon));
+                            action.addBookmark(new Record(editTop.getText().toString(), editBottom.getText().toString(), 0, 0, BOOKMARK_ITEM, chip_desktopMode.isChecked(), false, newIcon));
                             action.close();
                             bottom_navigation.setSelectedItemId(R.id.page_2); }
                         else {
@@ -1485,7 +1483,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                             int counter = sp.getInt("counter", 0);
                             counter = counter + 1;
                             sp.edit().putInt("counter", counter).apply();
-                            action.addStartSite(new Record(editTop.getText().toString(), editBottom.getText().toString(), 0, counter, STARTSITE_ITEM, chip_desktopMode.isChecked(), chip_nightMode.isChecked(), 0));
+                            action.addStartSite(new Record(editTop.getText().toString(), editBottom.getText().toString(), 0, counter, STARTSITE_ITEM, chip_desktopMode.isChecked(), false, 0));
                             action.close();
                             bottom_navigation.setSelectedItemId(R.id.page_1); }
                         HelperUnit.hideSoftKeyboard(editBottom, context);

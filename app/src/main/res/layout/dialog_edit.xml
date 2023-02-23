@@ -65,16 +65,6 @@
                 android:layout_marginEnd="10dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/editNightMode"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:chipIcon="@drawable/icon_night"
-                app:chipIconEnabled="true"
-                app:textEndPadding="0dp"
-                app:textStartPadding="0dp" />
-
-            <com.google.android.material.chip.Chip
                 android:id="@+id/editDesktopMode"
                 style="@style/Widget.Material3.Chip.Suggestion"
                 android:layout_width="wrap_content"
