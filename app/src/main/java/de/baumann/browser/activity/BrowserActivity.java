@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 import static android.webkit.WebView.HitTestResult.IMAGE_TYPE;
 import static android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE;
 import static android.webkit.WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
-import static java.security.AccessController.getContext;
 import static de.baumann.browser.database.RecordAction.BOOKMARK_ITEM;
 import static de.baumann.browser.database.RecordAction.STARTSITE_ITEM;
 
@@ -56,6 +55,7 @@ import android.view.WindowManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -79,6 +79,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
@@ -166,7 +168,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private long newIcon;
     private long filterBy;
     private boolean filter;
-    private boolean isNightMode;
     private boolean orientationChanged;
     private boolean searchOnSite;
     private ValueCallback<Uri[]> filePathCallback = null;
@@ -223,20 +224,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.md_theme_light_onBackground));
 
         if (sp.getBoolean("sp_screenOn", false)) getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        if (Objects.equals(sp.getString("nightMode", "2"), "3")) isNightMode = true;
-        if (Objects.equals(sp.getString("nightMode", "2"), "2")) isNightMode = false;
-        if (Objects.equals(sp.getString("nightMode", "2"), "1")) {
-            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            switch (nightModeFlags) {
-                case Configuration.UI_MODE_NIGHT_YES:
-                case Configuration.UI_MODE_NIGHT_UNDEFINED:
-                    isNightMode = true;
-                    break;
-                case Configuration.UI_MODE_NIGHT_NO:
-                    isNightMode = false;
-                    break;
-            }
-        }
 
         HelperUnit.initTheme(activity);
 
@@ -280,7 +267,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 builder.setTitle(R.string.menu_download);
                 builder.setIcon(R.drawable.icon_alert);
                 builder.setMessage(R.string.toast_downloadComplete);
-                builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS)));
+                builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> startActivity(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null)));
                 builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> dialog.cancel());
                 Dialog dialog = builder.create();
                 dialog.show();
@@ -319,6 +306,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         if (BrowserContainer.size() < 1) {
             if (sp.getBoolean("start_tabStart", false)) showOverview();
             addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "");
+        }
+
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if ((nightModeFlags == Configuration.UI_MODE_NIGHT_YES) || sp.getString("sp_theme", "1").equals("3")) {
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                WebSettings s = ninjaWebView.getSettings();
+                WebSettingsCompat.setAlgorithmicDarkeningAllowed(ninjaWebView.getSettings(), !WebSettingsCompat.isAlgorithmicDarkeningAllowed(s));
+            }
         }
     }
 
@@ -363,7 +358,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             builder.setTitle(R.string.menu_download);
             builder.setIcon(R.drawable.icon_alert);
             builder.setMessage(R.string.toast_downloadComplete);
-            builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS)));
+            builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> startActivity(new Intent(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null))));
             builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> dialog.cancel());
             AlertDialog dialog = builder.create();
             dialog.show();
@@ -615,10 +610,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 listView.setOnItemClickListener((parent, view, position, id) -> {
                     if (list.get(position).getType() == BOOKMARK_ITEM || list.get(position).getType() == STARTSITE_ITEM) {
                         if (list.get(position).getDesktopMode() != ninjaWebView.isDesktopMode())
-                            ninjaWebView.toggleDesktopMode(false);
-                        if (list.get(position).getNightMode() == ninjaWebView.isNightMode() && !isNightMode) {
-                            ninjaWebView.toggleNightMode();
-                            isNightMode = ninjaWebView.isNightMode(); }}
+                            ninjaWebView.toggleDesktopMode(false);}
                     ninjaWebView.loadUrl(list.get(position).getURL());
                     hideOverview();
                 });
@@ -646,10 +638,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 listView.setOnItemClickListener((parent, view, position, id) -> {
                     if (list.get(position).getType() == BOOKMARK_ITEM || list.get(position).getType() == STARTSITE_ITEM) {
                         if (list.get(position).getDesktopMode() != ninjaWebView.isDesktopMode())
-                            ninjaWebView.toggleDesktopMode(false);
-                        if (list.get(position).getNightMode() == ninjaWebView.isNightMode() && !isNightMode) {
-                            ninjaWebView.toggleNightMode();
-                            isNightMode = ninjaWebView.isNightMode(); } }
+                            ninjaWebView.toggleDesktopMode(false);}
                     ninjaWebView.loadUrl(list.get(position).getURL());
                     hideOverview();
                 });
@@ -687,10 +676,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 listView.setOnItemClickListener((parent, view, position, id) -> {
                     if (list.get(position).getType() == BOOKMARK_ITEM || list.get(position).getType() == STARTSITE_ITEM) {
                         if (list.get(position).getDesktopMode() != ninjaWebView.isDesktopMode())
-                            ninjaWebView.toggleDesktopMode(false);
-                        if (list.get(position).getNightMode() == ninjaWebView.isNightMode() && !isNightMode) {
-                            ninjaWebView.toggleNightMode();
-                            isNightMode = ninjaWebView.isNightMode(); }}
+                            ninjaWebView.toggleDesktopMode(false);}
                     ninjaWebView.loadUrl(list.get(position).getURL());
                     hideOverview();
                 });
@@ -810,9 +796,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         int colorSecondary = typedValue.data;
 
         badgeDrawable = BadgeDrawable.create(context);
-        badgeDrawable.setBadgeGravity(BadgeDrawable.TOP_END);
-        badgeDrawable.setVerticalOffset(20);
-        badgeDrawable.setHorizontalOffset(20);
         badgeDrawable.setBackgroundColor(colorSecondary);
 
         Button omnibox_overflow = findViewById(R.id.omnibox_overflow);
@@ -882,7 +865,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             progressBar.setVisibility(View.GONE);
             ninjaWebView.setProfileIcon(omniBox_tab);
             ninjaWebView.initCookieManager(url);
-            ninjaWebView.toggleWidescreen(Objects.requireNonNull(ninjaWebView.getUrl()));
             listTrusted = new List_trusted(context);
 
             if (Objects.requireNonNull(ninjaWebView.getTitle()).isEmpty())
@@ -957,10 +939,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     if ((record.getType() == BOOKMARK_ITEM) || (record.getType() == STARTSITE_ITEM)) {
                         if (record.getDesktopMode() != ninjaWebView.isDesktopMode())
                             ninjaWebView.toggleDesktopMode(false);
-                        if (record.getNightMode() == ninjaWebView.isNightMode() && !isNightMode) {
-                            ninjaWebView.toggleNightMode();
-                            isNightMode = ninjaWebView.isNightMode();
-                        }
                         break;
                     }
                 }
@@ -1134,7 +1112,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 action.close(); }
             else if (position == 3) printPDF();
             else if (position == 4) HelperUnit.createShortcut(context, ninjaWebView.getTitle(), ninjaWebView.getOriginalUrl());
-            else if (position == 5) HelperUnit.saveAs(activity, url); });
+            else if (position == 5) HelperUnit.saveAs(activity, url, null); });
 
         // Share
         GridItem item_11 = new GridItem( getString(R.string.menu_share_link), 0);
@@ -1184,7 +1162,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             else if (position == 1) {
                 Uri webpage = Uri.parse("https://github.com/scoute-dich/browser/wiki");
                 BrowserUnit.intentURL(this, webpage); }
-            else if (position == 2) startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+            else if (position == 2) {
+                startActivity(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null));
+            }
             else if (position == 3) {
                 Intent settings = new Intent(BrowserActivity.this, Settings_Activity.class);
                 startActivity(settings); }
@@ -1314,7 +1294,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     if (url.startsWith("data:")) {
                         DataURIParser dataURIParser = new DataURIParser(url);
                         HelperUnit.saveDataURI(activity, dataURIParser);
-                    } else HelperUnit.saveAs(activity, url);
+                    } else HelperUnit.saveAs(activity, url, null);
                     break;
                 case 7:
                     save_atHome(title, url);
@@ -1787,16 +1767,31 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             }
 
             Chip chip_toggleNightView = dialogView.findViewById(R.id.chip_toggleNightView);
-            chip_toggleNightView.setChecked(ninjaWebView.isNightMode());
-            chip_toggleNightView.setOnLongClickListener(view -> {
-                Toast.makeText(context, getString(R.string.menu_nightView), Toast.LENGTH_SHORT).show();
-                return true;
-            });
-            chip_toggleNightView.setOnClickListener(v -> {
-                ninjaWebView.toggleNightMode();
-                isNightMode = ninjaWebView.isNightMode();
-                dialog.cancel();
-            });
+
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                chip_toggleNightView.setChecked(WebSettingsCompat.isAlgorithmicDarkeningAllowed(ninjaWebView.getSettings()));
+                chip_toggleNightView.setOnLongClickListener(view -> {
+                    Toast.makeText(context, getString(R.string.menu_nightView), Toast.LENGTH_SHORT).show();
+                    return true;
+                });
+                chip_toggleNightView.setOnClickListener(v -> {
+                    if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                        WebSettings s = ninjaWebView.getSettings();
+                        WebSettingsCompat.setAlgorithmicDarkeningAllowed(ninjaWebView.getSettings(), !WebSettingsCompat.isAlgorithmicDarkeningAllowed(s));
+                        chip_toggleNightView.setChecked(WebSettingsCompat.isAlgorithmicDarkeningAllowed(ninjaWebView.getSettings()));
+                    }
+                    dialog.cancel();
+                });
+
+                int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                if ((nightModeFlags == Configuration.UI_MODE_NIGHT_YES) || sp.getString("sp_theme", "1").equals("3")) {
+                    chip_toggleNightView.setVisibility(View.VISIBLE);
+                } else  {
+                    chip_toggleNightView.setVisibility(View.GONE);
+                }
+            } else {
+                chip_toggleNightView.setVisibility(View.GONE);
+            }
 
             Chip chip_toggleDesktop = dialogView.findViewById(R.id.chip_toggleDesktop);
             chip_toggleDesktop.setChecked(ninjaWebView.isDesktopMode());
@@ -1917,13 +1912,13 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     // Voids
 
     private void doubleTapsQuit() {
-        if (!sp.getBoolean("sp_close_browser_confirm", true)) finish();
+        if (!sp.getBoolean("sp_close_browser_confirm", true)) finishAndRemoveTask();
         else {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
             builder.setTitle(R.string.setting_title_confirm_exit);
             builder.setIcon(R.drawable.icon_alert);
             builder.setMessage(R.string.toast_quit);
-            builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> finish());
+            builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> finishAndRemoveTask());
             builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> dialog.cancel());
             AlertDialog dialog = builder.create();
             dialog.show();
@@ -1991,7 +1986,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             int counter = sp.getInt("counter", 0);
             counter = counter + 1;
             sp.edit().putInt("counter", counter).apply();
-            if (action.addStartSite(new Record(title, url, 0, counter, 1, ninjaWebView.isDesktopMode(), ninjaWebView.isNightMode(), 0))) NinjaToast.show(this, R.string.app_done);
+            if (action.addStartSite(new Record(title, url, 0, counter, 1, ninjaWebView.isDesktopMode(), false, 0))) NinjaToast.show(this, R.string.app_done);
             else NinjaToast.show(this, R.string.app_error); }
         action.close();
     }
@@ -2015,7 +2010,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private void postLink(String data) {
         String urlForPosting = sp.getString("urlForPosting", "");
         String message = getString(R.string.menu_shareClipboard) + ": " + data;
-        assert urlForPosting != null;
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         View dialogViewSubMenu = View.inflate(context, R.layout.dialog_edit, null);
@@ -2076,7 +2070,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             NinjaToast.show(this, R.string.app_error);
         else {
             long value = 0;  //default red icon
-            action.addBookmark(new Record(ninjaWebView.getTitle(), ninjaWebView.getUrl(), 0, 0, 2, ninjaWebView.isDesktopMode(), ninjaWebView.isNightMode(), value));
+            action.addBookmark(new Record(ninjaWebView.getTitle(), ninjaWebView.getUrl(), 0, 0, 2, ninjaWebView.isDesktopMode(), false, value));
             NinjaToast.show(this, R.string.app_done); }
         action.close();
     }
@@ -2154,7 +2148,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 break;
             case "20":
                 ninjaWebView.toggleNightMode();
-                isNightMode = ninjaWebView.isNightMode();
                 break;
             case "21":
                 ninjaWebView.toggleDesktopMode(true);
@@ -2244,10 +2237,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     .apply();
             ninjaWebView.setProfileDefaultValues();
         }
-        if (isNightMode) {
-            ninjaWebView.toggleNightMode();
-            isNightMode = ninjaWebView.isNightMode();
-        }
+
         ninjaWebView.setBrowserController(this);
         ninjaWebView.setAlbumTitle(title, url);
         activity.registerForContextMenu(ninjaWebView);

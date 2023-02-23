@@ -80,6 +80,11 @@
             app:editTextSwitchKey="sp_instagram_switch"
             app:useSimpleSummaryProvider="true" />
 
+        <Preference
+            android:key="custom_redirects"
+            android:selectable="true"
+            android:title="@string/custom_redirects" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/setting_userScript">

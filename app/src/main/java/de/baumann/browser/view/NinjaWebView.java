@@ -63,12 +63,6 @@ import de.baumann.browser.unit.BrowserUnit;
 
 public class NinjaWebView extends WebView implements AlbumController {
 
-    private static final float[] NEGATIVE_COLOR = {
-            -1.0f, 0, 0, 0, 255, // Red
-            0, -1.0f, 0, 0, 255, // Green
-            0, 0, -1.0f, 0, 255, // Blue
-            0, 0, 0, 1.0f, 0     // Alpha
-    };
     public boolean fingerPrintProtection;
     public boolean history;
     public boolean adBlock;
@@ -78,7 +72,6 @@ public class NinjaWebView extends WebView implements AlbumController {
     private OnScrollChangeListener onScrollChangeListener;
     private Context context;
     private boolean desktopMode;
-    private boolean nightMode;
     private boolean stopped;
     private AdapterTabs album;
     private AlbumController predecessor = null;
@@ -109,7 +102,6 @@ public class NinjaWebView extends WebView implements AlbumController {
         this.context = context;
         this.foreground = false;
         this.desktopMode = false;
-        this.nightMode = false;
         this.isBackPressed = false;
         this.fingerPrintProtection = sp.getBoolean(profile + "_fingerPrintProtection", true);
         this.history = sp.getBoolean(profile + "_history", true);
@@ -536,7 +528,6 @@ public class NinjaWebView extends WebView implements AlbumController {
     @Override
     public synchronized void loadUrl(@NonNull String url) {
         String urlToLoad = BrowserUnit.redirectURL(this, sp, url).trim();
-        toggleWidescreen(BrowserUnit.queryWrapper(context, urlToLoad));
         initCookieManager(BrowserUnit.queryWrapper(context, urlToLoad));
         initPreferences(BrowserUnit.queryWrapper(context, urlToLoad));
         InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -597,10 +588,6 @@ public class NinjaWebView extends WebView implements AlbumController {
         return desktopMode;
     }
 
-    public boolean isNightMode() {
-        return nightMode;
-    }
-
     public boolean isFingerPrintProtection() {
         return fingerPrintProtection;
     }
@@ -650,7 +637,6 @@ public class NinjaWebView extends WebView implements AlbumController {
         }
 
         String ownUserAgent = sp.getString("sp_userAgent", "");
-        assert ownUserAgent != null;
         if (!ownUserAgent.equals("") && (sp.getBoolean("userAgentSwitch", false)))
             newUserAgent = ownUserAgent;
         return newUserAgent;
@@ -665,41 +651,10 @@ public class NinjaWebView extends WebView implements AlbumController {
         if (reload) reload();
     }
 
-    public void toggleWidescreen(String url) {
-        if (url.contains(".jpg")||
-                url.contains(".jpeg")||
-                url.contains(".png")||
-                url.contains(".webg")){
-            getSettings().setUseWideViewPort(true);
-            getSettings().setLoadWithOverviewMode(true);
-        } else {
-            getSettings().setUseWideViewPort(desktopMode);
-            getSettings().setLoadWithOverviewMode(desktopMode);
-        }
-    }
-
     public void toggleNightMode() {
-        nightMode = !nightMode;
-        if (nightMode) {
-            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK))
-                WebSettingsCompat.setForceDark(this.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
-            else {
-                Paint paint = new Paint();
-                ColorMatrix matrix = new ColorMatrix();
-                matrix.set(NEGATIVE_COLOR);
-                ColorMatrix gcm = new ColorMatrix();
-                gcm.setSaturation(0);
-                ColorMatrix concat = new ColorMatrix();
-                concat.setConcat(matrix, gcm);
-                ColorMatrixColorFilter filter = new ColorMatrixColorFilter(concat);
-                paint.setColorFilter(filter);
-                // maybe sometime LAYER_TYPE_NONE would better?
-                this.setLayerType(View.LAYER_TYPE_HARDWARE, paint);
-            }
-        } else {
-            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK))
-                WebSettingsCompat.setForceDark(this.getSettings(), WebSettingsCompat.FORCE_DARK_OFF);
-            else this.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+            WebSettings s = this.getSettings();
+            WebSettingsCompat.setAlgorithmicDarkeningAllowed(this.getSettings(), !WebSettingsCompat.isAlgorithmicDarkeningAllowed(s));
         }
     }
 

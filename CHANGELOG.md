@@ -7,6 +7,8 @@
 - fix: Auth-request dialog
 - fix: download dialog
 - fix: startsite is now the wiki #997
+- fix: crash when open downloads, while default file manager not installed
+- improved: theme settings
 
 
 ### v 9.5

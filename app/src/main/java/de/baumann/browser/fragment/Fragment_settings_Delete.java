@@ -7,14 +7,14 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import de.baumann.browser.R;
+import de.baumann.browser.preferences.BasePreferenceFragment;
 import de.baumann.browser.unit.HelperUnit;
 
-public class Fragment_settings_Delete extends PreferenceFragmentCompat {
+public class Fragment_settings_Delete extends BasePreferenceFragment {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
