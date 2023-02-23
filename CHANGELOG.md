@@ -11,6 +11,7 @@
 - fix: issues with the file name when downloading thanks to @Bnyro
 - fix: kill the app on pressing quit thanks to @Bnyro thanks to @Bnyro
 - fix: theme settings
+- fix: suppress DRM notice #1019
 - new: circular progress - press to stop loading
 - new: Swedish translation
 - new: material dialogs in the preferences thanks to @Bnyro

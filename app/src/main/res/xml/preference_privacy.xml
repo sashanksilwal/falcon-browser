@@ -3,6 +3,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="sp_drm"
+        android:summary="@string/hint_DRM_Media"/>
+
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="sp_autofill"

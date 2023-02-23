@@ -110,15 +110,18 @@ public class NinjaWebChromeClient extends WebChromeClient {
                     request.grant(request.getResources());
                 }
             } else if (PermissionRequest.RESOURCE_PROTECTED_MEDIA_ID.equals(resource)) {
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(ninjaWebView.getContext());
-                builder.setIcon(R.drawable.icon_alert);
-                builder.setTitle(R.string.app_warning);
-                builder.setMessage(R.string.hint_DRM_Media);
-                builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> request.grant(request.getResources()));
-                builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> request.deny());
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                HelperUnit.setupDialog(ninjaWebView.getContext(), dialog);
+                if (sp.getBoolean("sp_drm", true)) {
+                    request.grant(request.getResources());
+                } else {MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(ninjaWebView.getContext());
+                    builder.setIcon(R.drawable.icon_alert);
+                    builder.setTitle(R.string.app_warning);
+                    builder.setMessage(R.string.hint_DRM_Media);
+                    builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> request.grant(request.getResources()));
+                    builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> request.deny());
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    HelperUnit.setupDialog(ninjaWebView.getContext(), dialog);
+                }
             }
         }
     }
