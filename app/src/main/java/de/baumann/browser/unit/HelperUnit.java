@@ -126,7 +126,7 @@ public class HelperUnit {
         }
     }
 
-    public static void saveAs(final Activity activity, final String url) {
+    public static void saveAs(final Activity activity, final String url, final String name) {
 
         try {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
@@ -143,10 +143,11 @@ public class HelperUnit {
             editTop.setHint(activity.getString(R.string.dialog_title_hint));
             editBottom.setHint(activity.getString(R.string.dialog_extension_hint));
 
-            String filename = URLUtil.guessFileName(url, null, null);
-            editTop.setText(HelperUnit.fileName(url));
-
+            String filename = name != null ? name : URLUtil.guessFileName(url, null, null);
             String extension = filename.substring(filename.lastIndexOf("."));
+            String prefix = filename.substring(0, filename.lastIndexOf("."));
+
+            editTop.setText(prefix);
             if (extension.length() <= 8) editBottom.setText(extension);
 
             builder.setView(dialogView);
