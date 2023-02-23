@@ -17,7 +17,6 @@
 - new: material dialogs in the preferences thanks to @Bnyro
 - new: monochrome icon for Android 13+ thanks to @Bnyro
 - new: custom redirects thanks to @Bnyro
-- new: last Clipboard record as search suggestion thanks to @Bnyro
 - new: Custom error pages  thanks to @Bnyro
 
 
