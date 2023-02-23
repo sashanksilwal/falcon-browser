@@ -117,11 +117,11 @@ public class NinjaWebView extends WebView implements AlbumController {
         this.webViewClient = new NinjaWebViewClient(this) {
             @Override
             public void onReceivedError(WebView webview, WebResourceRequest request, WebResourceError error) {
-                if (request.getUrl().toString().equals(webview.getUrl())) {
-                    Context context = webview.getContext();
-                    String description = error.getDescription().toString();
-                    String failingUrl = request.getUrl().toString();
-                    String htmlData = getErrorHTML(context, description, failingUrl);
+                Context context = webview.getContext();
+                String description = error.getDescription().toString();
+                String failingUrl = request.getUrl().toString();
+                String htmlData = getErrorHTML(context, description, failingUrl);
+                if (!description.equals("net::ERR_FAILED")) {
                     webview.loadUrl("about:blank");
                     webview.loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8",null);
                     webview.invalidate();
