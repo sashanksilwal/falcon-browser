@@ -13,6 +13,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -206,6 +207,13 @@ public class NinjaWebView extends WebView implements AlbumController {
         String profileOriginal = profile;
         WebSettings webSettings = getSettings();
 
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if ((nightModeFlags == Configuration.UI_MODE_NIGHT_YES) || sp.getString("sp_theme", "1").equals("3")) {
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                WebSettingsCompat.setAlgorithmicDarkeningAllowed(webSettings, true);
+            }
+        }
+
         String userAgent = getUserAgent(desktopMode);
         webSettings.setUserAgentString(userAgent);
         if (android.os.Build.VERSION.SDK_INT >= 26) webSettings.setSafeBrowsingEnabled(true);
@@ -236,19 +244,17 @@ public class NinjaWebView extends WebView implements AlbumController {
         webSettings.setJavaScriptEnabled(sp.getBoolean(profile + "_javascript", true));
         webSettings.setJavaScriptCanOpenWindowsAutomatically(sp.getBoolean(profile + "_javascriptPopUp", false));
         webSettings.setDomStorageEnabled(sp.getBoolean(profile + "_dom", false));
-        fingerPrintProtection = sp.getBoolean(profile + "_fingerPrintProtection", true);
-        history = sp.getBoolean(profile + "_saveHistory", true);
-        adBlock = sp.getBoolean(profile + "_adBlock", true);
-        saveData = sp.getBoolean(profile + "_saveData", true);
-        camera = sp.getBoolean(profile + "_camera", true);
-        initCookieManager(url);
-        profile = profileOriginal;
 
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowFileAccessFromFileURLs(true);
         webSettings.setAllowUniversalAccessFromFileURLs(true);
 
-
+        fingerPrintProtection = sp.getBoolean(profile + "_fingerPrintProtection", true);
+        history = sp.getBoolean(profile + "_saveHistory", true);
+        adBlock = sp.getBoolean(profile + "_adBlock", true);
+        saveData = sp.getBoolean(profile + "_saveData", true);
+        camera = sp.getBoolean(profile + "_camera", true);
+        profile = profileOriginal;
     }
 
     public synchronized void initCookieManager(String url) {
@@ -538,14 +544,11 @@ public class NinjaWebView extends WebView implements AlbumController {
 
     @Override
     public synchronized void loadUrl(@NonNull String url) {
-        String urlToLoad = BrowserUnit.redirectURL(this, sp, url).trim();
-        initCookieManager(BrowserUnit.queryWrapper(context, urlToLoad));
-        initPreferences(BrowserUnit.queryWrapper(context, urlToLoad));
         InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
         favicon = null;
         stopped = false;
-        super.loadUrl(BrowserUnit.queryWrapper(context, urlToLoad), getRequestHeaders());
+        super.loadUrl(BrowserUnit.queryWrapper(context, url), getRequestHeaders());
     }
 
     @Override

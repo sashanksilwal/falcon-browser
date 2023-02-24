@@ -308,14 +308,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             if (sp.getBoolean("start_tabStart", false)) showOverview();
             addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "");
         }
-
-        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        if ((nightModeFlags == Configuration.UI_MODE_NIGHT_YES) || sp.getString("sp_theme", "1").equals("3")) {
-            if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                WebSettings s = ninjaWebView.getSettings();
-                WebSettingsCompat.setAlgorithmicDarkeningAllowed(ninjaWebView.getSettings(), !WebSettingsCompat.isAlgorithmicDarkeningAllowed(s));
-            }
-        }
     }
 
     @Override
@@ -430,12 +422,13 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         currentAlbumController.activate();
         contentFrame.removeAllViews();
         contentFrame.addView(av);
-        updateOmniBox();
         if (searchPanel.getVisibility() == View.VISIBLE) {
             searchOnSite = false;
             searchBox.setText("");
             searchPanel.setVisibility(View.GONE);
-            omniBox.setVisibility(View.VISIBLE); }
+            omniBox.setVisibility(View.VISIBLE);
+        }
+        updateOmniBox();
     }
 
     @Override
@@ -481,6 +474,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         progressBar.setProgressCompat(progress, true);
         if (progress != BrowserUnit.LOADING_STOPPED) {
             updateOmniBox();
+            ninjaWebView.initCookieManager(ninjaWebView.getUrl());
         }
         if (progress < BrowserUnit.PROGRESS_MAX) progressBar.setVisibility(View.VISIBLE);
     }
@@ -868,8 +862,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         if (url != null) {
 
             progressBar.setVisibility(View.GONE);
-            ninjaWebView.setProfileIcon(omniBox_tab);
-            ninjaWebView.initCookieManager(url);
             listTrusted = new List_trusted(context);
 
             if (Objects.requireNonNull(ninjaWebView.getTitle()).isEmpty())
@@ -898,6 +890,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     HelperUnit.setupDialog(context, dialog);
                 });
             }
+            ninjaWebView.setProfileIcon(omniBox_tab);
+            ninjaWebView.initCookieManager(url);
         }
     }
 

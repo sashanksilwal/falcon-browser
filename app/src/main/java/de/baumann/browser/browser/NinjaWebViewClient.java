@@ -86,6 +86,9 @@ public class NinjaWebViewClient extends WebViewClient {
         String urlToLoad = BrowserUnit.redirectURL(view, sp, url);
         ninjaWebView.setStopped(false);
         ninjaWebView.resetFavicon();
+        ninjaWebView.initPreferences(urlToLoad);
+        ninjaWebView.initCookieManager(urlToLoad);
+
         super.onPageStarted(view, urlToLoad, favicon);
 
         if (sp.getBoolean("onPageStarted", false))
@@ -442,36 +445,29 @@ public class NinjaWebViewClient extends WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         final Uri uri = request.getUrl();
         String url = uri.toString();
-        if (ninjaWebView.isBackPressed) return false;
 
+        if (ninjaWebView.isBackPressed) return false;
         else {
             // handle the url by implementing your logic
-
             if (url.startsWith("http://") || url.startsWith("https://")) {
-                android.webkit.CookieManager cookieManager = android.webkit.CookieManager.getInstance();
-                cookieManager.setAcceptCookie(true);
-                cookieManager.acceptCookie();
-                cookieManager.getCookie(url);
-                ninjaWebView.initPreferences(url);
-
                 return false;
-            }
-
-            try {
-                Intent intent;
-                if (url.startsWith("intent:")) {
-                    intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
-                    intent.addCategory("android.intent.category.BROWSABLE");
-                    intent.setComponent(null);
-                    intent.setSelector(null);
-                } else {
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            } else {
+                try {
+                    Intent intent;
+                    if (url.startsWith("intent:")) {
+                        intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                        intent.addCategory("android.intent.category.BROWSABLE");
+                        intent.setComponent(null);
+                        intent.setSelector(null);
+                    } else {
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    }
+                    view.getContext().startActivity(intent);
+                    return true;
+                } catch (Exception e) {
+                    Log.i(TAG, "shouldOverrideUrlLoading Exception:" + e);
+                    return true;
                 }
-                view.getContext().startActivity(intent);
-                return true;
-            } catch (Exception e) {
-                Log.i(TAG, "shouldOverrideUrlLoading Exception:" + e);
-                return true;
             }
         }
     }
