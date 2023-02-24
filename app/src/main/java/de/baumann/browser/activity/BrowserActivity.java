@@ -1764,26 +1764,15 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             Chip chip_toggleNightView = dialogView.findViewById(R.id.chip_toggleNightView);
 
             if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                chip_toggleNightView.setChecked(WebSettingsCompat.isAlgorithmicDarkeningAllowed(ninjaWebView.getSettings()));
+                chip_toggleNightView.setChecked(sp.getBoolean("setAlgorithmicDarkeningAllowed", true));
                 chip_toggleNightView.setOnLongClickListener(view -> {
                     Toast.makeText(context, getString(R.string.menu_nightView), Toast.LENGTH_SHORT).show();
                     return true;
                 });
                 chip_toggleNightView.setOnClickListener(v -> {
-                    if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                        WebSettings s = ninjaWebView.getSettings();
-                        WebSettingsCompat.setAlgorithmicDarkeningAllowed(ninjaWebView.getSettings(), !WebSettingsCompat.isAlgorithmicDarkeningAllowed(s));
-                        chip_toggleNightView.setChecked(WebSettingsCompat.isAlgorithmicDarkeningAllowed(ninjaWebView.getSettings()));
-                    }
+                    ninjaWebView.toggleNightMode();
                     dialog.cancel();
                 });
-
-                int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                if ((nightModeFlags == Configuration.UI_MODE_NIGHT_YES) || sp.getString("sp_theme", "1").equals("3")) {
-                    chip_toggleNightView.setVisibility(View.VISIBLE);
-                } else  {
-                    chip_toggleNightView.setVisibility(View.GONE);
-                }
             } else {
                 chip_toggleNightView.setVisibility(View.GONE);
             }

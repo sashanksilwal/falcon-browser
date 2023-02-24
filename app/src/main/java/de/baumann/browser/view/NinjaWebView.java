@@ -210,7 +210,14 @@ public class NinjaWebView extends WebView implements AlbumController {
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if ((nightModeFlags == Configuration.UI_MODE_NIGHT_YES) || sp.getString("sp_theme", "1").equals("3")) {
             if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                WebSettingsCompat.setAlgorithmicDarkeningAllowed(webSettings, true);
+                boolean allowed = sp.getBoolean("setAlgorithmicDarkeningAllowed", true);
+                if (!allowed) {
+                    WebSettingsCompat.setAlgorithmicDarkeningAllowed(webSettings, false);
+                    sp.edit().putBoolean("setAlgorithmicDarkeningAllowed", false).apply();
+                } else {
+                    WebSettingsCompat.setAlgorithmicDarkeningAllowed(webSettings, true);
+                    sp.edit().putBoolean("setAlgorithmicDarkeningAllowed", true).apply();
+                }
             }
         }
 
@@ -662,7 +669,14 @@ public class NinjaWebView extends WebView implements AlbumController {
     public void toggleNightMode() {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
             WebSettings s = this.getSettings();
-            WebSettingsCompat.setAlgorithmicDarkeningAllowed(this.getSettings(), !WebSettingsCompat.isAlgorithmicDarkeningAllowed(s));
+            boolean allowed = sp.getBoolean("setAlgorithmicDarkeningAllowed", true);
+            if (allowed) {
+                WebSettingsCompat.setAlgorithmicDarkeningAllowed(s, false);
+                sp.edit().putBoolean("setAlgorithmicDarkeningAllowed", false).apply();
+            } else {
+                WebSettingsCompat.setAlgorithmicDarkeningAllowed(s, true);
+                sp.edit().putBoolean("setAlgorithmicDarkeningAllowed", true).apply();
+            }
         }
     }
 
