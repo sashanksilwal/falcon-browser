@@ -55,7 +55,6 @@ public class NinjaWebChromeClient extends WebChromeClient {
         newWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                newWebView.initPreferences(request.getUrl().toString());
                 BrowserUnit.intentURL(context, request.getUrl());
                 return true;
             }
