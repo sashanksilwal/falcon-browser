@@ -13,6 +13,9 @@
 - fix: theme settings
 - fix: suppress DRM notice #1019
 - fix: profile icons - red for attached profiles #999
+- fix: Youtube videos in full screen mode cropped #1015
+- fix: Twitter-to-Nitter redirector matches some unrelated urls #1022
+- fix: & not escaped in search URL #959
 - new: circular progress - press to stop loading
 - new: Swedish translation
 - new: material dialogs in the preferences thanks to @Bnyro

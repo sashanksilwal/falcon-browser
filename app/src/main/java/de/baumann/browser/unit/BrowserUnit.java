@@ -102,48 +102,50 @@ public class BrowserUnit {
             if (!query.contains("://")) {
                 query = URL_SCHEME_HTTPS + query;
             }
-
             return query;
-        }
-
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        String customSearchEngine = sp.getString("sp_search_engine_custom", "");
-        assert customSearchEngine != null;
-
-        //Override UserAgent if own UserAgent is defined
-        if (!sp.contains("searchEngineSwitch")) {  //if new switch_text_preference has never been used initialize the switch
-            if (customSearchEngine.equals("")) {
-                sp.edit().putBoolean("searchEngineSwitch", false).apply();
-            } else {
-                sp.edit().putBoolean("searchEngineSwitch", true).apply();
-            }
-        }
-
-        if (sp.getBoolean("searchEngineSwitch", false)) {  //if new switch_text_preference has never been used initialize the switch
-            return customSearchEngine + query;
         } else {
-            final int i = Integer.parseInt(Objects.requireNonNull(sp.getString("sp_search_engine", "0")));
-            switch (i) {
-                case 1:
-                    return SEARCH_ENGINE_STARTPAGE_DE + query;
-                case 2:
-                    return SEARCH_ENGINE_BAIDU + query;
-                case 3:
-                    return SEARCH_ENGINE_BING + query;
-                case 4:
-                    return SEARCH_ENGINE_DUCKDUCKGO + query;
-                case 5:
-                    return SEARCH_ENGINE_GOOGLE + query;
-                case 6:
-                    return SEARCH_ENGINE_SEARX + query;
-                case 7:
-                    return SEARCH_ENGINE_QWANT + query;
-                case 8:
-                    return SEARCH_ENGINE_ECOSIA + query;
-                case 9:
-                    return SEARCH_ENGINE_Metager + query;
-                default:
-                    return SEARCH_ENGINE_STARTPAGE + query;
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+            String customSearchEngine = sp.getString("sp_search_engine_custom", "");
+
+            query = query.replace("&", "%26");
+
+            //Override UserAgent if own UserAgent is defined
+            if (!sp.contains("searchEngineSwitch")) {
+                //if new switch_text_preference has never been used initialize the switch
+                if (customSearchEngine.equals("")) {
+                    sp.edit().putBoolean("searchEngineSwitch", false).apply();
+                } else {
+                    sp.edit().putBoolean("searchEngineSwitch", true).apply();
+                }
+            }
+
+            if (sp.getBoolean("searchEngineSwitch", false)) {
+                //if new switch_text_preference has never been used initialize the switch
+                return customSearchEngine + query;
+            } else {
+                final int i = Integer.parseInt(Objects.requireNonNull(sp.getString("sp_search_engine", "0")));
+                switch (i) {
+                    case 1:
+                        return SEARCH_ENGINE_STARTPAGE_DE + query;
+                    case 2:
+                        return SEARCH_ENGINE_BAIDU + query;
+                    case 3:
+                        return SEARCH_ENGINE_BING + query;
+                    case 4:
+                        return SEARCH_ENGINE_DUCKDUCKGO + query;
+                    case 5:
+                        return SEARCH_ENGINE_GOOGLE + query;
+                    case 6:
+                        return SEARCH_ENGINE_SEARX + query;
+                    case 7:
+                        return SEARCH_ENGINE_QWANT + query;
+                    case 8:
+                        return SEARCH_ENGINE_ECOSIA + query;
+                    case 9:
+                        return SEARCH_ENGINE_Metager + query;
+                    default:
+                        return SEARCH_ENGINE_STARTPAGE + query;
+                }
             }
         }
     }
@@ -220,21 +222,22 @@ public class BrowserUnit {
         }
 
         if (sp.getBoolean("sp_youTube_switch", false) &&
-                (domain.contains("youtube.") || domain.contains("youtu."))) {
+                domain.equals("youtube.com") || domain.equals("m.youtube.com")) {
             ninjaWebView.stopLoading();
             String substring = url.substring(url.indexOf("watch?v=") + 8);
             url = sp.getString("sp_youTube_string", "https://yewtu.be/") + substring;
             return url;
         }
 
-        else if (sp.getBoolean("sp_twitter_switch", false) && domain.contains("twitter.")) {
+        else if (sp.getBoolean("sp_twitter_switch", false) &&
+                domain.equals("twitter.com") || domain.equals("m.twitter.com")) {
             ninjaWebView.stopLoading();
             String substring = url.substring(url.indexOf("twitter.com") + 12);
             url = sp.getString("sp_twitter_string", "https://nitter.net/") + substring;
             return url;
         }
 
-        else if (sp.getBoolean("sp_instagram_switch", false) && domain.contains("instagram.com")) {
+        else if (sp.getBoolean("sp_instagram_switch", false) && (domain.equals("instagram.com"))) {
             ninjaWebView.stopLoading();
             String substring = url.substring(url.indexOf("instagram.com") + 14);
             url = sp.getString("sp_instagram_string", "https://bibliogram.pussthecat.org/") + substring;
