@@ -540,8 +540,9 @@ public class NinjaWebView extends WebView implements AlbumController {
         imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
         favicon = null;
         stopped = false;
-        initPreferences(BrowserUnit.queryWrapper(context, url));
-        super.loadUrl(BrowserUnit.queryWrapper(context, url), getRequestHeaders());
+        String urlToLoad = BrowserUnit.redirectURL(this, sp, url);
+        initPreferences(BrowserUnit.queryWrapper(context, urlToLoad));
+        super.loadUrl(BrowserUnit.queryWrapper(context, urlToLoad), getRequestHeaders());
     }
 
     @Override

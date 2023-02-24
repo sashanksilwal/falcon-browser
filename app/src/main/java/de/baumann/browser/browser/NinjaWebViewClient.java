@@ -83,12 +83,10 @@ public class NinjaWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
 
-        String urlToLoad = BrowserUnit.redirectURL(view, sp, url);
         ninjaWebView.setStopped(false);
         ninjaWebView.resetFavicon();
-        ninjaWebView.initPreferences(urlToLoad);
 
-        super.onPageStarted(view, urlToLoad, favicon);
+        super.onPageStarted(view, url, favicon);
 
         if (sp.getBoolean("onPageStarted", false))
             view.evaluateJavascript(Objects.requireNonNull(sp.getString("sp_onPageStarted", "")), null);
