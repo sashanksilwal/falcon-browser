@@ -87,7 +87,6 @@ public class NinjaWebViewClient extends WebViewClient {
         ninjaWebView.setStopped(false);
         ninjaWebView.resetFavicon();
         ninjaWebView.initPreferences(urlToLoad);
-        ninjaWebView.initCookieManager(urlToLoad);
 
         super.onPageStarted(view, urlToLoad, favicon);
 

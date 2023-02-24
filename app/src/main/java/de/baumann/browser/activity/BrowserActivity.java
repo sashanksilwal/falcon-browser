@@ -474,7 +474,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         progressBar.setProgressCompat(progress, true);
         if (progress != BrowserUnit.LOADING_STOPPED) {
             updateOmniBox();
-            ninjaWebView.initCookieManager(ninjaWebView.getUrl());
         }
         if (progress < BrowserUnit.PROGRESS_MAX) progressBar.setVisibility(View.VISIBLE);
     }
@@ -863,6 +862,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             progressBar.setVisibility(View.GONE);
             listTrusted = new List_trusted(context);
+            ninjaWebView.setProfileIcon(omniBox_tab);
 
             if (Objects.requireNonNull(ninjaWebView.getTitle()).isEmpty())
                 omniBox_text.setText(url);
@@ -890,8 +890,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     HelperUnit.setupDialog(context, dialog);
                 });
             }
-            ninjaWebView.setProfileIcon(omniBox_tab);
-            ninjaWebView.initCookieManager(url);
         }
     }
 
@@ -1962,7 +1960,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         if (ninjaWebView.canGoBack()) {
             ninjaWebView.setIsBackPressed(true);
             ninjaWebView.initPreferences(historyUrl);
-            ninjaWebView.initCookieManager(historyUrl);
             ninjaWebView.goBack();
         }
     }
@@ -2085,7 +2082,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     WebBackForwardList mWebBackForwardList = ninjaWebView.copyBackForwardList();
                     String historyUrl = mWebBackForwardList.getItemAtIndex(mWebBackForwardList.getCurrentIndex() + 1).getUrl();
                     ninjaWebView.initPreferences(historyUrl);
-                    ninjaWebView.initCookieManager(historyUrl);
                     ninjaWebView.goForward(); }
                 else NinjaToast.show(this, R.string.toast_webview_forward);
                 break;
