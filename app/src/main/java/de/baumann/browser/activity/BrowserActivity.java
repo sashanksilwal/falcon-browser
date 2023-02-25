@@ -92,7 +92,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -1859,6 +1858,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     }
 
     private void showDialogFilter() {
+
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
         builder.setView(dialogView);
@@ -1885,10 +1885,16 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         GridAdapter gridAdapter = new GridAdapter(context, gridList);
         menu_grid.setNumColumns(2);
-        menu_grid.setHorizontalSpacing(10);
-        menu_grid.setVerticalSpacing(10);
-
+        menu_grid.setHorizontalSpacing(20);
+        menu_grid.setVerticalSpacing(20);
         menu_grid.setAdapter(gridAdapter);
+
+        if (menu_grid.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) menu_grid.getLayoutParams();
+            p.setMargins(56, 20, 56, 20);
+            menu_grid.requestLayout();
+        }
+
         gridAdapter.notifyDataSetChanged();
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
             filter = true;
