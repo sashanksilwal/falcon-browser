@@ -429,6 +429,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             omniBox.setVisibility(View.VISIBLE);
         }
         updateOmniBox();
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+            WebSettings s = ninjaWebView.getSettings();
+            boolean allowed = sp.getBoolean("setAlgorithmicDarkeningAllowed", true);
+            WebSettingsCompat.setAlgorithmicDarkeningAllowed(s, allowed);
+        }
     }
 
     @Override
