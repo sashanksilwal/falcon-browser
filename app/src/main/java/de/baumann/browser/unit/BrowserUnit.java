@@ -222,20 +222,27 @@ public class BrowserUnit {
         }
 
         if (sp.getBoolean("sp_youTube_switch", false) &&
-                (domain.equals("youtube.com") || domain.equals("m.youtube.com"))) {
+                domain.equals("youtube.com") || domain.equals("m.youtube.com")) {
             ninjaWebView.stopLoading();
             String substring = url.substring(url.indexOf("watch?v=") + 8);
             url = sp.getString("sp_youTube_string", "https://yewtu.be/") + substring;
             return url;
         }
 
-        else if (sp.getBoolean("sp_twitter_switch", false) && domain.equals("twitter.com")) {
+        else if (sp.getBoolean("sp_twitter_switch", false) &&
+                domain.equals("twitter.com") || domain.equals("m.twitter.com")) {
             ninjaWebView.stopLoading();
             String substring = url.substring(url.indexOf("twitter.com") + 12);
             url = sp.getString("sp_twitter_string", "https://nitter.net/") + substring;
             return url;
         }
 
+        else if (sp.getBoolean("sp_instagram_switch", false) && (domain.equals("instagram.com"))) {
+            ninjaWebView.stopLoading();
+            String substring = url.substring(url.indexOf("instagram.com") + 14);
+            url = sp.getString("sp_instagram_string", "https://bibliogram.pussthecat.org/") + substring;
+            return url;
+        }
         return url;
     }
 

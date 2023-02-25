@@ -119,12 +119,15 @@ public class NinjaWebView extends WebView implements AlbumController {
                 Context context = webview.getContext();
                 String description = error.getDescription().toString();
                 String failingUrl = request.getUrl().toString();
-                String htmlData = getErrorHTML(context, description, failingUrl);
-                if (!description.equals("net::ERR_FAILED")) {
-                    webview.loadUrl("about:blank");
-                    webview.loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8",null);
+                String urlToLoad = sp.getString("urlToLoad", "");
+                String htmlData = getErrorHTML(context, description, urlToLoad);
+
+                if (urlToLoad.equals(failingUrl)) {
+                    webview.loadUrl(urlToLoad);
+                    webview.loadDataWithBaseURL(urlToLoad, htmlData, "text/html", "UTF-8",urlToLoad);
                     webview.invalidate();
                 }
+
             }
         };
         this.webChromeClient = new NinjaWebChromeClient(this);
@@ -548,6 +551,7 @@ public class NinjaWebView extends WebView implements AlbumController {
         favicon = null;
         stopped = false;
         String urlToLoad = BrowserUnit.redirectURL(this, sp, url);
+        sp.edit().putString("urlToLoad", urlToLoad).apply();
         initPreferences(BrowserUnit.queryWrapper(context, urlToLoad));
         super.loadUrl(BrowserUnit.queryWrapper(context, urlToLoad), getRequestHeaders());
     }

@@ -1766,7 +1766,12 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             }
 
             Chip chip_toggleNightView = dialogView.findViewById(R.id.chip_toggleNightView);
-
+            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if ((nightModeFlags == Configuration.UI_MODE_NIGHT_YES) && !sp.getString("sp_theme", "1").equals("2")) {
+                chip_toggleNightView.setVisibility(View.VISIBLE);
+            } else  {
+                chip_toggleNightView.setVisibility(View.GONE);
+            }
             if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
                 chip_toggleNightView.setChecked(sp.getBoolean("setAlgorithmicDarkeningAllowed", true));
                 chip_toggleNightView.setOnLongClickListener(view -> {
@@ -1777,8 +1782,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     ninjaWebView.toggleNightMode();
                     dialog.cancel();
                 });
-            } else {
-                chip_toggleNightView.setVisibility(View.GONE);
             }
 
             Chip chip_toggleDesktop = dialogView.findViewById(R.id.chip_toggleDesktop);
@@ -2079,6 +2082,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 break;
             case "02":
                 if (ninjaWebView.canGoForward()) {
+                    WebBackForwardList mWebBackForwardList = ninjaWebView.copyBackForwardList();
+                    String historyUrl = mWebBackForwardList.getItemAtIndex(mWebBackForwardList.getCurrentIndex() + 1).getUrl();
+                    ninjaWebView.initPreferences(historyUrl);
                     ninjaWebView.goForward(); }
                 else NinjaToast.show(this, R.string.toast_webview_forward);
                 break;
