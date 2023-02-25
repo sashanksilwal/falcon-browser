@@ -78,14 +78,6 @@
             app:editTextSwitchKey="sp_twitter_switch"
             app:useSimpleSummaryProvider="true" />
 
-        <de.baumann.browser.preferences.EditTextSwitchPreference
-            android:defaultValue="https://bibliogram.pussthecat.org/"
-            android:key="sp_instagram_string"
-            android:selectable="true"
-            android:title="@string/privacy_redirect_inst"
-            app:editTextSwitchKey="sp_instagram_switch"
-            app:useSimpleSummaryProvider="true" />
-
         <Preference
             android:key="custom_redirects"
             android:selectable="true"

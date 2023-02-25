@@ -1,5 +1,6 @@
 ### v 9.6 (WIP)
 
+- removed: redirection for Instagram
 - fix: Redirect error from YouTube #991
 - fix: loading images fit screen width
 - fix: cookie manager, when going back in history
