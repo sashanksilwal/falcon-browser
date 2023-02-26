@@ -1,4 +1,4 @@
-### v 9.6 (WIP)
+### v 9.6
 
 - removed: redirection for Instagram
 - fix: Redirect error from YouTube #991
