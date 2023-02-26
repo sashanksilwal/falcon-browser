@@ -2,7 +2,6 @@ package de.baumann.browser.objects;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.JsonWriter;
 
 import androidx.preference.PreferenceManager;
 
@@ -20,7 +19,6 @@ public class CustomRedirectsHelper {
         ArrayList<CustomRedirect> redirects = new ArrayList<>();
         String redirectsPref = preferences.getString(CUSTOM_REDIRECTS_KEY, "[]");
 
-        assert redirectsPref != null;
         JSONArray array = new JSONArray(redirectsPref);
         for (int i = 0; i < array.length(); i++) {
             JSONObject redirect = array.getJSONObject(i);

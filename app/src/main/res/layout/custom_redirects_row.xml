@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/icon_delete" />
+        android:src="@drawable/icon_delete"
+        android:contentDescription="@string/menu_delete" />
 
 </LinearLayout>

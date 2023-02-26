@@ -121,13 +121,11 @@ public class NinjaWebView extends WebView implements AlbumController {
                 String failingUrl = request.getUrl().toString();
                 String urlToLoad = sp.getString("urlToLoad", "");
                 String htmlData = getErrorHTML(context, description, urlToLoad);
-
                 if (urlToLoad.equals(failingUrl)) {
                     webview.loadUrl(urlToLoad);
                     webview.loadDataWithBaseURL(urlToLoad, htmlData, "text/html", "UTF-8",urlToLoad);
                     webview.invalidate();
                 }
-
             }
         };
         this.webChromeClient = new NinjaWebChromeClient(this);
@@ -137,10 +135,11 @@ public class NinjaWebView extends WebView implements AlbumController {
         initAlbum();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private String getErrorHTML(Context context, String description, String failingUrl) {
         int primary = MaterialColors.getColor(context, R.attr.colorPrimary, Color.GREEN);
         int background = MaterialColors.getColor(context, android.R.attr.colorBackground, Color.BLACK);
-        String primaryHex = String.format("#%06X", (0xFFFFFF & primary));;
+        String primaryHex = String.format("#%06X", (0xFFFFFF & primary));
         String backgroundHex = String.format("#%06X", (0xFFFFFF & background));
         String errorSvgPath = "";
         try {

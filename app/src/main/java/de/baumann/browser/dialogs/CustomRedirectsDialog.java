@@ -1,7 +1,6 @@
 package de.baumann.browser.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,9 +19,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import de.baumann.browser.R;
 import de.baumann.browser.objects.CustomRedirect;
@@ -84,8 +83,8 @@ public class CustomRedirectsDialog extends DialogFragment {
         builder.setTitle(R.string.create_new);
         builder.setNegativeButton(R.string.app_cancel, null);
         builder.setPositiveButton(R.string.app_ok, ((dialogInterface, i) -> {
-            String sourceText = source.getText().toString();
-            String targetText = target.getText().toString();
+            String sourceText = Objects.requireNonNull(source.getText()).toString();
+            String targetText = Objects.requireNonNull(target.getText()).toString();
             if (targetText.isEmpty() || sourceText.isEmpty()) return;
 
             adapter.addRedirect(new CustomRedirect(sourceText, targetText));

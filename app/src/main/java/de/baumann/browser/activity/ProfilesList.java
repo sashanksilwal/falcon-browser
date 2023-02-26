@@ -66,18 +66,16 @@ public class ProfilesList extends AppCompatActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         listToLoad = sp.getString("listToLoad", "standard");
 
-        if (listToLoad != null) {
-            switch (listToLoad) {
-                case "protected":
-                    setTitle(R.string.setting_title_profiles_protectedList);
-                    break;
-                case "standard":
-                    setTitle(R.string.setting_title_profiles_standardList);
-                    break;
-                case "trusted":
-                    setTitle(R.string.setting_title_profiles_trustedList);
-                    break;
-            }
+        switch (listToLoad) {
+            case "protected":
+                setTitle(R.string.setting_title_profiles_protectedList);
+                break;
+            case "standard":
+                setTitle(R.string.setting_title_profiles_standardList);
+                break;
+            case "trusted":
+                setTitle(R.string.setting_title_profiles_trustedList);
+                break;
         }
 
         listProtected = new List_protected(this);
