@@ -15,6 +15,7 @@
     <string name="album_title_home">Accueil</string>
     <string name="album_title_tab">Onglets ouverts</string>
     <string name="search_hint">Chercher</string>
+    <string name="create_new">New</string>
     <string name="color_red">Rouge</string>
     <string name="color_pink">Rose</string>
     <string name="color_purple">Violet</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">Enregistrer en PDF</string>
     <string name="menu_shareClipboard">Copier dans le presse-papiers</string>
     <string name="menu_other_searchSite">Rechercher sur le site</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">Titre :</string>
     <string name="dialog_URL_hint">URL :</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">Redirection</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">Demande \'Enregistrer les données\'</string>
     <string name="setting_title_profiles">Profils</string>
     <string name="setting_title_profiles_edit">Modifier les Profils</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">Redémarrer et recharger les onglets</string>
     <string name="setting_title_screenOn">Garder l\'écran allumé</string>
     <string name="setting_title_audioBackground">Jouer l\'audio en arrière-plan</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
