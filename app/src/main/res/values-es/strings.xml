@@ -15,6 +15,7 @@
     <string name="album_title_home">Inicio</string>
     <string name="album_title_tab">Pestañas abiertas</string>
     <string name="search_hint">Búsqueda</string>
+    <string name="create_new">New</string>
     <string name="color_red">Rojo</string>
     <string name="color_pink">Rosa</string>
     <string name="color_purple">Púrpura</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">Guardar como PDF</string>
     <string name="menu_shareClipboard">Copiar al portapapeles</string>
     <string name="menu_other_searchSite">Buscar en sitio web</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">Título de entrada:</string>
     <string name="dialog_URL_hint">URL:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">Redirigir</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">Solicitar \"reducir datos\"</string>
     <string name="setting_title_profiles">Perfiles</string>
     <string name="setting_title_profiles_edit">Editar perfil</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">Reiniciar y recargar pestañas</string>
     <string name="setting_title_screenOn">Mantener pantalla encendida</string>
     <string name="setting_title_audioBackground">Reproducir audio en segundo plano</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
