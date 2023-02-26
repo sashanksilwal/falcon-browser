@@ -15,6 +15,7 @@
     <string name="album_title_home">Plocha</string>
     <string name="album_title_tab">Otevřené karty</string>
     <string name="search_hint">Hledat</string>
+    <string name="create_new">New</string>
     <string name="color_red">Červená</string>
     <string name="color_pink">Růžová</string>
     <string name="color_purple">Fialová</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">Uložit jako PDF</string>
     <string name="menu_shareClipboard">Kopírovat do schránky</string>
     <string name="menu_other_searchSite">Hledat na stránce</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">Název:</string>
     <string name="dialog_URL_hint">URL:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">Přesměrovat</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">Požadavek „Ušetřit data“</string>
     <string name="setting_title_profiles">Profily</string>
     <string name="setting_title_profiles_edit">Upravit profily</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">Restartování a opětovné načtení karet</string>
     <string name="setting_title_screenOn">Nechat obrazovku zapnutou</string>
     <string name="setting_title_audioBackground">Přehrát zvuk na pozadí</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
