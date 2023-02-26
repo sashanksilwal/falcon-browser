@@ -15,6 +15,7 @@
     <string name="album_title_home">Hem</string>
     <string name="album_title_tab">Öppnade flikar</string>
     <string name="search_hint">Sök</string>
+    <string name="create_new">New</string>
     <string name="color_red">Röd</string>
     <string name="color_pink">Rosa</string>
     <string name="color_purple">Lila</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">Spara som PDF</string>
     <string name="menu_shareClipboard">Kopiera till urklipp</string>
     <string name="menu_other_searchSite">Sök på sida</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">Titel:</string>
     <string name="dialog_URL_hint">URL:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">Omdirigera</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">Begär \'Spardata\'</string>
     <string name="setting_title_profiles">Profiler</string>
     <string name="setting_title_profiles_edit">Redigera profiler</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">Starta om och ladda om flikar</string>
     <string name="setting_title_screenOn">Behåll skärmen på</string>
     <string name="setting_title_audioBackground">Spela ljud i bakgrunden</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
