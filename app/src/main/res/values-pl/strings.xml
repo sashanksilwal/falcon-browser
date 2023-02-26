@@ -15,6 +15,7 @@
     <string name="album_title_home">Strona główna</string>
     <string name="album_title_tab">Otwarte karty</string>
     <string name="search_hint">Szukaj</string>
+    <string name="create_new">New</string>
     <string name="color_red">Czerwony</string>
     <string name="color_pink">Różowy</string>
     <string name="color_purple">Fioletowy</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">Zapisz jako PDF</string>
     <string name="menu_shareClipboard">Kopiuj do schowka</string>
     <string name="menu_other_searchSite">Wyszukaj na stronie</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">Tytuł:</string>
     <string name="dialog_URL_hint">Adres URL:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">Przekierowanie</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">Wysyłaj żądanie \'Oszczędzaj dane\'</string>
     <string name="setting_title_profiles">Profile</string>
     <string name="setting_title_profiles_edit">Edytuj profile</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">Uruchom ponownie i załaduj ponownie karty</string>
     <string name="setting_title_screenOn">Nie wyłączaj ekranu</string>
     <string name="setting_title_audioBackground">Odtwarzanie dźwięku w tle</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
