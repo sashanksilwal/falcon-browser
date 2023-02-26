@@ -15,6 +15,7 @@
     <string name="album_title_home">Главная</string>
     <string name="album_title_tab">Открытые вкладки</string>
     <string name="search_hint">Поиск</string>
+    <string name="create_new">New</string>
     <string name="color_red">Красный</string>
     <string name="color_pink">Розовый</string>
     <string name="color_purple">Фиолетовый</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">Сохранить в PDF</string>
     <string name="menu_shareClipboard">Копировать в буфер</string>
     <string name="menu_other_searchSite">Поиск по сайту</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">Заголовок:</string>
     <string name="dialog_URL_hint">URL:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">Перенаправить</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">Запрос \'Сохранить данные\'</string>
     <string name="setting_title_profiles">Профили</string>
     <string name="setting_title_profiles_edit">Редактирование профилей</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">Перезапуск и перезагрузка вкладок</string>
     <string name="setting_title_screenOn">Не отключать экран</string>
     <string name="setting_title_audioBackground">Воспроизведение аудио в фоне</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
