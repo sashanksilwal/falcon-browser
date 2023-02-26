@@ -15,6 +15,7 @@
     <string name="album_title_home">Početna stranica</string>
     <string name="album_title_tab">Otvorene Kartice</string>
     <string name="search_hint">Traži</string>
+    <string name="create_new">New</string>
     <string name="color_red">Crvena</string>
     <string name="color_pink">Ružičasta</string>
     <string name="color_purple">Ljubičasta</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">Spasi kao PDF</string>
     <string name="menu_shareClipboard">Kopiraj na međuspremnik</string>
     <string name="menu_other_searchSite">Traži na stranici</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">Naslov:</string>
     <string name="dialog_URL_hint">URL:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">Preusmjeriti</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">Zahtjevnite \'Spašavanje Podataka\'</string>
     <string name="setting_title_profiles">Profili</string>
     <string name="setting_title_profiles_edit">Uredite profile</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">Ponovo pokrenite i učitajte kartice</string>
     <string name="setting_title_screenOn">Držite ekran uključen</string>
     <string name="setting_title_audioBackground">Pustite audio u pozadini</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
