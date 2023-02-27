@@ -15,6 +15,7 @@
     <string name="album_title_home">Αρχική</string>
     <string name="album_title_tab">Ανοιγμένες Καρτέλες</string>
     <string name="search_hint">Αναζήτηση</string>
+    <string name="create_new">New</string>
     <string name="color_red">Κόκκινο</string>
     <string name="color_pink">Ροζ</string>
     <string name="color_purple">Μωβ</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">Αποθήκευση ως PDF</string>
     <string name="menu_shareClipboard">Αντιγραφή στο πρόχειρο</string>
     <string name="menu_other_searchSite">Αναζήτηση στον ιστότοπο</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">Τίτλος:</string>
     <string name="dialog_URL_hint">url:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">Ανακατεύθυνση</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">Αίτημα \'Αποθήκευση Δεδομένων\'</string>
     <string name="setting_title_profiles">Προφίλ</string>
     <string name="setting_title_profiles_edit">Επεξεργασία προφίλ</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">Επανεκκίνηση και επαναφόρτωση καρτελών</string>
     <string name="setting_title_screenOn">Κρατήστε την οθόνη ανοιχτή</string>
     <string name="setting_title_audioBackground">Αναπαραγωγή ήχου στο φόντο</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>

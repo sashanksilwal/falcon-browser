@@ -15,6 +15,7 @@
     <string name="album_title_home">ホーム</string>
     <string name="album_title_tab">開かれたタブ</string>
     <string name="search_hint">検索</string>
+    <string name="create_new">New</string>
     <string name="color_red">赤</string>
     <string name="color_pink">ピンク</string>
     <string name="color_purple">紫</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">PDF として保存</string>
     <string name="menu_shareClipboard">クリップボードにコピー</string>
     <string name="menu_other_searchSite">サイト内の検索</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">タイトル:</string>
     <string name="dialog_URL_hint">URL:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">リダイレクト</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">「データを保存」のリクエスト</string>
     <string name="setting_title_profiles">プロファイル</string>
     <string name="setting_title_profiles_edit">プロファイルの編集</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">再起動してタブを再読込</string>
     <string name="setting_title_screenOn">画面を消灯しない</string>
     <string name="setting_title_audioBackground">バックグラウンドで音声を再生</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>

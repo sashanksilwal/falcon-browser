@@ -15,6 +15,7 @@
     <string name="album_title_home">主页</string>
     <string name="album_title_tab">开启的标签页</string>
     <string name="search_hint">搜索</string>
+    <string name="create_new">新建</string>
     <string name="color_red">红色</string>
     <string name="color_pink">粉色</string>
     <string name="color_purple">紫色</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">保存为 PDF</string>
     <string name="menu_shareClipboard">复制到剪切板</string>
     <string name="menu_other_searchSite">页面内搜索</string>
+    <string name="link_you_copied">您复制的链接</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">标题:</string>
     <string name="dialog_URL_hint">URL：</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">重定向</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="privacy_redirect_inst">Instagram</string>
+    <string name="custom_redirects">自定义重定向</string>
+    <string name="source">源代码</string>
+    <string name="target">目标</string>
     <string name="setting_title_save_data">请求“保存数据”</string>
     <string name="setting_title_profiles">配置文件</string>
     <string name="setting_title_profiles_edit">编辑配置文件</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">重新启动并重新加载标签</string>
     <string name="setting_title_screenOn">保持屏幕开启</string>
     <string name="setting_title_audioBackground">在后台播放音频</string>
+    <!-- WebView errors -->
+    <string name="error_loading">加载 “%1$s”失败。</string>
+    <string name="retry">重试</string>
     <!-- License changelog -->
 </resources>

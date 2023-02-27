@@ -15,6 +15,7 @@
     <string name="album_title_home">صفحه خانگی</string>
     <string name="album_title_tab">زبانه های باز</string>
     <string name="search_hint">جستجو</string>
+    <string name="create_new">New</string>
     <string name="color_red">قرمز</string>
     <string name="color_pink">صورتی</string>
     <string name="color_purple">بنفش</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">ذخیره به عنوان PDF</string>
     <string name="menu_shareClipboard">کپی در حافظه</string>
     <string name="menu_other_searchSite">جستجو در صفحه </string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">عنوان:</string>
     <string name="dialog_URL_hint">URL:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">هدایت</string>
     <string name="privacy_redirect_twitter">توییتر</string>
     <string name="privacy_redirect_youTube">یوتیوب</string>
-    <string name="privacy_redirect_inst">اینستاگرام</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">درخواست صرفه جویی داده</string>
     <string name="setting_title_profiles">نمایه‌ ها</string>
     <string name="setting_title_profiles_edit">ویرایش نمایه ها</string>
@@ -201,5 +205,8 @@
     <string name="menu_restart">شروع مجدد و بازخوانی برگه ها</string>
     <string name="setting_title_screenOn">روشن نگه داشتن صفحه نمایش</string>
     <string name="setting_title_audioBackground">پخش صدا در پس زمینه</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>

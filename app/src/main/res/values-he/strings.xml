@@ -15,6 +15,7 @@
     <string name="album_title_home">בית</string>
     <string name="album_title_tab">כרטיסיות נפתחות</string>
     <string name="search_hint">לחפש</string>
+    <string name="create_new">New</string>
     <string name="color_red">אדום</string>
     <string name="color_pink">ורוד</string>
     <string name="color_purple">סגול</string>
@@ -49,6 +50,7 @@
     <string name="menu_save_pdf">שמור כ-PDF</string>
     <string name="menu_shareClipboard">העתק ללוח</string>
     <string name="menu_other_searchSite">חפש באתר</string>
+    <string name="link_you_copied">Link you copied</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">כותרת:</string>
     <string name="dialog_URL_hint">כתובת אתר:</string>
@@ -81,7 +83,9 @@
     <string name="privacy_redirect">הפניה מחדש</string>
     <string name="privacy_redirect_twitter">טוויטר</string>
     <string name="privacy_redirect_youTube">יוטיוב</string>
-    <string name="privacy_redirect_inst">אינסטגרם</string>
+    <string name="custom_redirects">Custom redirects</string>
+    <string name="source">Source</string>
+    <string name="target">Target</string>
     <string name="setting_title_save_data">בקש \'שמור נתונים\'</string>
     <string name="setting_title_profiles">פרופילים</string>
     <string name="setting_title_profiles_edit">ערוך פרופילים</string>
@@ -200,5 +204,8 @@
     <string name="menu_restart">הפעל מחדש וטען מחדש כרטיסיות</string>
     <string name="setting_title_screenOn">השאר מסך דלוק</string>
     <string name="setting_title_audioBackground">השמעת אודיו ברקע</string>
+    <!-- WebView errors -->
+    <string name="error_loading">Failed to load \"%1$s\"</string>
+    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
