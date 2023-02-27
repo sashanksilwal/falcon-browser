@@ -205,8 +205,5 @@
     <string name="menu_restart">شروع مجدد و بازخوانی برگه ها</string>
     <string name="setting_title_screenOn">روشن نگه داشتن صفحه نمایش</string>
     <string name="setting_title_audioBackground">پخش صدا در پس زمینه</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
