@@ -204,8 +204,5 @@
     <string name="menu_restart">Επανεκκίνηση και επαναφόρτωση καρτελών</string>
     <string name="setting_title_screenOn">Κρατήστε την οθόνη ανοιχτή</string>
     <string name="setting_title_audioBackground">Αναπαραγωγή ήχου στο φόντο</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>

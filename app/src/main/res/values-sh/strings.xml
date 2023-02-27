@@ -204,8 +204,5 @@
     <string name="menu_restart">Ponovo pokrenite i učitajte kartice</string>
     <string name="setting_title_screenOn">Držite ekran uključen</string>
     <string name="setting_title_audioBackground">Pustite audio u pozadini</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>

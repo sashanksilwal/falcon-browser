@@ -204,8 +204,5 @@
     <string name="menu_restart">Riavvia e ricarica le schede</string>
     <string name="setting_title_screenOn">Mantieni il display acceso</string>
     <string name="setting_title_audioBackground">Riproduci audio in sottofondo</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>

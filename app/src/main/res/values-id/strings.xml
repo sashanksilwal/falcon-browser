@@ -204,8 +204,5 @@
     <string name="menu_restart">Mulai ulang dan muat ulang tab</string>
     <string name="setting_title_screenOn">Biarkan layar tetap menyala</string>
     <string name="setting_title_audioBackground">Putar suara di latar belakang</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>

@@ -204,8 +204,5 @@
     <string name="menu_restart">Újraindítás és a lapok újratöltése</string>
     <string name="setting_title_screenOn">Kijelző ébrentartása</string>
     <string name="setting_title_audioBackground">Hang lejátszása a háttérben</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>

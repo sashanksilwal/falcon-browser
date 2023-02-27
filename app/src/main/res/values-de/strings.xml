@@ -204,8 +204,5 @@
     <string name="menu_restart">Neu starten und Tabs neu laden</string>
     <string name="setting_title_screenOn">Bildschirm nicht ausschalten</string>
     <string name="setting_title_audioBackground">Audio im Hintergrund abspielen</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
