@@ -204,8 +204,5 @@
     <string name="menu_restart">הפעל מחדש וטען מחדש כרטיסיות</string>
     <string name="setting_title_screenOn">השאר מסך דלוק</string>
     <string name="setting_title_audioBackground">השמעת אודיו ברקע</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
