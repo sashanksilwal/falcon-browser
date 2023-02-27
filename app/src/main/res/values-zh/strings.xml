@@ -204,8 +204,5 @@
     <string name="menu_restart">重新启动并重新加载标签</string>
     <string name="setting_title_screenOn">保持屏幕开启</string>
     <string name="setting_title_audioBackground">在后台播放音频</string>
-    <!-- WebView errors -->
-    <string name="error_loading">加载 “%1$s”失败。</string>
-    <string name="retry">重试</string>
     <!-- License changelog -->
 </resources>
