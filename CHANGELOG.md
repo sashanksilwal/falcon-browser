@@ -1,3 +1,8 @@
+### v 9.10 (WIP)
+
+- fix: Password field for protected sites shows entries #1039
+
+
 ### v 9.6
 
 - removed: redirection for Instagram

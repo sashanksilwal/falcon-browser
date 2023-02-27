@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Message;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
@@ -547,6 +548,7 @@ public class NinjaWebViewClient extends WebViewClient {
         EditText editBottom = dialogView.findViewById(R.id.editBottom);
         editTop.setText("");
         editTop.setHint(this.context.getString(R.string.dialog_sign_in_username));
+        editBottom.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         editBottom.setText("");
         editBottom.setHint(this.context.getString(R.string.dialog_sign_in_password));
 
