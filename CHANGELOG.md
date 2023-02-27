@@ -1,6 +1,7 @@
 ### v 9.10 (WIP)
 
 - fix: Password field for protected sites shows entries #1039
+- fix: youtube redirects
 
 
 ### v 9.6

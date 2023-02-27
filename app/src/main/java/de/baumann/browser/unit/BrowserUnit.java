@@ -224,7 +224,7 @@ public class BrowserUnit {
         if (sp.getBoolean("sp_youTube_switch", false) &&
                 domain.equals("youtube.com") || domain.equals("m.youtube.com")) {
             ninjaWebView.stopLoading();
-            String substring = url.substring(url.indexOf("watch?v=") + 8);
+            String substring = url.substring(url.indexOf("youtube.com") + 12);
             url = sp.getString("sp_youTube_string", "https://yewtu.be/") + substring;
             return url;
         }
