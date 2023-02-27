@@ -204,8 +204,5 @@
     <string name="menu_restart">Uruchom ponownie i załaduj ponownie karty</string>
     <string name="setting_title_screenOn">Nie wyłączaj ekranu</string>
     <string name="setting_title_audioBackground">Odtwarzanie dźwięku w tle</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>

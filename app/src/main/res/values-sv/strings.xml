@@ -204,8 +204,5 @@
     <string name="menu_restart">Starta om och ladda om flikar</string>
     <string name="setting_title_screenOn">Behåll skärmen på</string>
     <string name="setting_title_audioBackground">Spela ljud i bakgrunden</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
