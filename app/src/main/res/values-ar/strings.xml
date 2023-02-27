@@ -204,8 +204,5 @@
     <string name="menu_restart">إعادة تشغيل وإعادة تحميل علامات التبويب</string>
     <string name="setting_title_screenOn">إبقاء الشاشة مشتغلة</string>
     <string name="setting_title_audioBackground">شغل الصوت في الخلفية</string>
-    <!-- WebView errors -->
-    <string name="error_loading">Failed to load \"%1$s\"</string>
-    <string name="retry">Retry</string>
     <!-- License changelog -->
 </resources>
