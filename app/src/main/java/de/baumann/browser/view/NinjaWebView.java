@@ -149,14 +149,15 @@ public class NinjaWebView extends WebView implements AlbumController {
             errorSvgPath = new String(b);
         } catch (Exception ignored) {}
 
+        String s = context.getString(R.string.app_error) + ": " +failingUrl;
         return "<html><body>" +
                 errorSvgPath +
                 "<div align=\"center\">" +
                 description +
                 "<hr style=\"height: 1rem; visibility:hidden;\" />" +
-                context.getString(R.string.error_loading, failingUrl) +
+                s +
                 "\n</div>" +
-                "<a href=\"" + failingUrl + "\">" + context.getString(R.string.retry) + "</a>" +
+                "<a href=\"" + failingUrl + "\">" + context.getString(R.string.menu_reload) + "</a>" +
                 "</body></html>" +
                 "<style>" +
                 "html { background: " + backgroundHex + ";" + "color: " + primaryHex + "; }" +
