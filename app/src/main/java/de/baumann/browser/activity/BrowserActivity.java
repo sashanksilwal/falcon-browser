@@ -305,7 +305,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         //if still no open Tab open default page
         if (BrowserContainer.size() < 1) {
             if (sp.getBoolean("start_tabStart", false)) showOverview();
-            addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "");
+            addAlbum(getString(R.string.app_name), "", true, false, "");
+            ninjaWebView.loadUrl(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki"));
         }
     }
 

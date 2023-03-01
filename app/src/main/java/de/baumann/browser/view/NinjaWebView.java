@@ -121,8 +121,7 @@ public class NinjaWebView extends WebView implements AlbumController {
                 String failingUrl = request.getUrl().toString();
                 String urlToLoad = sp.getString("urlToLoad", "");
                 String htmlData = getErrorHTML(context, description, urlToLoad);
-                if (urlToLoad.equals(failingUrl)) {
-                    webview.loadUrl(urlToLoad);
+                if (failingUrl.contains(urlToLoad)) {
                     webview.loadDataWithBaseURL(urlToLoad, htmlData, "text/html", "UTF-8",urlToLoad);
                     webview.invalidate();
                 }
