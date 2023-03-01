@@ -305,8 +305,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         //if still no open Tab open default page
         if (BrowserContainer.size() < 1) {
             if (sp.getBoolean("start_tabStart", false)) showOverview();
-            addAlbum(getString(R.string.app_name), "", true, false, "");
-            ninjaWebView.loadUrl(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki"));
+            addAlbum(getString(R.string.app_name), sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki"), true, false, "");
         }
     }
 
@@ -2239,7 +2238,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         }
 
         ninjaWebView.setBrowserController(this);
-        ninjaWebView.setAlbumTitle(title, url);
         activity.registerForContextMenu(ninjaWebView);
 
         SwipeTouchListener swipeTouchListener;
@@ -2291,7 +2289,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) ninjaWebView.reload(); }
         View albumView = ninjaWebView.getAlbumView();
         tab_container.addView(albumView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        updateOmniBox();
+        ninjaWebView.reload();
     }
 
     private synchronized void addAlbum(String title, final String url, final boolean foreground, final boolean profileDialog, String profile) {

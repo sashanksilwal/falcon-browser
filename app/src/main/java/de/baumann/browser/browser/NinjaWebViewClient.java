@@ -71,13 +71,11 @@ public class NinjaWebViewClient extends WebViewClient {
             view.evaluateJavascript("var links=document.getElementsByTagName('video'); for(let i=0;i<links.length;i++){links[i].pause()};", null);
 
         if (ninjaWebView.isHistory()) {
-            if (!url.equals("about:blank")) {
-                RecordAction action = new RecordAction(ninjaWebView.getContext());
-                action.open(true);
-                if (action.checkUrl(ninjaWebView.getUrl(), RecordUnit.TABLE_HISTORY)) action.deleteURL(ninjaWebView.getUrl(), RecordUnit.TABLE_HISTORY);
-                action.addHistory(new Record(ninjaWebView.getTitle(), ninjaWebView.getUrl(), System.currentTimeMillis(), 0, 0, ninjaWebView.isDesktopMode(), false, 0));
-                action.close();
-            }
+            RecordAction action = new RecordAction(ninjaWebView.getContext());
+            action.open(true);
+            if (action.checkUrl(ninjaWebView.getUrl(), RecordUnit.TABLE_HISTORY)) action.deleteURL(ninjaWebView.getUrl(), RecordUnit.TABLE_HISTORY);
+            action.addHistory(new Record(ninjaWebView.getTitle(), ninjaWebView.getUrl(), System.currentTimeMillis(), 0, 0, ninjaWebView.isDesktopMode(), false, 0));
+            action.close();
         }
     }
 

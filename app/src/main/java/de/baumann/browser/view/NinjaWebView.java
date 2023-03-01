@@ -59,6 +59,7 @@ import de.baumann.browser.database.FaviconHelper;
 import de.baumann.browser.database.Record;
 import de.baumann.browser.database.RecordAction;
 import de.baumann.browser.unit.BrowserUnit;
+import de.baumann.browser.unit.HelperUnit;
 
 public class NinjaWebView extends WebView implements AlbumController {
 
@@ -122,7 +123,7 @@ public class NinjaWebView extends WebView implements AlbumController {
                 String urlToLoad = sp.getString("urlToLoad", "");
                 String htmlData = getErrorHTML(context, description, urlToLoad);
                 if (urlToLoad.equals(failingUrl)) {
-                    webview.loadDataWithBaseURL(urlToLoad, htmlData, "text/html", "UTF-8", urlToLoad);
+                    webview.loadDataWithBaseURL(urlToLoad, htmlData, "","",urlToLoad);
                     webview.invalidate();
                 }
             }
@@ -549,7 +550,6 @@ public class NinjaWebView extends WebView implements AlbumController {
         imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
         favicon = null;
         stopped = false;
-        //String urlToLoad = BrowserUnit.redirectURL(this, sp, url);
         sp.edit().putString("urlToLoad", url).apply();
         initPreferences(BrowserUnit.queryWrapper(context, url));
         super.loadUrl(BrowserUnit.queryWrapper(context, url), getRequestHeaders());
