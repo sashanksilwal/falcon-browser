@@ -2,6 +2,7 @@
 
 - fix: Password field for protected sites shows entries #1039
 - fix: youtube redirects
+- fix: onReceivedError
 
 
 ### v 9.6
