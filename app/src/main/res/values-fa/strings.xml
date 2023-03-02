@@ -83,9 +83,9 @@
     <string name="privacy_redirect">هدایت</string>
     <string name="privacy_redirect_twitter">توییتر</string>
     <string name="privacy_redirect_youTube">یوتیوب</string>
-    <string name="custom_redirects">Custom redirects</string>
-    <string name="source">Source</string>
-    <string name="target">Target</string>
+    <string name="custom_redirects">تغییرمسیرهای سفارشی</string>
+    <string name="source">منبع</string>
+    <string name="target">هدف</string>
     <string name="setting_title_save_data">درخواست صرفه جویی داده</string>
     <string name="setting_title_profiles">نمایه‌ ها</string>
     <string name="setting_title_profiles_edit">ویرایش نمایه ها</string>
