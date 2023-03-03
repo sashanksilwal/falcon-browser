@@ -164,6 +164,7 @@
     <string name="setting_title_searchEngine">Custom search engine</string>
 
     <string name="setting_title_userAgent">Custom user agent</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
 
     <string name="setting_title_fingerPrint">Fingerprint protection</string>
     <string name="setting_theme">Theme</string>

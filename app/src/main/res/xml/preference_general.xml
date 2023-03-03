@@ -38,4 +38,14 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/menu_more">
+
+        <SwitchPreferenceCompat
+            android:title="@string/setting_title_clipboard_record"
+            android:defaultValue="false"
+            android:key="sp_clipboard_record" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
