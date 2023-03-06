@@ -67,6 +67,7 @@
     <string name="setting_label">Подешавања</string>
     <!-- browser setting -->
     <string name="setting_title_browser">Подешавања прегледача</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">Претраживач</string>
     <string name="setting_summary_search_engine_google">Гугл</string>
     <string name="setting_summary_search_engine_duckduckgo">Дакдакго</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">Повуците надоле да бисте поново учитали</string>
     <string name="setting_title_searchEngine">Прилагођени погон за претраживач</string>
     <string name="setting_title_userAgent">Прилагођени кориснички агент</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">Заштита отиска прста</string>
     <string name="setting_theme">Тема</string>
     <string name="setting_theme_system">Система</string>

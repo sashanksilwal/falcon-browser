@@ -67,6 +67,7 @@
     <string name="setting_label">Configurações</string>
     <!-- browser setting -->
     <string name="setting_title_browser">Configurações do Navegador</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">Mecanismo de busca</string>
     <string name="setting_summary_search_engine_google">Google</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">Deslize para baixo para fechar</string>
     <string name="setting_title_searchEngine">Mecanismo de pesquisa customizado</string>
     <string name="setting_title_userAgent">User agent personalizado</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">Verificação de impressão</string>
     <string name="setting_theme">Tema</string>
     <string name="setting_theme_system">Sistema</string>

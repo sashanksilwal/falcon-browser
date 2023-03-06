@@ -67,6 +67,7 @@
     <string name="setting_label">تنظیمات</string>
     <!-- browser setting -->
     <string name="setting_title_browser">تنظیمات مرورگر</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">موتور جستجو</string>
     <string name="setting_summary_search_engine_google">گوگل</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">برای بارگیری مجدد انگشت خود را به پایین بکشید</string>
     <string name="setting_title_searchEngine">موتور جستجوی سفارشی</string>
     <string name="setting_title_userAgent">سفارشی سازی نماینده کاربری </string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">محافظت به وسیله اثرانگشت</string>
     <string name="setting_theme">پوسته</string>
     <string name="setting_theme_system">سامانه</string>

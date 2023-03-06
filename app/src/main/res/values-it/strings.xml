@@ -67,6 +67,7 @@
     <string name="setting_label">Impostazioni</string>
     <!-- browser setting -->
     <string name="setting_title_browser">Impostazioni browser</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">Motore di ricerca</string>
     <string name="setting_summary_search_engine_google">Google</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">Trascina in basso per rifiutare</string>
     <string name="setting_title_searchEngine">Motore di ricerca personalizzato</string>
     <string name="setting_title_userAgent">Agente utente personalizzato</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">Protezione dalle impronte digitali</string>
     <string name="setting_theme">Tema</string>
     <string name="setting_theme_system">Sistema</string>

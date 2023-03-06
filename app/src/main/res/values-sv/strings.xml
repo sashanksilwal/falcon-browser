@@ -67,6 +67,7 @@
     <string name="setting_label">Inställningar</string>
     <!-- browser setting -->
     <string name="setting_title_browser">Webbläsarinställningar</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">Sökmotor</string>
     <string name="setting_summary_search_engine_google">Google</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">Dra ner för att ladda om</string>
     <string name="setting_title_searchEngine">Anpassad sökmotor</string>
     <string name="setting_title_userAgent">Anpassad användaragent</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">Fingeravtrycksskydd</string>
     <string name="setting_theme">Tema</string>
     <string name="setting_theme_system">System</string>

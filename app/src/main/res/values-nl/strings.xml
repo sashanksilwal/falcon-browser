@@ -67,6 +67,7 @@
     <string name="setting_label">Instellingen</string>
     <!-- browser setting -->
     <string name="setting_title_browser">Browserinstellingen</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">Zoekmachine</string>
     <string name="setting_summary_search_engine_google">Google</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">Veeg omlaag om te herladen</string>
     <string name="setting_title_searchEngine">Aangepaste zoekmachine</string>
     <string name="setting_title_userAgent">Aangepaste user agent</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">Vingerafdruk bescherming</string>
     <string name="setting_theme">Thema</string>
     <string name="setting_theme_system">Systeem</string>
