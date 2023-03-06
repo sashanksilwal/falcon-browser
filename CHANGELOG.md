@@ -1,8 +1,11 @@
 ### v 9.10 (WIP)
 
+- new: Clipboard record preference thanks to @Bnyro
+- new: show url, when clicking menu title
 - fix: Password field for protected sites shows entries #1039
 - fix: youtube redirects
 - fix: onReceivedError
+- fix: Settings refactor thanks to @Bnyro
 
 
 ### v 9.6
@@ -17,7 +20,7 @@
 - fix: startsite is now the wiki #997
 - fix: crash when open downloads, while default file manager not installed
 - fix: issues with the file name when downloading thanks to @Bnyro
-- fix: kill the app on pressing quit thanks to @Bnyro thanks to @Bnyro
+- fix: kill the app on pressing quit thanks to @Bnyro
 - fix: theme settings
 - fix: suppress DRM notice #1019
 - fix: profile icons - red for attached profiles #999

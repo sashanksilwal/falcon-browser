@@ -295,7 +295,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             openTabsProfile = new ArrayList<>(Arrays.asList(TextUtils.split(sp.getString("openTabsProfile", ""), "‚‗‚")));
             if (openTabs.size() > 0) {
                 for (int counter = 0; counter < openTabs.size(); counter++) {
-                    addAlbum(getString(R.string.app_name), openTabs.get(counter), BrowserContainer.size() < 1, false, openTabsProfile.get(counter));
+                    addAlbum(openTabs.get(counter), BrowserContainer.size() < 1, false, openTabsProfile.get(counter));
                 }
             }
             sp.edit().putString("profile", saveDefaultProfile).apply();
@@ -305,7 +305,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         //if still no open Tab open default page
         if (BrowserContainer.size() < 1) {
             if (sp.getBoolean("start_tabStart", false)) showOverview();
-            addAlbum(getString(R.string.app_name), sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki"), true, false, "");
+            addAlbum(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki"), true, false, "");
         }
     }
 
@@ -1016,11 +1016,13 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         if (title.isEmpty()) overflow_title.setText(url);
         else overflow_title.setText(title);
 
-        Button overflow_help = dialogView.findViewById(R.id.overflow_help);
-        overflow_help.setOnClickListener(v -> {
-            dialog_overflow.cancel();
-            Uri webpage = Uri.parse("https://github.com/scoute-dich/browser/wiki");
-            BrowserUnit.intentURL(this, webpage); });
+        overflow_title.setOnClickListener(v -> {
+            overflow_title.setText(ninjaWebView.getUrl());
+            overflow_title.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            overflow_title.setSingleLine(true);
+            overflow_title.setMarqueeRepeatLimit(1);
+            overflow_title.setSelected(true);
+        });
 
         final GridView menu_grid_tab = dialogView.findViewById(R.id.overflow_tab);
         final GridView menu_grid_share = dialogView.findViewById(R.id.overflow_share);
@@ -1074,9 +1076,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             if (position == 0)
                 ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")));
             else if (position == 1)
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "");
+                addAlbum(Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "");
             else if (position == 2)
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, true, "");
+                addAlbum(Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, true, "");
             else if (position == 3) ninjaWebView.reload();
             else if (position == 4) removeAlbum(currentAlbumController);
             else if (position == 5) doubleTapsQuit(); });
@@ -1223,7 +1225,19 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
 
         TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
-        menuTitle.setText(title);
+        menuTitle.setText(url);
+        menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuTitle.setSingleLine(true);
+        menuTitle.setMarqueeRepeatLimit(1);
+        menuTitle.setSelected(true);
+
+        menuTitle.setOnClickListener(v -> {
+            menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuTitle.setSingleLine(true);
+            menuTitle.setMarqueeRepeatLimit(1);
+            menuTitle.setSelected(true);
+        });
+
         ImageView menu_icon = dialogView.findViewById(R.id.menu_icon);
 
         if (type == SRC_ANCHOR_TYPE) {
@@ -1274,13 +1288,13 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             dialog.cancel();
             switch (position) {
                 case 0:
-                    addAlbum(getString(R.string.app_name), url, true, false, "");
+                    addAlbum(url, true, false, "");
                     break;
                 case 1:
-                    addAlbum(getString(R.string.app_name), url, false, false, "");
+                    addAlbum(url, false, false, "");
                     break;
                 case 2:
-                    addAlbum(getString(R.string.app_name), url, true, true, "");
+                    addAlbum(url, true, true, "");
                     break;
                 case 3:
                     shareLink(HelperUnit.domain(url), url);
@@ -1311,6 +1325,13 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
         menuTitle.setText(title);
+        menuTitle.setOnClickListener(v -> {
+            menuTitle.setText(url);
+            menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuTitle.setSingleLine(true);
+            menuTitle.setMarqueeRepeatLimit(1);
+            menuTitle.setSelected(true);
+        });
         FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
 
         builder.setView(dialogView);
@@ -1355,14 +1376,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             AlertDialog dialogSubMenu;
             switch (position) {
                 case 0:
-                    addAlbum(getString(R.string.app_name), url, true, false, "");
+                    addAlbum(url, true, false, "");
                     hideOverview();
                     break;
                 case 1:
-                    addAlbum(getString(R.string.app_name), url, false, false, "");
+                    addAlbum(url, false, false, "");
                     break;
                 case 2:
-                    addAlbum(getString(R.string.app_name), url, true, true, "");
+                    addAlbum(url, true, true, "");
                     hideOverview();
                     break;
                 case 3:
@@ -2047,7 +2068,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             Objects.requireNonNull(clipboard).setPrimaryClip(clip);
             String text = getString(R.string.toast_copy_successful) + ": " + data;
             NinjaToast.show(this, text);
-            addAlbum("", shareTop, true, false, "");
+            addAlbum(shareTop, true, false, "");
             HelperUnit.hideSoftKeyboard(editTop, context);
             dialog.cancel();
         });
@@ -2111,7 +2132,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 showOverview();
                 break;
             case "09":
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "");
+                addAlbum(Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "");
                 break;
             case "10":
                 removeAlbum(currentAlbumController);
@@ -2209,7 +2230,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             data = url; }
 
         if (!data.isEmpty()) {
-            addAlbum(null, data, true, false, "");
+            addAlbum(data, true, false, "");
             getIntent().setAction("");
             hideOverview();
             BrowserUnit.openInBackground(activity, intent, data);
@@ -2217,7 +2238,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void setWebView(String title, final String url, final boolean foreground) {
+    private void setWebView(final String url, final boolean foreground) {
         ninjaWebView = new NinjaWebView(context);
 
         if (Objects.requireNonNull(sp.getString("saved_key_ok", "no")).equals("no")) {
@@ -2292,7 +2313,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         ninjaWebView.reload();
     }
 
-    private synchronized void addAlbum(String title, final String url, final boolean foreground, final boolean profileDialog, String profile) {
+    private synchronized void addAlbum(final String url, final boolean foreground, final boolean profileDialog, String profile) {
 
         //restoreProfile from shared preferences if app got killed
         if (!profile.equals("")) sp.edit().putString("profile", profile).apply();
@@ -2340,9 +2361,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                         break;
                 }
                 dialog.cancel();
-                setWebView(title, url, foreground);
+                setWebView(url, foreground);
             });
         }
-        else setWebView(title, url, foreground);
+        else setWebView(url, foreground);
     }
 }
