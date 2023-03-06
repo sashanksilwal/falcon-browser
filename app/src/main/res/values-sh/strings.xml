@@ -67,6 +67,7 @@
     <string name="setting_label">Postavke</string>
     <!-- browser setting -->
     <string name="setting_title_browser">Postavke preglednika</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">Jezgro Preglednika</string>
     <string name="setting_summary_search_engine_google">Google</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">Prevucite prema dolje za ponovno učitavanje</string>
     <string name="setting_title_searchEngine">Prilagođeni pretraživački stroj</string>
     <string name="setting_title_userAgent">Prilagođeni korisnički agent</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">Zaštita otiska prsta</string>
     <string name="setting_theme">Tema</string>
     <string name="setting_theme_system">Sistema</string>
