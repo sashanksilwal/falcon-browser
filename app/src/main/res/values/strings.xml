@@ -78,6 +78,7 @@
 
     <!-- browser setting -->
     <string name="setting_title_browser">Browser Settings</string>
+    <string name="setting_title_general">General</string>
 
     <string name="setting_title_search_engine">Search Engine</string>
     <string name="setting_summary_search_engine_google">Google</string>
@@ -163,6 +164,7 @@
     <string name="setting_title_searchEngine">Custom search engine</string>
 
     <string name="setting_title_userAgent">Custom user agent</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
 
     <string name="setting_title_fingerPrint">Fingerprint protection</string>
     <string name="setting_theme">Theme</string>

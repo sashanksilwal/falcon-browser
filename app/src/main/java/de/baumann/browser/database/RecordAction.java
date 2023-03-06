@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.webkit.URLUtil;
 
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import de.baumann.browser.R;
+import de.baumann.browser.unit.ClipboardUnit;
 import de.baumann.browser.unit.RecordUnit;
 
 public class RecordAction {
@@ -341,6 +345,18 @@ public class RecordAction {
         return record;
     }
 
+
+    @Nullable
+    private Record getClipboard(Activity activity) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
+        if (!sp.getBoolean("sp_clipboard_record", false)) return null;
+        String clipboardEntry = ClipboardUnit.getPrimary(activity);
+        if (clipboardEntry == null || !URLUtil.isValidUrl(clipboardEntry)) return null;
+        return new Record(
+                activity.getString(R.string.link_you_copied), clipboardEntry, 0L, -1, CLIPBOARD_ITEM, null, null, 0L
+        );
+    }
+
     public List<Record> listEntries(Activity activity) {
         List<Record> list = new ArrayList<>();
         RecordAction action = new RecordAction(activity);
@@ -348,6 +364,9 @@ public class RecordAction {
         list.addAll(action.listBookmark(activity, false, 0)); //move bookmarks to top of list
         list.addAll(action.listStartSite(activity));
         list.addAll(action.listHistory());
+        // add the latest copied item from the clipboard if it's a valid URL
+        Record clipboard = action.getClipboard(activity);
+        if (clipboard != null) list.add(clipboard);
         action.close();
         return list;
     }
