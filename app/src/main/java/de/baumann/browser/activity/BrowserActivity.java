@@ -1230,7 +1230,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         menuTitle.setSingleLine(true);
         menuTitle.setMarqueeRepeatLimit(1);
         menuTitle.setSelected(true);
-
         menuTitle.setOnClickListener(v -> {
             menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             menuTitle.setSingleLine(true);
@@ -1317,16 +1316,18 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         });
     }
 
-    private void showContextMenuList(final String title, final String url,
-                                     final AdapterRecord adapterRecord, final List<Record> recordList, final int location) {
+    private void showContextMenuList(final String title, final String url, final AdapterRecord adapterRecord, final List<Record> recordList, final int location) {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
 
         TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
-        menuTitle.setText(title);
+        menuTitle.setText(url);
+        menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuTitle.setSingleLine(true);
+        menuTitle.setMarqueeRepeatLimit(1);
+        menuTitle.setSelected(true);
         menuTitle.setOnClickListener(v -> {
-            menuTitle.setText(url);
             menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             menuTitle.setSingleLine(true);
             menuTitle.setMarqueeRepeatLimit(1);
