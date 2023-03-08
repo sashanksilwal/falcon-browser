@@ -45,7 +45,6 @@ import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -58,7 +57,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -93,6 +91,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -169,7 +168,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private long newIcon;
     private long filterBy;
     private boolean filter;
-    private boolean orientationChanged;
     private boolean searchOnSite;
     private ValueCallback<Uri[]> filePathCallback = null;
     private AlbumController currentAlbumController = null;
@@ -228,13 +226,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         HelperUnit.initTheme(activity);
 
-        OrientationEventListener mOrientationListener = new OrientationEventListener(getApplicationContext()) {
-            @Override
-            public void onOrientationChanged(int orientation) {
-                orientationChanged = true;
-            }
-        };
-        if (mOrientationListener.canDetectOrientation()) mOrientationListener.enable();
 
         sp.edit()
                 .putInt("restart_changed", 0)
@@ -468,10 +459,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (!orientationChanged) {
-            saveOpenedTabs();
-            HelperUnit.triggerRebirth(context); }
-        else orientationChanged = false;
     }
 
     @Override
@@ -514,17 +501,13 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         fullscreenHolder = new FrameLayout(context);
         fullscreenHolder.addView(
                 customView,
-                new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
                 ));
 
         FrameLayout decorView = (FrameLayout) getWindow().getDecorView();
         decorView.addView(
                 fullscreenHolder,
-                new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
                 ));
 
         customView.setKeepScreenOn(true);
@@ -1030,21 +1013,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         final GridView menu_grid_save = dialogView.findViewById(R.id.overflow_save);
         final GridView menu_grid_other = dialogView.findViewById(R.id.overflow_other);
 
-        int orientation = this.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // code for portrait mode
-            menu_grid_tab.setNumColumns(1);
-            menu_grid_share.setNumColumns(1);
-            menu_grid_save.setNumColumns(1);
-            menu_grid_other.setNumColumns(1);
-        } else {
-            // code for landscape mode
-            menu_grid_tab.setNumColumns(3);
-            menu_grid_share.setNumColumns(3);
-            menu_grid_save.setNumColumns(3);
-            menu_grid_other.setNumColumns(3);
-        }
-
         menu_grid_tab.setVisibility(View.VISIBLE);
         menu_grid_share.setVisibility(View.GONE);
         menu_grid_save.setVisibility(View.GONE);
@@ -1204,8 +1172,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 Uri webpage = Uri.parse("https://github.com/scoute-dich/browser/wiki");
                 BrowserUnit.intentURL(this, webpage); }
             else if (position == 2) {
-                startActivity(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null));
-            }
+                startActivity(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null));}
             else if (position == 3) {
                 Intent settings = new Intent(BrowserActivity.this, Settings_Activity.class);
                 startActivity(settings); }
@@ -1214,45 +1181,49 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 HelperUnit.triggerRebirth(context);}
         });
 
-        NavigationBarView.OnItemSelectedListener navListener = menuItem -> {
-            if (menuItem.getItemId() == R.id.page_0) {
-                menu_grid_tab.setVisibility(View.VISIBLE);
-                menu_grid_share.setVisibility(View.GONE);
-                menu_grid_save.setVisibility(View.GONE);
-                menu_grid_other.setVisibility(View.GONE); }
-            else if (menuItem.getItemId() == R.id.page_1) {
-                menu_grid_tab.setVisibility(View.GONE);
-                menu_grid_share.setVisibility(View.VISIBLE);
-                menu_grid_save.setVisibility(View.GONE);
-                menu_grid_other.setVisibility(View.GONE); }
-            else if (menuItem.getItemId() == R.id.page_2) {
-                menu_grid_tab.setVisibility(View.GONE);
-                menu_grid_share.setVisibility(View.GONE);
-                menu_grid_save.setVisibility(View.VISIBLE);
-                menu_grid_other.setVisibility(View.GONE); }
-            else if (menuItem.getItemId() == R.id.page_3) {
-                menu_grid_tab.setVisibility(View.GONE);
-                menu_grid_share.setVisibility(View.GONE);
-                menu_grid_save.setVisibility(View.GONE);
-                menu_grid_other.setVisibility(View.VISIBLE); }
-            return true;
-        };
-
-        BottomNavigationView bottom_navigation = dialogView.findViewById(R.id.bottom_navigation);
-        bottom_navigation.setOnItemSelectedListener(navListener);
+        TabLayout tabLayout = dialogView.findViewById(R.id.tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    menu_grid_tab.setVisibility(View.VISIBLE);
+                    menu_grid_share.setVisibility(View.GONE);
+                    menu_grid_save.setVisibility(View.GONE);
+                    menu_grid_other.setVisibility(View.GONE); }
+                else if (tab.getPosition() == 1) {
+                    menu_grid_tab.setVisibility(View.GONE);
+                    menu_grid_share.setVisibility(View.VISIBLE);
+                    menu_grid_save.setVisibility(View.GONE);
+                    menu_grid_other.setVisibility(View.GONE); }
+                else if (tab.getPosition() == 2) {
+                    menu_grid_tab.setVisibility(View.GONE);
+                    menu_grid_share.setVisibility(View.GONE);
+                    menu_grid_save.setVisibility(View.VISIBLE);
+                    menu_grid_other.setVisibility(View.GONE); }
+                else if (tab.getPosition() == 3) {
+                    menu_grid_tab.setVisibility(View.GONE);
+                    menu_grid_share.setVisibility(View.GONE);
+                    menu_grid_save.setVisibility(View.GONE);
+                    menu_grid_other.setVisibility(View.VISIBLE); }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
 
         menu_grid_tab.setOnTouchListener(new SwipeTouchListener(context) {
-            public void onSwipeRight() { bottom_navigation.setSelectedItemId(R.id.page_3); }
-            public void onSwipeLeft() { bottom_navigation.setSelectedItemId(R.id.page_1); }});
+            public void onSwipeRight() { Objects.requireNonNull(tabLayout.getTabAt(3)).select();}
+            public void onSwipeLeft() { Objects.requireNonNull(tabLayout.getTabAt(1)).select();}});
         menu_grid_share.setOnTouchListener(new SwipeTouchListener(context) {
-            public void onSwipeRight() { bottom_navigation.setSelectedItemId(R.id.page_0); }
-            public void onSwipeLeft() { bottom_navigation.setSelectedItemId(R.id.page_2); }});
+            public void onSwipeRight() { Objects.requireNonNull(tabLayout.getTabAt(0)).select();}
+            public void onSwipeLeft() { Objects.requireNonNull(tabLayout.getTabAt(2)).select();}});
         menu_grid_save.setOnTouchListener(new SwipeTouchListener(context) {
-            public void onSwipeRight() { bottom_navigation.setSelectedItemId(R.id.page_1); }
-            public void onSwipeLeft() { bottom_navigation.setSelectedItemId(R.id.page_3); }});
+            public void onSwipeRight() { Objects.requireNonNull(tabLayout.getTabAt(1)).select();}
+            public void onSwipeLeft() { Objects.requireNonNull(tabLayout.getTabAt(3)).select();}});
         menu_grid_other.setOnTouchListener(new SwipeTouchListener(context) {
-            public void onSwipeRight() { bottom_navigation.setSelectedItemId(R.id.page_2); }
-            public void onSwipeLeft() { bottom_navigation.setSelectedItemId(R.id.page_0); }});
+            public void onSwipeRight() { Objects.requireNonNull(tabLayout.getTabAt(2)).select();}
+            public void onSwipeLeft() { Objects.requireNonNull(tabLayout.getTabAt(0)).select();}});
     }
 
     // Menus
@@ -1314,13 +1285,22 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         }
 
         GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
-        int orientation = this.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) menu_grid.setNumColumns(1);
-        else menu_grid.setNumColumns(3);
-
         GridAdapter gridAdapter = new GridAdapter(context, gridList);
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
+
+        menu_grid.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
+            if (position == 0) NinjaToast.show(context, item_01.getTitle());
+            else if (position == 1) NinjaToast.show(context, item_02.getTitle());
+            else if (position == 2) NinjaToast.show(context, item_03.getTitle());
+            else if (position == 3) NinjaToast.show(context, item_04.getTitle());
+            else if (position == 4) NinjaToast.show(context, item_05.getTitle());
+            else if (position == 5) NinjaToast.show(context, item_06.getTitle());
+            else if (position == 6) NinjaToast.show(context, item_07.getTitle());
+            else if (position == 7) NinjaToast.show(context, item_08.getTitle());
+            return true;
+        });
+
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
             dialog.cancel();
             switch (position) {
@@ -1402,13 +1382,20 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             gridList.add(gridList.size(), item_05); }
 
         GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
-        int orientation = this.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) menu_grid.setNumColumns(1);
-        else menu_grid.setNumColumns(3);
-
         GridAdapter gridAdapter = new GridAdapter(context, gridList);
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
+
+        menu_grid.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
+            if (position == 0) NinjaToast.show(context, item_01.getTitle());
+            else if (position == 1) NinjaToast.show(context, item_02.getTitle());
+            else if (position == 2) NinjaToast.show(context, item_03.getTitle());
+            else if (position == 3) NinjaToast.show(context, item_04.getTitle());
+            else if (position == 4) NinjaToast.show(context, item_05.getTitle());
+            else if (position == 5) NinjaToast.show(context, item_06.getTitle());
+            return true;
+        });
+
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
             dialog.cancel();
             MaterialAlertDialogBuilder builderSubMenu;
@@ -2373,9 +2360,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
             GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
-            int orientation = this.getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) menu_grid.setNumColumns(1);
-            else menu_grid.setNumColumns(2);
             final List<GridItem> gridList = new LinkedList<>();
             gridList.add(gridList.size(), item_01);
             gridList.add(gridList.size(), item_02);
@@ -2384,6 +2368,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             GridAdapter gridAdapter = new GridAdapter(context, gridList);
             menu_grid.setAdapter(gridAdapter);
             gridAdapter.notifyDataSetChanged();
+
+            menu_grid.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
+                if (position == 0) NinjaToast.show(context, item_01.getTitle());
+                else if (position == 1) NinjaToast.show(context, item_02.getTitle());
+                else if (position == 2) NinjaToast.show(context, item_03.getTitle());
+                else if (position == 3) NinjaToast.show(context, item_04.getTitle());
+                return true;
+            });
             menu_grid.setOnItemClickListener((parent, view, position, id) -> {
                 switch (position) {
                     case 0:
