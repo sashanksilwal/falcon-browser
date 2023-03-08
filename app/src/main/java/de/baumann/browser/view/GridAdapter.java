@@ -2,6 +2,7 @@ package de.baumann.browser.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class GridAdapter extends BaseAdapter {
             holder.title = view.findViewById(R.id.menuEntry);
             holder.title.setText(text);
             holder.cardView = view.findViewById(R.id.menuCardView);
+
             if (text.equals(sp.getString("icon_01", context.getResources().getString(R.string.color_red)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.red, null));
             else if (text.equals(sp.getString("icon_02", context.getResources().getString(R.string.color_pink)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.pink, null));
             else if (text.equals(sp.getString("icon_03", context.getResources().getString(R.string.color_purple)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.purple, null));
@@ -51,16 +53,12 @@ public class GridAdapter extends BaseAdapter {
             else if (text.equals(sp.getString("icon_06", context.getResources().getString(R.string.color_green)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.green, null));
             else if (text.equals(sp.getString("icon_07", context.getResources().getString(R.string.color_lime)))) {
                 view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.lime, null));
-
-
                 holder.title.setPadding(10,0,10, 0);
             }
             else if (text.equals(sp.getString("icon_08", context.getResources().getString(R.string.color_yellow)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.yellow, null));
             else if (text.equals(sp.getString("icon_09", context.getResources().getString(R.string.color_orange)))) view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.orange, null));
             else if (text.equals(sp.getString("icon_10", context.getResources().getString(R.string.color_brown)))) {
                 view.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.brown, null));
-
-
                 holder.title.setPadding(10,0,10, 0);
             }
             else if (text.equals(sp.getString("icon_11", context.getResources().getString(R.string.color_grey)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.grey, null));

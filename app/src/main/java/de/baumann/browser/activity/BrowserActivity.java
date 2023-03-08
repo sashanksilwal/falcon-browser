@@ -58,6 +58,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -1071,6 +1072,16 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         menu_grid_tab.setAdapter(gridAdapter_tab);
         gridAdapter_tab.notifyDataSetChanged();
 
+        menu_grid_tab.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
+            if (position == 0) NinjaToast.show(context, item_01.getTitle());
+            else if (position == 1) NinjaToast.show(context, item_02.getTitle());
+            else if (position == 2) NinjaToast.show(context, item_03.getTitle());
+            else if (position == 3) NinjaToast.show(context, item_04.getTitle());
+            else if (position == 4) NinjaToast.show(context, item_05.getTitle());
+            else if (position == 5) NinjaToast.show(context, item_06.getTitle());
+            return true;
+        });
+
         menu_grid_tab.setOnItemClickListener((parent, view14, position, id) -> {
             dialog_overflow.cancel();
             if (position == 0)
@@ -1103,6 +1114,16 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         menu_grid_save.setAdapter(gridAdapter_save);
         gridAdapter_save.notifyDataSetChanged();
 
+        menu_grid_save.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
+            if (position == 0) NinjaToast.show(context, item_21.getTitle());
+            else if (position == 1) NinjaToast.show(context, item_22.getTitle());
+            else if (position == 2) NinjaToast.show(context, item_23.getTitle());
+            else if (position == 3) NinjaToast.show(context, item_24.getTitle());
+            else if (position == 4) NinjaToast.show(context, item_25.getTitle());
+            else if (position == 5) NinjaToast.show(context, item_26.getTitle());
+            return true;
+        });
+
         menu_grid_save.setOnItemClickListener((parent, view13, position, id) -> {
             dialog_overflow.cancel();
             RecordAction action = new RecordAction(context);
@@ -1133,6 +1154,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         menu_grid_share.setAdapter(gridAdapter_share);
         gridAdapter_share.notifyDataSetChanged();
 
+        menu_grid_share.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
+            if (position == 0) NinjaToast.show(context, item_11.getTitle());
+            else if (position == 1) NinjaToast.show(context, item_12.getTitle());
+            else if (position == 2) NinjaToast.show(context, item_13.getTitle());
+            else if (position == 3) NinjaToast.show(context, item_14.getTitle());
+            return true;
+        });
+
         menu_grid_share.setOnItemClickListener((parent, view12, position, id) -> {
             dialog_overflow.cancel();
             if (position == 0) shareLink(title, url);
@@ -1158,6 +1187,15 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         GridAdapter gridAdapter_other = new GridAdapter(context, gridList_other);
         menu_grid_other.setAdapter(gridAdapter_other);
         gridAdapter_other.notifyDataSetChanged();
+
+        menu_grid_other.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
+            if (position == 0) NinjaToast.show(context, item_31.getTitle());
+            else if (position == 1) NinjaToast.show(context, item_34.getTitle());
+            else if (position == 2) NinjaToast.show(context, item_32.getTitle());
+            else if (position == 3) NinjaToast.show(context, item_33.getTitle());
+            else if (position == 4) NinjaToast.show(context, item_36.getTitle());
+            return true;
+        });
 
         menu_grid_other.setOnItemClickListener((parent, view1, position, id) -> {
             dialog_overflow.cancel();
