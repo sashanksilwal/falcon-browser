@@ -67,6 +67,7 @@
     <string name="setting_label">الاعدادات</string>
     <!-- browser setting -->
     <string name="setting_title_browser">إعدادات المتصفح</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">محرك البحث</string>
     <string name="setting_summary_search_engine_google">غوغل</string>
     <string name="setting_summary_search_engine_duckduckgo">محرك DuckDuckGo</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">اسحب لأسفل لإعادة التحميل</string>
     <string name="setting_title_searchEngine">محرك بحث مخصص</string>
     <string name="setting_title_userAgent">وكيل مستخدم مخصص</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">حماية بصمة الإصبع</string>
     <string name="setting_theme">السمة</string>
     <string name="setting_theme_system">نظام</string>

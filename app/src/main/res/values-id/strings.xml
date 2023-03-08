@@ -67,6 +67,7 @@
     <string name="setting_label">Pengaturan</string>
     <!-- browser setting -->
     <string name="setting_title_browser">Pengaturan peramban</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">Mesin Pencari</string>
     <string name="setting_summary_search_engine_google">Google</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">Geser ke bawah untuk memuat ulang</string>
     <string name="setting_title_searchEngine">Mesin pencari kustom</string>
     <string name="setting_title_userAgent">Agen pengguna kustom</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">Perlindungan fingerprint</string>
     <string name="setting_theme">Tema</string>
     <string name="setting_theme_system">Sistem</string>

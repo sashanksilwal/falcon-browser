@@ -67,6 +67,7 @@
     <string name="setting_label">設定</string>
     <!-- browser setting -->
     <string name="setting_title_browser">ブラウザ設定</string>
+    <string name="setting_title_general">General</string>
     <string name="setting_title_search_engine">検索エンジン</string>
     <string name="setting_summary_search_engine_google">Google</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -132,6 +133,7 @@
     <string name="setting_title_reload">下にスワイプして再読み込み</string>
     <string name="setting_title_searchEngine">カスタム検索エンジン</string>
     <string name="setting_title_userAgent">カスタムユーザーエージェント</string>
+    <string name="setting_title_clipboard_record">Clipboard record</string>
     <string name="setting_title_fingerPrint">指紋の保護</string>
     <string name="setting_theme">テーマ</string>
     <string name="setting_theme_system">システム</string>
