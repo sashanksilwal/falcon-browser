@@ -67,9 +67,7 @@ public class CustomRedirectsDialog extends DialogFragment {
         // when the button to create a new entry is clicked, don't close the dialog
         dialog.setOnShowListener(dI -> {
             Button b = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
-            b.setOnClickListener(view -> {
-                showCreateNewDialog();
-            });
+            b.setOnClickListener(view -> showCreateNewDialog());
         });
         return dialog;
     }

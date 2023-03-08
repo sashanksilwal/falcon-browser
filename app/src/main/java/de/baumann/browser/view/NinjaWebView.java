@@ -59,7 +59,6 @@ import de.baumann.browser.database.FaviconHelper;
 import de.baumann.browser.database.Record;
 import de.baumann.browser.database.RecordAction;
 import de.baumann.browser.unit.BrowserUnit;
-import de.baumann.browser.unit.HelperUnit;
 
 public class NinjaWebView extends WebView implements AlbumController {
 
@@ -476,7 +475,6 @@ public class NinjaWebView extends WebView implements AlbumController {
     }
 
     private synchronized void initAlbum() {
-        album.setAlbumTitle(context.getString(R.string.app_name));
         album.setBrowserController(browserController);
     }
 
@@ -560,11 +558,6 @@ public class NinjaWebView extends WebView implements AlbumController {
         return album.getAlbumView();
     }
 
-    public void setAlbumTitle(String title, String url) {
-        album.setAlbumTitle(title);
-        FaviconHelper.setFavicon(context, getAlbumView(), url, R.id.faviconView, R.drawable.icon_image_broken);
-    }
-
     @Override
     public synchronized void activate() {
         requestFocus();
@@ -584,8 +577,8 @@ public class NinjaWebView extends WebView implements AlbumController {
         else if (foreground) browserController.updateProgress(BrowserUnit.LOADING_STOPPED);
     }
 
-    public synchronized void updateTitle(String title) {
-        album.setAlbumTitle(title);
+    public synchronized void updateTitle(String title, String url) {
+        album.setAlbumTitle(title, url);
     }
 
     public synchronized void updateFavicon(String url) {

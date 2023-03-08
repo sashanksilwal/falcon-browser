@@ -647,8 +647,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                         View v = super.getView(position, convertView, parent);
                         TextView record_item_time = v.findViewById(R.id.dateView);
                         record_item_time.setVisibility(View.VISIBLE);
-                        TextView record_item_title = v.findViewById(R.id.titleView);
-                        record_item_title.setPadding(0,0,150,0);
                         return v;
                     }
                 };

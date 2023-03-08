@@ -2,6 +2,7 @@
 
 - new: Clipboard record preference thanks to @Bnyro
 - new: show url on link menus or when clicking menu title
+- new: show urls in lists
 - fix: Password field for protected sites shows entries #1039
 - fix: youtube redirects
 - fix: onReceivedError

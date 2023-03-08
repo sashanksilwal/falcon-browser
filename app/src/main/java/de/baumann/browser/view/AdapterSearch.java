@@ -101,7 +101,6 @@ public class AdapterSearch extends BaseAdapter implements Filterable {
 
         CompleteItem item = resultList.get(position);
         holder.titleView.setText(item.title);
-        holder.titleView.setPadding(0,0,100,0);
         holder.urlView.setText(item.url);
         holder.iconView.setVisibility(View.VISIBLE);
 

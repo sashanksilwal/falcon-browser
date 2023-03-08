@@ -16,7 +16,6 @@ import java.util.Objects;
 
 import de.baumann.browser.R;
 import de.baumann.browser.fragment.Fragment_settings_General;
-import de.baumann.browser.fragment.Fragment_settings_Privacy;
 import de.baumann.browser.unit.BrowserUnit;
 import de.baumann.browser.unit.HelperUnit;
 

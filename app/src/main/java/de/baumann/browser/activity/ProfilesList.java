@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -107,7 +108,7 @@ public class ProfilesList extends AppCompatActivity {
             @Override
             public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
-                Button deleteEntry = v.findViewById(R.id.cancelButton);
+                ImageView deleteEntry = v.findViewById(R.id.iconView);
                 deleteEntry.setVisibility(View.VISIBLE);
                 MaterialCardView cardView = v.findViewById(R.id.cardView);
                 cardView.setVisibility(View.GONE);
