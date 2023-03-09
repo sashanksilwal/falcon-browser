@@ -2334,6 +2334,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) ninjaWebView.reload(); }
         View albumView = ninjaWebView.getAlbumView();
         tab_container.addView(albumView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        badgeDrawable.setNumber(BrowserContainer.size());
         ninjaWebView.reload();
     }
 

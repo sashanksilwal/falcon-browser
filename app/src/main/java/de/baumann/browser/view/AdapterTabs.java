@@ -6,6 +6,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -63,10 +64,11 @@ class AdapterTabs {
 
     public void activate() {
         TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.colorSecondaryContainer, typedValue, true);
+        context.getTheme().resolveAttribute(R.attr.colorPrimaryContainer, typedValue, true);
         int color = typedValue.data;
         albumCardView.setCardBackgroundColor(color);
-        albumTitle.setOnClickListener(view -> {
+        LinearLayout textGroup = albumView.findViewById(R.id.textGroup);
+        textGroup.setOnClickListener(view -> {
             albumCardView.setCardBackgroundColor(color);
             browserController.hideOverview();
         });
