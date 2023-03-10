@@ -41,7 +41,7 @@ public class NinjaWebChromeClient extends WebChromeClient {
         ninjaWebView.updateTitle(progress);
         ninjaWebView.updateFavicon(view.getUrl());
         if (Objects.requireNonNull(view.getTitle()).isEmpty()) ninjaWebView.updateTitle(view.getUrl(), view.getUrl());
-        else ninjaWebView.updateTitle(view.getTitle(), view.getUrl());
+        else ninjaWebView.updateTitle(view.getTitle(),view.getUrl());
     }
 
     @Override

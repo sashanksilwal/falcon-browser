@@ -23,6 +23,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -111,7 +113,20 @@ public class NinjaWebView extends WebView implements AlbumController {
         this.listStandard = new List_standard(this.context);
         this.listProtected = new List_protected(this.context);
         this.album = new AdapterTabs(this.context, this, browserController);
-        this.webViewClient = new NinjaWebViewClient(this);
+        this.webViewClient = new NinjaWebViewClient(this) {
+            @Override
+            public void onReceivedError(WebView webview, WebResourceRequest request, WebResourceError error) {
+                Context context = webview.getContext();
+                String description = error.getDescription().toString();
+                String failingUrl = request.getUrl().toString();
+                String urlToLoad = sp.getString("urlToLoad", "");
+                String htmlData = getErrorHTML(context, description, urlToLoad);
+                if (failingUrl.contains(urlToLoad)) {
+                    webview.loadDataWithBaseURL(urlToLoad, htmlData, "text/html", "UTF-8",urlToLoad);
+                    webview.invalidate();
+                }
+            }
+        };
         this.webChromeClient = new NinjaWebChromeClient(this);
         this.downloadListener = new NinjaDownloadListener(this.context);
 
@@ -541,6 +556,11 @@ public class NinjaWebView extends WebView implements AlbumController {
     @Override
     public View getAlbumView() {
         return album.getAlbumView();
+    }
+
+    public void setAlbumTitle(String title, String url) {
+        album.setAlbumTitle(title, url);
+        FaviconHelper.setFavicon(context, getAlbumView(), url, R.id.faviconView, R.drawable.icon_image_broken);
     }
 
     @Override
