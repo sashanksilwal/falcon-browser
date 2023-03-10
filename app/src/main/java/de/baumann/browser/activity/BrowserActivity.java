@@ -143,6 +143,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private FloatingActionButton omniBox_tab;
     private KeyListener listener;
     private BadgeDrawable badgeDrawable;
+    private BadgeDrawable badgeTab;
 
     // Layouts
     private CircularProgressIndicator progressBar;
@@ -740,6 +741,16 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             showDialogFilter();
             return true;
         });
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
+        int colorSecondary = typedValue.data;
+
+        badgeTab = bottom_navigation.getOrCreateBadge(R.id.page_0);
+        badgeTab.setBackgroundColor(colorSecondary);
+        badgeTab.setHorizontalOffset(10);
+        badgeTab.setVerticalOffset(10);
         setSelectedTab();
     }
 
@@ -839,6 +850,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private void updateOmniBox() {
 
         badgeDrawable.setNumber(BrowserContainer.size());
+        badgeTab.setNumber(BrowserContainer.size());
         BadgeUtils.attachBadgeDrawable(badgeDrawable, omniBox_tab, findViewById(R.id.layout));
         omniBox_text.clearFocus();
         ninjaWebView = (NinjaWebView) currentAlbumController;
@@ -2335,6 +2347,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         View albumView = ninjaWebView.getAlbumView();
         tab_container.addView(albumView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         badgeDrawable.setNumber(BrowserContainer.size());
+        badgeTab.setNumber(BrowserContainer.size());
         ninjaWebView.reload();
     }
 
