@@ -15,7 +15,7 @@
     <string name="album_title_home">בית</string>
     <string name="album_title_tab">כרטיסיות נפתחות</string>
     <string name="search_hint">לחפש</string>
-    <string name="create_new">New</string>
+    <string name="create_new">חדש</string>
     <string name="color_red">אדום</string>
     <string name="color_pink">ורוד</string>
     <string name="color_purple">סגול</string>
@@ -67,7 +67,7 @@
     <string name="setting_label">הגדרות</string>
     <!-- browser setting -->
     <string name="setting_title_browser">הגדרות דפדפן</string>
-    <string name="setting_title_general">General</string>
+    <string name="setting_title_general">הגדרות כלליות</string>
     <string name="setting_title_search_engine">מנוע חיפוש</string>
     <string name="setting_summary_search_engine_google">גוגל</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -84,9 +84,9 @@
     <string name="privacy_redirect">הפניה מחדש</string>
     <string name="privacy_redirect_twitter">טוויטר</string>
     <string name="privacy_redirect_youTube">יוטיוב</string>
-    <string name="custom_redirects">Custom redirects</string>
-    <string name="source">Source</string>
-    <string name="target">Target</string>
+    <string name="custom_redirects">הפניות מותאמות</string>
+    <string name="source">מקור</string>
+    <string name="target">מטרה</string>
     <string name="setting_title_save_data">בקש \'שמור נתונים\'</string>
     <string name="setting_title_profiles">פרופילים</string>
     <string name="setting_title_profiles_edit">ערוך פרופילים</string>
