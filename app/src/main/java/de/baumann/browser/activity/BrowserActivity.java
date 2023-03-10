@@ -1271,6 +1271,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
+        HelperUnit.setupDialog(context, dialog);
         Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
 
         GridItem item_01 = new GridItem( getString(R.string.main_menu_new_tabOpen), 0);
@@ -1368,6 +1369,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
+        HelperUnit.setupDialog(context, dialog);
         Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
 
         GridItem item_01 = new GridItem( getString(R.string.main_menu_new_tabOpen), 0);
@@ -1478,6 +1480,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                         builderFilter.setView(dialogViewFilter);
                         AlertDialog dialogFilter = builderFilter.create();
                         dialogFilter.show();
+                        HelperUnit.setupDialog(context, dialogFilter);
                         TextView menuTitleFilter = dialogViewFilter.findViewById(R.id.menuTitle);
                         menuTitleFilter.setText(R.string.menu_filter);
                         CardView cardView = dialogViewFilter.findViewById(R.id.cardView);
@@ -1579,6 +1582,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             AlertDialog dialog = builder.create();
             dialog.show();
+            HelperUnit.setupDialog(context, dialog);
             Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
 
             //ProfileControl
@@ -1926,6 +1930,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
+        HelperUnit.setupDialog(context, dialog);
 
         TextView menuTitleFilter = dialogView.findViewById(R.id.menuTitle);
         menuTitleFilter.setText(R.string.menu_filter);
@@ -2371,6 +2376,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             TextView dialog_title = dialogView.findViewById(R.id.menuTitle);
             dialog_title.setText(url);
             dialog.show();
+            HelperUnit.setupDialog(context, dialog);
 
             Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
             GridView menu_grid = dialogView.findViewById(R.id.menu_grid);

@@ -1,5 +1,7 @@
 package de.baumann.browser.preferences;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -17,6 +19,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import de.baumann.browser.R;
+import de.baumann.browser.unit.HelperUnit;
 
 public class BasePreferenceFragment extends PreferenceFragmentCompat {
     @Override
@@ -65,6 +68,10 @@ public class BasePreferenceFragment extends PreferenceFragmentCompat {
             dialog.dismiss();
         });
         builder.setView(dialogView);
-        builder.show();
+        Dialog dialog = builder.create();
+        dialog.show();
+        Context context = this.getContext();
+        assert context != null;
+        HelperUnit.setupDialog(context, dialog);
     }
 }

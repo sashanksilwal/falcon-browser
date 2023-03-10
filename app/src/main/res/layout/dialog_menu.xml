@@ -8,8 +8,7 @@
     android:paddingBottom="10dp"
     android:layoutDirection="locale"
     android:orientation="vertical"
-    tools:ignore="ContentDescription"
-    android:background="?attr/colorSurface">
+    tools:ignore="ContentDescription">
 
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.Material3.CardView.Filled"

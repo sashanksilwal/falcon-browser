@@ -63,6 +63,7 @@ public class NinjaDownloadListener implements DownloadListener {
         cardView.setVisibility(View.GONE);
         AlertDialog dialog = builder.create();
         dialog.show();
+        HelperUnit.setupDialog(context, dialog);
 
         Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
         GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
@@ -127,6 +128,5 @@ public class NinjaDownloadListener implements DownloadListener {
                     break;
             }
         });
-        HelperUnit.setupDialog(context, dialog);
     }
 }
