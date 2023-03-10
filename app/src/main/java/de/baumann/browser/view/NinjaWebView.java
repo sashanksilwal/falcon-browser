@@ -113,20 +113,7 @@ public class NinjaWebView extends WebView implements AlbumController {
         this.listStandard = new List_standard(this.context);
         this.listProtected = new List_protected(this.context);
         this.album = new AdapterTabs(this.context, this, browserController);
-        this.webViewClient = new NinjaWebViewClient(this) {
-            @Override
-            public void onReceivedError(WebView webview, WebResourceRequest request, WebResourceError error) {
-                Context context = webview.getContext();
-                String description = error.getDescription().toString();
-                String failingUrl = request.getUrl().toString();
-                String urlToLoad = sp.getString("urlToLoad", "");
-                String htmlData = getErrorHTML(context, description, urlToLoad);
-                if (urlToLoad.equals(failingUrl)) {
-                    webview.loadDataWithBaseURL(urlToLoad, htmlData, "","",urlToLoad);
-                    webview.invalidate();
-                }
-            }
-        };
+        this.webViewClient = new NinjaWebViewClient(this);
         this.webChromeClient = new NinjaWebChromeClient(this);
         this.downloadListener = new NinjaDownloadListener(this.context);
 
@@ -135,7 +122,7 @@ public class NinjaWebView extends WebView implements AlbumController {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private String getErrorHTML(Context context, String description, String failingUrl) {
+    public static String getErrorHTML(Context context, String description, String failingUrl) {
         int primary = MaterialColors.getColor(context, R.attr.colorPrimary, Color.GREEN);
         int background = MaterialColors.getColor(context, android.R.attr.colorBackground, Color.BLACK);
         String primaryHex = String.format("#%06X", (0xFFFFFF & primary));

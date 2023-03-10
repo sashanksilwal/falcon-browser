@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
@@ -76,6 +77,19 @@ public class NinjaWebViewClient extends WebViewClient {
             if (action.checkUrl(ninjaWebView.getUrl(), RecordUnit.TABLE_HISTORY)) action.deleteURL(ninjaWebView.getUrl(), RecordUnit.TABLE_HISTORY);
             action.addHistory(new Record(ninjaWebView.getTitle(), ninjaWebView.getUrl(), System.currentTimeMillis(), 0, 0, ninjaWebView.isDesktopMode(), false, 0));
             action.close();
+        }
+    }
+
+    @Override
+    public void onReceivedError(WebView webview, WebResourceRequest request, WebResourceError error) {
+        Context context = webview.getContext();
+        String description = error.getDescription().toString();
+        String failingUrl = request.getUrl().toString();
+        String urlToLoad = sp.getString("urlToLoad", "");
+        String htmlData = NinjaWebView.getErrorHTML(context, description, urlToLoad);
+        if (urlToLoad.equals(failingUrl)) {
+            webview.loadDataWithBaseURL(null, htmlData, "","",failingUrl);
+            webview.invalidate();
         }
     }
 
