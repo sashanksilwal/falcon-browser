@@ -10,6 +10,7 @@
 - fix: youtube redirects
 - fix: onReceivedError
 - fix: Settings refactor thanks to @Bnyro
+- fix: OLED theme issues #1052
 
 
 ### v 9.6

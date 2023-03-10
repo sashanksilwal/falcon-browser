@@ -1234,6 +1234,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         menu_grid_other.setOnTouchListener(new SwipeTouchListener(context) {
             public void onSwipeRight() { Objects.requireNonNull(tabLayout.getTabAt(2)).select();}
             public void onSwipeLeft() { Objects.requireNonNull(tabLayout.getTabAt(0)).select();}});
+
+        HelperUnit.setupDialog(context, dialog_overflow);
     }
 
     // Menus

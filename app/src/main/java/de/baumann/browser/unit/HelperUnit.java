@@ -417,6 +417,10 @@ public class HelperUnit {
         ImageView imageView = dialog.findViewById(android.R.id.icon);
         if (imageView != null) imageView.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+        if (sp.getString("sp_theme", "1").equals("5")) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_border);
+        }
     }
 
     public static void triggerRebirth(Context context) {

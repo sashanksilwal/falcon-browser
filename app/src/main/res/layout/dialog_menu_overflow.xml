@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:ignore="ContentDescription"
-    android:background="?attr/colorSurface">
+    tools:ignore="ContentDescription">
 
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.Material3.CardView.Filled"
@@ -67,6 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="?attr/colorSurface"
         app:tabMode="fixed">
 
         <com.google.android.material.tabs.TabItem
@@ -91,6 +91,10 @@
             android:icon="@drawable/icon_dots" />
 
     </com.google.android.material.tabs.TabLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"
