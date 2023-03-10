@@ -15,7 +15,7 @@
     <string name="album_title_home">Hem</string>
     <string name="album_title_tab">Öppnade flikar</string>
     <string name="search_hint">Sök</string>
-    <string name="create_new">New</string>
+    <string name="create_new">Nya</string>
     <string name="color_red">Röd</string>
     <string name="color_pink">Rosa</string>
     <string name="color_purple">Lila</string>
@@ -50,7 +50,7 @@
     <string name="menu_save_pdf">Spara som PDF</string>
     <string name="menu_shareClipboard">Kopiera till urklipp</string>
     <string name="menu_other_searchSite">Sök på sida</string>
-    <string name="link_you_copied">Link you copied</string>
+    <string name="link_you_copied">Länk kopierad</string>
     <!-- Dialog -->
     <string name="dialog_title_hint">Titel:</string>
     <string name="dialog_URL_hint">URL:</string>
@@ -67,7 +67,7 @@
     <string name="setting_label">Inställningar</string>
     <!-- browser setting -->
     <string name="setting_title_browser">Webbläsarinställningar</string>
-    <string name="setting_title_general">General</string>
+    <string name="setting_title_general">Allmänt</string>
     <string name="setting_title_search_engine">Sökmotor</string>
     <string name="setting_summary_search_engine_google">Google</string>
     <string name="setting_summary_search_engine_duckduckgo">DuckDuckGo</string>
@@ -84,9 +84,9 @@
     <string name="privacy_redirect">Omdirigera</string>
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
-    <string name="custom_redirects">Custom redirects</string>
-    <string name="source">Source</string>
-    <string name="target">Target</string>
+    <string name="custom_redirects">Anpassade omdirigeringar</string>
+    <string name="source">Källkod</string>
+    <string name="target">Pricktavla</string>
     <string name="setting_title_save_data">Begär \'Spardata\'</string>
     <string name="setting_title_profiles">Profiler</string>
     <string name="setting_title_profiles_edit">Redigera profiler</string>
@@ -133,7 +133,7 @@
     <string name="setting_title_reload">Dra ner för att ladda om</string>
     <string name="setting_title_searchEngine">Anpassad sökmotor</string>
     <string name="setting_title_userAgent">Anpassad användaragent</string>
-    <string name="setting_title_clipboard_record">Clipboard record</string>
+    <string name="setting_title_clipboard_record">Urklipp post</string>
     <string name="setting_title_fingerPrint">Fingeravtrycksskydd</string>
     <string name="setting_theme">Tema</string>
     <string name="setting_theme_system">System</string>

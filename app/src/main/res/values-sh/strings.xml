@@ -85,7 +85,7 @@
     <string name="privacy_redirect_twitter">Twitter</string>
     <string name="privacy_redirect_youTube">YouTube</string>
     <string name="custom_redirects">Custom redirects</string>
-    <string name="source">Source</string>
+    <string name="source">Izvor</string>
     <string name="target">Target</string>
     <string name="setting_title_save_data">Zahtjevnite \'Spašavanje Podataka\'</string>
     <string name="setting_title_profiles">Profili</string>
