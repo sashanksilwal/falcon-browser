@@ -62,7 +62,7 @@ public class AdapterRecord extends ArrayAdapter<Record> {
 
         Record record = list.get(position);
         long filter = record.getIconColor();
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
         String text;
 
         if (record.getTime() > 1) {
