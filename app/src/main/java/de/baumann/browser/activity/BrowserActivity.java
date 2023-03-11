@@ -43,7 +43,6 @@ import android.text.method.KeyListener;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.OrientationEventListener;
 import android.view.View;
@@ -1020,16 +1019,16 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         builder.setView(dialogView);
         AlertDialog dialog_overflow = builder.create();
         dialog_overflow.show();
-        Objects.requireNonNull(dialog_overflow.getWindow()).setGravity(Gravity.BOTTOM);
+        HelperUnit.setupDialog(context, dialog_overflow);
         FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
 
         TextView overflow_title = dialogView.findViewById(R.id.overflow_title);
-        assert title != null;
-        if (title.isEmpty()) overflow_title.setText(url);
-        else overflow_title.setText(title);
-
+        overflow_title.setText(url);
+        overflow_title.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        overflow_title.setSingleLine(true);
+        overflow_title.setMarqueeRepeatLimit(1);
+        overflow_title.setSelected(true);
         overflow_title.setOnClickListener(v -> {
-            overflow_title.setText(ninjaWebView.getUrl());
             overflow_title.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             overflow_title.setSingleLine(true);
             overflow_title.setMarqueeRepeatLimit(1);
@@ -1040,21 +1039,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         final GridView menu_grid_share = dialogView.findViewById(R.id.overflow_share);
         final GridView menu_grid_save = dialogView.findViewById(R.id.overflow_save);
         final GridView menu_grid_other = dialogView.findViewById(R.id.overflow_other);
-
-        int orientation = this.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // code for portrait mode
-            menu_grid_tab.setNumColumns(1);
-            menu_grid_share.setNumColumns(1);
-            menu_grid_save.setNumColumns(1);
-            menu_grid_other.setNumColumns(1);
-        } else {
-            // code for landscape mode
-            menu_grid_tab.setNumColumns(3);
-            menu_grid_share.setNumColumns(3);
-            menu_grid_save.setNumColumns(3);
-            menu_grid_other.setNumColumns(3);
-        }
 
         menu_grid_tab.setVisibility(View.VISIBLE);
         menu_grid_share.setVisibility(View.GONE);
@@ -1280,7 +1264,17 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
 
         TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
-        menuTitle.setText(title);
+        menuTitle.setText(url);
+        menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuTitle.setSingleLine(true);
+        menuTitle.setMarqueeRepeatLimit(1);
+        menuTitle.setSelected(true);
+        menuTitle.setOnClickListener(v -> {
+            menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuTitle.setSingleLine(true);
+            menuTitle.setMarqueeRepeatLimit(1);
+            menuTitle.setSelected(true);
+        });
         ImageView menu_icon = dialogView.findViewById(R.id.menu_icon);
 
         if (type == SRC_ANCHOR_TYPE) {
@@ -1294,7 +1288,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
-        Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+        HelperUnit.setupDialog(context, dialog);
 
         GridItem item_01 = new GridItem( getString(R.string.main_menu_new_tabOpen), 0);
         GridItem item_02 = new GridItem( getString(R.string.main_menu_new_tab), 0);
@@ -1320,10 +1314,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         }
 
         GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
-        int orientation = this.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) menu_grid.setNumColumns(1);
-        else menu_grid.setNumColumns(3);
-
         GridAdapter gridAdapter = new GridAdapter(context, gridList);
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
@@ -1367,13 +1357,23 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
 
         TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
-        menuTitle.setText(title);
-        FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
+        menuTitle.setText(url);
+        menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuTitle.setSingleLine(true);
+        menuTitle.setMarqueeRepeatLimit(1);
+        menuTitle.setSelected(true);
+        menuTitle.setOnClickListener(v -> {
+            menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuTitle.setSingleLine(true);
+            menuTitle.setMarqueeRepeatLimit(1);
+            menuTitle.setSelected(true);
+        });
 
+        FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
-        Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+        HelperUnit.setupDialog(context, dialog);
 
         GridItem item_01 = new GridItem( getString(R.string.main_menu_new_tabOpen), 0);
         GridItem item_02 = new GridItem( getString(R.string.main_menu_new_tab), 0);
@@ -1399,10 +1399,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             gridList.add(gridList.size(), item_05); }
 
         GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
-        int orientation = this.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) menu_grid.setNumColumns(1);
-        else menu_grid.setNumColumns(3);
-
         GridAdapter gridAdapter = new GridAdapter(context, gridList);
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
@@ -1476,12 +1472,12 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                         builderFilter.setView(dialogViewFilter);
                         AlertDialog dialogFilter = builderFilter.create();
                         dialogFilter.show();
+                        HelperUnit.setupDialog(context, dialogFilter);
                         TextView menuTitleFilter = dialogViewFilter.findViewById(R.id.menuTitle);
                         menuTitleFilter.setText(R.string.menu_filter);
                         CardView cardView = dialogViewFilter.findViewById(R.id.cardView);
                         cardView.setVisibility(View.GONE);
 
-                        Objects.requireNonNull(dialogFilter.getWindow()).setGravity(Gravity.BOTTOM);
                         GridView menuEditFilter = dialogViewFilter.findViewById(R.id.menu_grid);
                         final List<GridItem> menuEditFilterList = new LinkedList<>();
                         HelperUnit.addFilterItems(activity, menuEditFilterList);
@@ -1577,7 +1573,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             AlertDialog dialog = builder.create();
             dialog.show();
-            Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+            HelperUnit.setupDialog(context, dialog);
 
             //ProfileControl
 
@@ -1924,6 +1920,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
+        HelperUnit.setupDialog(context, dialog);
 
         TextView menuTitleFilter = dialogView.findViewById(R.id.menuTitle);
         menuTitleFilter.setText(R.string.menu_filter);
@@ -1938,7 +1935,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             BrowserUnit.intentURL(this, webpage);
         });
 
-        Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
         GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
         final List<GridItem> gridList = new LinkedList<>();
         HelperUnit.addFilterItems(activity, gridList);
@@ -2367,13 +2363,20 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_link);
             TextView dialog_title = dialogView.findViewById(R.id.menuTitle);
             dialog_title.setText(url);
+            dialog_title.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            dialog_title.setSingleLine(true);
+            dialog_title.setMarqueeRepeatLimit(1);
+            dialog_title.setSelected(true);
+            dialog_title.setOnClickListener(v -> {
+                dialog_title.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                dialog_title.setSingleLine(true);
+                dialog_title.setMarqueeRepeatLimit(1);
+                dialog_title.setSelected(true);
+            });
             dialog.show();
+            HelperUnit.setupDialog(context, dialog);
 
-            Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
             GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
-            int orientation = this.getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) menu_grid.setNumColumns(1);
-            else menu_grid.setNumColumns(2);
             final List<GridItem> gridList = new LinkedList<>();
             gridList.add(gridList.size(), item_01);
             gridList.add(gridList.size(), item_02);
