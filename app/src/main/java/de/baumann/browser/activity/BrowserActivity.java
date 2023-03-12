@@ -1566,7 +1566,16 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             TextView dialog_warning = dialogView.findViewById(R.id.dialog_titleDomain);
             dialog_warning.setText(HelperUnit.domain(url));
-            FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
+            dialog_warning.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            dialog_warning.setSingleLine(true);
+            dialog_warning.setMarqueeRepeatLimit(1);
+            dialog_warning.setSelected(true);
+            dialog_warning.setOnClickListener(v -> {
+                dialog_warning.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                dialog_warning.setSingleLine(true);
+                dialog_warning.setMarqueeRepeatLimit(1);
+                dialog_warning.setSelected(true);
+            });
 
             TextView dialog_titleProfile = dialogView.findViewById(R.id.dialog_titleProfile);
             ninjaWebView.putProfileBoolean("", dialog_titleProfile, chip_profile_trusted, chip_profile_standard, chip_profile_protected, chip_profile_changed);
@@ -1902,7 +1911,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             });
 
             Button button_help = dialogView.findViewById(R.id.button_help);
-            button_help.setVisibility(View.VISIBLE);
             button_help.setOnClickListener(view -> {
                 dialog.cancel();
                 Uri webpage = Uri.parse("https://github.com/scoute-dich/browser/wiki/Fast-Toggle-Dialog");

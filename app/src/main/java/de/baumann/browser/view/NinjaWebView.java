@@ -416,28 +416,28 @@ public class NinjaWebView extends WebView implements AlbumController {
                 chip_profile_standard.setChecked(false);
                 chip_profile_protected.setChecked(false);
                 chip_profile_changed.setChecked(false);
-                textTitle = this.context.getString(R.string.setting_title_profiles_active) + ": " + this.context.getString(R.string.setting_title_profiles_trusted);
+                textTitle = this.context.getString(R.string.setting_title_profiles_trusted);
                 break;
             case "profileStandard":
                 chip_profile_trusted.setChecked(false);
                 chip_profile_standard.setChecked(true);
                 chip_profile_protected.setChecked(false);
                 chip_profile_changed.setChecked(false);
-                textTitle = this.context.getString(R.string.setting_title_profiles_active) + ": " + this.context.getString(R.string.setting_title_profiles_standard);
+                textTitle = this.context.getString(R.string.setting_title_profiles_standard);
                 break;
             case "profileProtected":
                 chip_profile_trusted.setChecked(false);
                 chip_profile_standard.setChecked(false);
                 chip_profile_protected.setChecked(true);
                 chip_profile_changed.setChecked(false);
-                textTitle = this.context.getString(R.string.setting_title_profiles_active) + ": " + this.context.getString(R.string.setting_title_profiles_protected);
+                textTitle = this.context.getString(R.string.setting_title_profiles_protected);
                 break;
             default:
                 chip_profile_trusted.setChecked(false);
                 chip_profile_standard.setChecked(false);
                 chip_profile_protected.setChecked(false);
                 chip_profile_changed.setChecked(true);
-                textTitle = this.context.getString(R.string.setting_title_profiles_active) + ": " + this.context.getString(R.string.setting_title_profiles_changed);
+                textTitle = this.context.getString(R.string.setting_title_profiles_changed);
                 break;
         }
         dialog_titleProfile.setText(textTitle);
