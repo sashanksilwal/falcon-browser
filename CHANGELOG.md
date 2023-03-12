@@ -1,4 +1,4 @@
-### v 9.10 (WIP)
+### v 9.10
 
 - new: Clipboard record preference thanks to @Bnyro
 - new: show url on link menus or when clicking menu title

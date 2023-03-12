@@ -11,104 +11,98 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Filled"
+            android:id="@+id/albumCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp" >
 
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.Material3.CardView.Filled"
-                android:id="@+id/albumCardView"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/listPreferredItemHeightSmall"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:layout_marginBottom="10dp" >
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
 
-                <RelativeLayout
+                <TextView
+                    android:id="@+id/dialog_titleDomain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/albumProfile"
+                    android:layout_centerInParent="true"
+                    android:textStyle="bold"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"/>
+
+                <LinearLayout
+                    android:id="@+id/albumProfile"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/dialog_titleDomain"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_toStartOf="@id/albumProfile"
-                        android:ellipsize="end"
-                        android:includeFontPadding="false"
-                        android:maxLines="1"
-                        android:gravity="center_vertical"
-                        android:textStyle="bold"
-                        android:textAppearance="?attr/textAppearanceBodyLarge"/>
-
-                    <LinearLayout
-                        android:id="@+id/albumProfile"
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_setProfileTrusted"
+                        style="@style/Widget.Material3.Chip.Suggestion"
                         android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_profile_trusted"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_alignParentEnd="true"
-                        android:orientation="horizontal">
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_setProfileTrusted"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_profile_trusted"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_setProfileStandard"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_profile_standard"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_setProfileStandard"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_profile_standard"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_setProfileProtected"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_profile_protected"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_setProfileProtected"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_profile_protected"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
+                </LinearLayout>
 
-                    </LinearLayout>
+            </RelativeLayout>
 
-                </RelativeLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.Material3.CardView.Filled"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/listPreferredItemHeightSmall"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:layout_marginBottom="10dp" >
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="5dp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -147,228 +141,279 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="5dp"
                         android:layout_toStartOf="@id/ib_reload"
-                        android:ellipsize="end"
-                        android:gravity="center_vertical"
-                        android:includeFontPadding="false"
-                        android:maxLines="1"
+                        android:layout_centerInParent="true"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/editProfile"
-                style="@style/Widget.Material3.CardView.Filled"
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_profile_changed"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_profile_changed"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_profile_trusted"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_profile_trusted"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_profile_standard"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_profile_standard"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_profile_protected"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_profile_protected"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/editProfile"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:orientation="vertical"
+                android:layout_margin="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="5dp"
+                    android:gravity="center">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_image"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_image"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center">
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_image"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_image"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_adBlock"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_adblock"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_saveData"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_savedata"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_location"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_location"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_adBlock"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_adblock"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_camera"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_camera"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_microphone"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_microphone"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_history"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_history"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_Fingerprint"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_fingerprint"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_saveData"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_savedata"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center">
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_cookie"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_cookie"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_javaScript"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_java"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_javaScriptPopUp"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_popup"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_dom"
-                            style="@style/Widget.Material3.Chip.Suggestion"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            app:chipIcon="@drawable/icon_dom"
-                            app:chipIconEnabled="true"
-                            app:textEndPadding="0dp"
-                            app:textStartPadding="0dp"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                            app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                    </LinearLayout>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_location"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_location"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
 
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_camera"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_camera"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_microphone"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_microphone"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_history"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_history"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_Fingerprint"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        app:chipIcon="@drawable/icon_fingerprint"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_cookie"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_cookie"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_javaScript"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_java"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_javaScriptPopUp"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_popup"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_dom"
+                        style="@style/Widget.Material3.Chip.Suggestion"
+                        android:layout_width="wrap_content"
+                        app:chipIcon="@drawable/icon_dom"
+                        app:chipIconEnabled="true"
+                        app:textEndPadding="0dp"
+                        app:textStartPadding="0dp"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                        app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_margin="5dp">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_profile_changed"
+                    android:id="@+id/chip_toggleNightView"
                     style="@style/Widget.Material3.Chip.Suggestion"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
-                    app:chipIcon="@drawable/icon_profile_changed"
+                    app:chipIcon="@drawable/icon_night"
                     app:chipIconEnabled="true"
                     app:textEndPadding="0dp"
                     app:textStartPadding="0dp"
@@ -377,11 +422,11 @@
                     app:chipIconTint="@drawable/bg_chip_icon_state" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_profile_trusted"
+                    android:id="@+id/chip_toggleDesktop"
                     style="@style/Widget.Material3.Chip.Suggestion"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
-                    app:chipIcon="@drawable/icon_profile_trusted"
+                    app:chipIcon="@drawable/icon_desktop"
                     app:chipIconEnabled="true"
                     app:textEndPadding="0dp"
                     app:textStartPadding="0dp"
@@ -390,11 +435,11 @@
                     app:chipIconTint="@drawable/bg_chip_icon_state" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_profile_standard"
+                    android:id="@+id/chip_toggleScreenOn"
                     style="@style/Widget.Material3.Chip.Suggestion"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
-                    app:chipIcon="@drawable/icon_profile_standard"
+                    app:chipIcon="@drawable/icon_screen"
                     app:chipIconEnabled="true"
                     app:textEndPadding="0dp"
                     app:textStartPadding="0dp"
@@ -403,11 +448,24 @@
                     app:chipIconTint="@drawable/bg_chip_icon_state" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_profile_protected"
+                    android:id="@+id/chip_toggleAudioBackground"
                     style="@style/Widget.Material3.Chip.Suggestion"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
-                    app:chipIcon="@drawable/icon_profile_protected"
+                    app:chipIcon="@drawable/icon_audio"
+                    app:chipIconEnabled="true"
+                    app:textEndPadding="0dp"
+                    app:textStartPadding="0dp"
+                    android:layout_height="wrap_content"
+                    app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                    app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_toggleRedirect"
+                    style="@style/Widget.Material3.Chip.Suggestion"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    app:chipIcon="@drawable/icon_redirect"
                     app:chipIconEnabled="true"
                     app:textEndPadding="0dp"
                     app:textStartPadding="0dp"
@@ -417,85 +475,7 @@
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_toggleNightView"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                app:chipIcon="@drawable/icon_night"
-                app:chipIconEnabled="true"
-                app:textEndPadding="0dp"
-                app:textStartPadding="0dp"
-                android:layout_height="wrap_content"
-                app:chipBackgroundColor="@drawable/bg_chip_state_list_light"
-                app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_toggleDesktop"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                app:chipIcon="@drawable/icon_desktop"
-                app:chipIconEnabled="true"
-                app:textEndPadding="0dp"
-                app:textStartPadding="0dp"
-                android:layout_height="wrap_content"
-                app:chipBackgroundColor="@drawable/bg_chip_state_list_light"
-                app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_toggleScreenOn"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                app:chipIcon="@drawable/icon_screen"
-                app:chipIconEnabled="true"
-                app:textEndPadding="0dp"
-                app:textStartPadding="0dp"
-                android:layout_height="wrap_content"
-                app:chipBackgroundColor="@drawable/bg_chip_state_list_light"
-                app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_toggleAudioBackground"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                app:chipIcon="@drawable/icon_audio"
-                app:chipIconEnabled="true"
-                app:textEndPadding="0dp"
-                app:textStartPadding="0dp"
-                android:layout_height="wrap_content"
-                app:chipBackgroundColor="@drawable/bg_chip_state_list_light"
-                app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_toggleRedirect"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                app:chipIcon="@drawable/icon_redirect"
-                app:chipIconEnabled="true"
-                app:textEndPadding="0dp"
-                app:textStartPadding="0dp"
-                android:layout_height="wrap_content"
-                app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
