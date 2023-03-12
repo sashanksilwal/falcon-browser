@@ -66,7 +66,7 @@ public class AdapterRecord extends ArrayAdapter<Record> {
         String text;
 
         if (record.getTime() > 1) {
-            text = sdf.format(record.getTime()) + " | " + record.getURL();
+            text = sdf.format(record.getTime()) + ": " + record.getURL();
         } else {
             text = record.getURL();
         }
