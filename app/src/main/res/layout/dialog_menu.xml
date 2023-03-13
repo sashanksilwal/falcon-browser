@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:backgroundTint="?attr/colorSecondaryContainer"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
