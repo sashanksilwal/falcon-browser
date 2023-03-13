@@ -1,4 +1,9 @@
-### v 9.10
+### v 9.11 (WIP)
+
+- new: context menu in tab overview
+
+
+### v 9.10 "Durruti"
 
 - new: Clipboard record preference thanks to @Bnyro
 - new: show url on link menus or when clicking menu title

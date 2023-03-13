@@ -2060,7 +2060,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         NinjaToast.show(this, text);
     }
 
-    private void shareLink(String title, String url) {
+    public void shareLink(String title, String url) {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, title);
