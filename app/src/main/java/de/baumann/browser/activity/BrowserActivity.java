@@ -2348,9 +2348,66 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         else {
             ninjaWebView.activate();
             showAlbum(ninjaWebView);
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) ninjaWebView.reload(); }
+            ninjaWebView.reload(); }
+
         View albumView = ninjaWebView.getAlbumView();
         tab_container.addView(albumView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        albumView.setOnLongClickListener(v -> {
+
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+            View dialogView = View.inflate(context, R.layout.dialog_menu, null);
+
+            TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
+            menuTitle.setText(url);
+            menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuTitle.setSingleLine(true);
+            menuTitle.setMarqueeRepeatLimit(1);
+            menuTitle.setSelected(true);
+            menuTitle.setOnClickListener(v2 -> {
+                menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                menuTitle.setSingleLine(true);
+                menuTitle.setMarqueeRepeatLimit(1);
+                menuTitle.setSelected(true);
+            });
+
+            FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
+            builder.setView(dialogView);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            HelperUnit.setupDialog(context, dialog);
+
+            GridItem item_01 = new GridItem( context.getString(R.string.menu_share_link), 0);
+            GridItem item_02 = new GridItem( context.getString(R.string.menu_closeTab), 0);
+
+            final List<GridItem> gridList = new LinkedList<>();
+            gridList.add(gridList.size(), item_01);
+            gridList.add(gridList.size(), item_02);
+
+            GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
+            GridAdapter gridAdapter = new GridAdapter(context, gridList);
+            menu_grid.setAdapter(gridAdapter);
+            gridAdapter.notifyDataSetChanged();
+            menu_grid.setOnItemClickListener((parent, view, position, id) -> {
+                dialog.cancel();
+                switch (position) {
+                    case 0:
+                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        sharingIntent.putExtra(Intent.EXTRA_TEXT, url);
+                        context.startActivity(Intent.createChooser(sharingIntent, (context.getString(R.string.menu_share_link))));
+                        break;
+                    case 1:
+
+                        removeAlbum(currentAlbumController);
+                        if (BrowserContainer.size() < 2) { hideOverview();}
+                        break;
+                }
+            });
+            return false;
+        });
+
+
         updateOmniBox();
     }
 
