@@ -2355,11 +2355,17 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         albumView.setOnLongClickListener(v -> {
 
+
+            TextView textViewTitle = albumView.findViewById(R.id.titleView);
+            TextView textViewUrl = albumView.findViewById(R.id.dateView);
+            String titleDialog = textViewTitle.getText().toString();
+            String urlDialog = textViewUrl.getText().toString();
+
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
             View dialogView = View.inflate(context, R.layout.dialog_menu, null);
 
             TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
-            menuTitle.setText(url);
+            menuTitle.setText(urlDialog);
             menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             menuTitle.setSingleLine(true);
             menuTitle.setMarqueeRepeatLimit(1);
@@ -2371,7 +2377,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 menuTitle.setSelected(true);
             });
 
-            FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
+            FaviconHelper.setFavicon(context, dialogView, urlDialog, R.id.menu_icon, R.drawable.icon_image_broken);
             builder.setView(dialogView);
             AlertDialog dialog = builder.create();
             dialog.show();
@@ -2394,11 +2400,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     case 0:
                         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                         sharingIntent.setType("text/plain");
-                        sharingIntent.putExtra(Intent.EXTRA_TEXT, url);
+                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, titleDialog);
+                        sharingIntent.putExtra(Intent.EXTRA_TEXT, urlDialog);
                         context.startActivity(Intent.createChooser(sharingIntent, (context.getString(R.string.menu_share_link))));
                         break;
                     case 1:
-
                         removeAlbum(currentAlbumController);
                         if (BrowserContainer.size() < 2) { hideOverview();}
                         break;
