@@ -2406,8 +2406,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             });
             return false;
         });
-
-
         updateOmniBox();
     }
 
