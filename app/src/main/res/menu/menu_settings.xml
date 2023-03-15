@@ -11,10 +11,4 @@
         android:title="Help"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/menu_info"
-        android:icon="@drawable/icon_alert"
-        android:title="Info"
-        app:showAsAction="always" />
-
 </menu>

@@ -40,6 +40,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -126,7 +127,7 @@ public class HelperUnit {
         }
     }
 
-    public static void saveAs(final Activity activity, final String url, final String name) {
+    public static void saveAs(final Activity activity, final String url, final String name, Dialog dialogParent) {
 
         try {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
@@ -185,7 +186,12 @@ public class HelperUnit {
                         BackupUnit.requestPermission(activity);
                     }
                     HelperUnit.hideSoftKeyboard(editBottom, activity);
-                    dialog.cancel();
+                    try {
+                        dialog.cancel();
+                    } catch (Exception e) {
+                        Log.i("FOSS Browser", "shouldOverrideUrlLoading Exception:" + e);
+                    }
+                    dialogParent.cancel();
                 }
             });
         } catch (Exception e) {
@@ -333,7 +339,7 @@ public class HelperUnit {
         }
     }
 
-    public static void saveDataURI(Activity activity, DataURIParser dataUriParser) {
+    public static void saveDataURI(Activity activity, DataURIParser dataUriParser, Dialog dialogParent) {
 
         byte[] imagedata = dataUriParser.getImagedata();
         String filename = dataUriParser.getFilename();
@@ -389,6 +395,7 @@ public class HelperUnit {
                 }
                 HelperUnit.hideSoftKeyboard(editBottom, activity);
                 dialog.cancel();
+                dialogParent.cancel();
             }
         });
     }

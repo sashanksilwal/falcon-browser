@@ -144,6 +144,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     private KeyListener listener;
     private BadgeDrawable badgeDrawable;
     private BadgeDrawable badgeTab;
+    private AdapterSearch adapterSearch;
 
     // Layouts
     private CircularProgressIndicator progressBar;
@@ -296,7 +297,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             openTabsProfile = new ArrayList<>(Arrays.asList(TextUtils.split(sp.getString("openTabsProfile", ""), "‚‗‚")));
             if (openTabs.size() > 0) {
                 for (int counter = 0; counter < openTabs.size(); counter++) {
-                    addAlbum(getString(R.string.app_name), openTabs.get(counter), BrowserContainer.size() < 1, false, openTabsProfile.get(counter));
+                    addAlbum(getString(R.string.app_name), openTabs.get(counter), BrowserContainer.size() < 1, false, openTabsProfile.get(counter), null);
                 }
             }
             sp.edit().putString("profile", saveDefaultProfile).apply();
@@ -306,7 +307,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         //if still no open Tab open default page
         if (BrowserContainer.size() < 1) {
             if (sp.getBoolean("start_tabStart", false)) showOverview();
-            addAlbum(getString(R.string.app_name), "", true, false, "");
+            addAlbum(getString(R.string.app_name), "", true, false, "", null);
             ninjaWebView.loadUrl(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki"));
         }
     }
@@ -563,7 +564,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         WebView.HitTestResult result = ninjaWebView.getHitTestResult();
         if (result.getExtra() != null) {
             if (result.getType() == SRC_ANCHOR_TYPE)
-                showContextMenuLink(result.getExtra(), result.getExtra(), SRC_ANCHOR_TYPE, true);
+                showContextMenuLink(result.getExtra(), result.getExtra(), SRC_ANCHOR_TYPE, false);
             else if (result.getType() == SRC_IMAGE_ANCHOR_TYPE) {
                 // Create a background thread that has a Looper
                 HandlerThread handlerThread = new HandlerThread("HandlerThread");
@@ -573,11 +574,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 Message msg = backgroundHandler.obtainMessage();
                 ninjaWebView.requestFocusNodeHref(msg);
                 String url = (String) msg.getData().get("url");
-                showContextMenuLink(url, url, SRC_ANCHOR_TYPE, true); }
+                showContextMenuLink(HelperUnit.domain(url), url, SRC_ANCHOR_TYPE, false); }
             else if (result.getType() == IMAGE_TYPE) {
-                showContextMenuLink(result.getExtra(), result.getExtra(), IMAGE_TYPE, true);
+                showContextMenuLink(result.getExtra(), result.getExtra(), IMAGE_TYPE, false);
             }
-            else showContextMenuLink(result.getExtra(), result.getExtra(), 0, true); }
+            else showContextMenuLink(result.getExtra(), result.getExtra(), 0, false); }
     }
 
     // Views
@@ -939,10 +940,10 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     public void initSearch() {
         RecordAction action = new RecordAction(this);
         List<Record> list = action.listEntries(activity);
-        AdapterSearch adapter = new AdapterSearch(this, R.layout.item_list, list);
-        list_search.setAdapter(adapter);
+        adapterSearch = new AdapterSearch(this, R.layout.item_list, list);
+        list_search.setAdapter(adapterSearch);
         list_search.setTextFilterEnabled(true);
-        adapter.notifyDataSetChanged();
+        adapterSearch.notifyDataSetChanged();
         list_search.setOnItemClickListener((parent, view, position, id) -> {
             omniBox_text.clearFocus();
             String url = ((TextView) view.findViewById(R.id.dateView)).getText().toString();
@@ -960,16 +961,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         list_search.setOnItemLongClickListener((adapterView, view, i, l) -> {
             String title = ((TextView) view.findViewById(R.id.titleView)).getText().toString();
             String url = ((TextView) view.findViewById(R.id.dateView)).getText().toString();
-            showContextMenuLink(title, url, SRC_ANCHOR_TYPE, false);
-            omnibox_close.performClick();
-            omnibox_close.performClick();
+            showContextMenuLink(title, url, SRC_ANCHOR_TYPE, true);
             return true;
         });
         omniBox_text.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {}
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s);
+                adapterSearch.getFilter().filter(s);
             }
         });
     }
@@ -1047,20 +1046,20 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         // Tab
 
-        GridItem item_01 = new GridItem( getString(R.string.menu_openFav), 0);
-        GridItem item_02 = new GridItem( getString(R.string.main_menu_new_tabOpen), 0);
-        GridItem item_03 = new GridItem( getString(R.string.main_menu_new_tabProfile), 0);
-        GridItem item_04 = new GridItem( getString(R.string.menu_reload), 0);
-        GridItem item_05 = new GridItem( getString(R.string.menu_closeTab), 0);
-        GridItem item_06 = new GridItem( getString(R.string.menu_quit), 0);
+        GridItem item_01 = new GridItem( getString(R.string.menu_openFav), R.drawable.icon_star);
+        GridItem item_02 = new GridItem( getString(R.string.main_menu_new_tabOpen), R.drawable.icon_tab_plus);
+        GridItem item_03 = new GridItem( getString(R.string.main_menu_new_tabProfile), R.drawable.icon_profile_trusted);
+        GridItem item_04 = new GridItem( getString(R.string.menu_reload), R.drawable.icon_refresh);
+        GridItem item_05 = new GridItem( getString(R.string.menu_closeTab), R.drawable.icon_tab_remove);
+        GridItem item_06 = new GridItem( getString(R.string.menu_quit), R.drawable.icon_close);
 
         final List<GridItem> gridList_tab = new LinkedList<>();
 
         gridList_tab.add(gridList_tab.size(), item_01);
         gridList_tab.add(gridList_tab.size(), item_02);
+        gridList_tab.add(gridList_tab.size(), item_05);
         gridList_tab.add(gridList_tab.size(), item_03);
         gridList_tab.add(gridList_tab.size(), item_04);
-        gridList_tab.add(gridList_tab.size(), item_05);
         gridList_tab.add(gridList_tab.size(), item_06);
 
         GridAdapter gridAdapter_tab = new GridAdapter(context, gridList_tab);
@@ -1078,24 +1077,32 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         });
 
         menu_grid_tab.setOnItemClickListener((parent, view14, position, id) -> {
-            dialog_overflow.cancel();
-            if (position == 0)
+            if (position == 0) {
                 ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")));
-            else if (position == 1)
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "");
-            else if (position == 2)
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, true, "");
-            else if (position == 3) ninjaWebView.reload();
-            else if (position == 4) removeAlbum(currentAlbumController);
-            else if (position == 5) doubleTapsQuit(); });
+                dialog_overflow.cancel();
+            }  else if (position == 1) {
+                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "", dialog_overflow);
+                dialog_overflow.cancel();
+            } else if (position == 3) {
+                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, true, "", dialog_overflow);
+            } else if (position == 4) {
+                ninjaWebView.reload();
+                dialog_overflow.cancel();
+            } else if (position == 2) {
+                removeAlbum(currentAlbumController);
+                dialog_overflow.cancel();
+            } else if (position == 5) {
+                doubleTapsQuit();
+                dialog_overflow.cancel();
+            } });
 
         // Save
-        GridItem item_21 = new GridItem( getString(R.string.menu_fav), 0);
-        GridItem item_22 = new GridItem( getString(R.string.menu_save_home), 0);
-        GridItem item_23 = new GridItem( getString(R.string.menu_save_bookmark), 0);
-        GridItem item_24 = new GridItem( getString(R.string.menu_save_pdf), 0);
-        GridItem item_25 = new GridItem( getString(R.string.menu_sc), 0);
-        GridItem item_26 = new GridItem( getString(R.string.menu_save_as), 0);
+        GridItem item_21 = new GridItem( getString(R.string.menu_fav), R.drawable.icon_star);
+        GridItem item_22 = new GridItem( getString(R.string.menu_save_home), R.drawable.icon_web);
+        GridItem item_23 = new GridItem( getString(R.string.menu_save_bookmark), R.drawable.icon_bookmark);
+        GridItem item_24 = new GridItem( getString(R.string.menu_save_pdf), R.drawable.icon_file);
+        GridItem item_25 = new GridItem( getString(R.string.menu_sc), R.drawable.icon_home);
+        GridItem item_26 = new GridItem( getString(R.string.menu_save_as), R.drawable.icon_save_as);
 
         final List<GridItem> gridList_save = new LinkedList<>();
         gridList_save.add(gridList_save.size(), item_21);
@@ -1120,24 +1127,43 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         });
 
         menu_grid_save.setOnItemClickListener((parent, view13, position, id) -> {
-            dialog_overflow.cancel();
             RecordAction action = new RecordAction(context);
             if (position == 0) {
                 sp.edit().putString("favoriteURL", url).apply();
-                NinjaToast.show(this, R.string.app_done); }
-            else if (position == 1) save_atHome(title, url);
+                NinjaToast.show(this, R.string.app_done);
+                dialog_overflow.cancel();
+            }
+            else if (position == 1) {
+                save_atHome(title, url);
+                dialog_overflow.cancel();
+            }
             else if (position == 2) {
                 saveBookmark();
-                action.close(); }
-            else if (position == 3) printPDF();
-            else if (position == 4) HelperUnit.createShortcut(context, ninjaWebView.getTitle(), ninjaWebView.getOriginalUrl());
-            else if (position == 5) HelperUnit.saveAs(activity, url, null); });
+                action.close();
+                dialog_overflow.cancel();
+            }
+            else if (position == 3) {
+                printPDF();
+                dialog_overflow.cancel();
+            }
+            else if (position == 4) {
+                HelperUnit.createShortcut(context, ninjaWebView.getTitle(), ninjaWebView.getOriginalUrl());
+                dialog_overflow.cancel();
+            }
+            else if (position == 5) {
+                assert url != null;
+                if (url.startsWith("data:")) {
+                    DataURIParser dataURIParser = new DataURIParser(url);
+                    HelperUnit.saveDataURI(activity, dataURIParser, dialog_overflow);
+                } else HelperUnit.saveAs(activity, url, null, dialog_overflow);
+            }
+        });
 
         // Share
-        GridItem item_11 = new GridItem( getString(R.string.menu_share_link), 0);
-        GridItem item_12 = new GridItem( getString(R.string.dialog_postOnWebsite), 0);
-        GridItem item_13 = new GridItem( getString(R.string.menu_shareClipboard), 0);
-        GridItem item_14 = new GridItem( getString(R.string.menu_open_with), 0);
+        GridItem item_11 = new GridItem( getString(R.string.menu_share_link), R.drawable.icon_link);
+        GridItem item_12 = new GridItem( getString(R.string.dialog_postOnWebsite), R.drawable.icon_post);
+        GridItem item_13 = new GridItem( getString(R.string.menu_shareClipboard), R.drawable.icon_clipboard);
+        GridItem item_14 = new GridItem( getString(R.string.menu_open_with), R.drawable.icon_open_with);
 
         final List<GridItem> gridList_share = new LinkedList<>();
         gridList_share.add(gridList_share.size(), item_11);
@@ -1158,19 +1184,27 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         });
 
         menu_grid_share.setOnItemClickListener((parent, view12, position, id) -> {
-            dialog_overflow.cancel();
-            if (position == 0) shareLink(title, url);
-            else if (position == 1) postLink(url);
-            else if (position == 2) copyLink(url);
-            else if (position == 3) BrowserUnit.intentURL(context, Uri.parse(url));
+            if (position == 0) {
+                shareLink(title, url);
+                dialog_overflow.cancel();
+            } else if (position == 1) {
+                String text = title + ": " + url;
+                postLink(text, dialog_overflow);
+            } else if (position == 2) {
+                copyLink(url);
+                dialog_overflow.cancel();
+            } else if (position == 3) {
+                BrowserUnit.intentURL(context, Uri.parse(url));
+                dialog_overflow.cancel();
+            }
         });
 
         // Other
-        GridItem item_31 = new GridItem( getString(R.string.menu_other_searchSite), 0);
-        GridItem item_32 = new GridItem( getString(R.string.menu_download), 0);
-        GridItem item_33 = new GridItem( getString(R.string.setting_label), 0);
-        GridItem item_36 = new GridItem( getString(R.string.menu_restart), 0);
-        GridItem item_34 = new GridItem( getString((R.string.app_help)), 0);
+        GridItem item_31 = new GridItem( getString(R.string.menu_other_searchSite), R.drawable.icon_search);
+        GridItem item_32 = new GridItem( getString(R.string.menu_download), R.drawable.icon_download);
+        GridItem item_33 = new GridItem( getString(R.string.setting_label), R.drawable.icon_settings);
+        GridItem item_36 = new GridItem( getString(R.string.menu_restart), R.drawable.icon_refresh);
+        GridItem item_34 = new GridItem( getString((R.string.app_help)), R.drawable.icon_help);
 
         final List<GridItem> gridList_other = new LinkedList<>();
         gridList_other.add(gridList_other.size(), item_31);
@@ -1193,18 +1227,21 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         });
 
         menu_grid_other.setOnItemClickListener((parent, view1, position, id) -> {
-            dialog_overflow.cancel();
-            if (position == 0) searchOnSite();
-            else if (position == 1) {
+            if (position == 0) {
+                searchOnSite();
+                dialog_overflow.cancel();
+            } else if (position == 1) {
                 Uri webpage = Uri.parse("https://github.com/scoute-dich/browser/wiki");
-                BrowserUnit.intentURL(this, webpage); }
-            else if (position == 2) {
+                BrowserUnit.intentURL(this, webpage);
+                dialog_overflow.cancel();
+            } else if (position == 2) {
                 startActivity(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null));
-            }
-            else if (position == 3) {
+                dialog_overflow.cancel();
+            } else if (position == 3) {
                 Intent settings = new Intent(BrowserActivity.this, Settings_Activity.class);
-                startActivity(settings); }
-            else if (position == 4) {
+                startActivity(settings);
+                dialog_overflow.cancel();
+            } else if (position == 4) {
                 saveOpenedTabs();
                 HelperUnit.triggerRebirth(context);}
         });
@@ -1290,14 +1327,15 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         dialog.show();
         HelperUnit.setupDialog(context, dialog);
 
-        GridItem item_01 = new GridItem( getString(R.string.main_menu_new_tabOpen), 0);
-        GridItem item_02 = new GridItem( getString(R.string.main_menu_new_tab), 0);
-        GridItem item_03 = new GridItem( getString(R.string.main_menu_new_tabProfile), 0);
-        GridItem item_04 = new GridItem( getString(R.string.menu_share_link), 0);
-        GridItem item_05 = new GridItem( getString(R.string.menu_shareClipboard), 0);
-        GridItem item_06 = new GridItem( getString(R.string.menu_open_with), 0);
-        GridItem item_07 = new GridItem( getString(R.string.menu_save_as), 0);
-        GridItem item_08 = new GridItem( getString(R.string.menu_save_home), 0);
+        GridItem item_01 = new GridItem( getString(R.string.main_menu_new_tabOpen), R.drawable.icon_tab_plus);
+        GridItem item_02 = new GridItem( getString(R.string.main_menu_new_tab), R.drawable.icon_tab_background);
+        GridItem item_03 = new GridItem( getString(R.string.main_menu_new_tabProfile), R.drawable.icon_profile_trusted);
+        GridItem item_04 = new GridItem( getString(R.string.menu_share_link), R.drawable.icon_link);
+        GridItem item_05 = new GridItem( getString(R.string.menu_shareClipboard), R.drawable.icon_clipboard);
+        GridItem item_06 = new GridItem( getString(R.string.menu_open_with), R.drawable.icon_open_with);
+        GridItem item_07 = new GridItem( getString(R.string.menu_save_as), R.drawable.icon_save_as);
+        GridItem item_08 = new GridItem( getString(R.string.menu_save_home), R.drawable.icon_web);
+        GridItem item_09 = new GridItem( getString(R.string.menu_delete), R.drawable.icon_delete);
 
         final List<GridItem> gridList = new LinkedList<>();
 
@@ -1307,10 +1345,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         gridList.add(gridList.size(), item_04);
         gridList.add(gridList.size(), item_05);
         gridList.add(gridList.size(), item_06);
+        gridList.add(gridList.size(), item_07);
+        gridList.add(gridList.size(), item_08);
 
         if (showAll) {
-            gridList.add(gridList.size(), item_07);
-            gridList.add(gridList.size(), item_08);
+            gridList.add(gridList.size(), item_09);
         }
 
         GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
@@ -1318,34 +1357,63 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
-            dialog.cancel();
             switch (position) {
                 case 0:
-                    addAlbum(getString(R.string.app_name), url, true, false, "");
+                    addAlbum(getString(R.string.app_name), url, true, false, "", dialog);
+                    dialog.cancel();
                     break;
                 case 1:
-                    addAlbum(getString(R.string.app_name), url, false, false, "");
+                    addAlbum(getString(R.string.app_name), url, false, false, "", dialog);
+                    dialog.cancel();
                     break;
                 case 2:
-                    addAlbum(getString(R.string.app_name), url, true, true, "");
+                    addAlbum(getString(R.string.app_name), url, true, true, "", dialog);
                     break;
                 case 3:
                     shareLink(HelperUnit.domain(url), url);
+                    dialog.cancel();
                     break;
                 case 4:
                     copyLink(url);
+                    dialog.cancel();
                     break;
                 case 5:
                     BrowserUnit.intentURL(context, Uri.parse(url));
+                    dialog.cancel();
                     break;
                 case 6:
                     if (url.startsWith("data:")) {
                         DataURIParser dataURIParser = new DataURIParser(url);
-                        HelperUnit.saveDataURI(activity, dataURIParser);
-                    } else HelperUnit.saveAs(activity, url, null);
+                        HelperUnit.saveDataURI(activity, dataURIParser, dialog);
+                    } else HelperUnit.saveAs(activity, url, null, dialog);
                     break;
                 case 7:
                     save_atHome(title, url);
+                    dialog.cancel();
+                    break;
+                case 8:
+                    MaterialAlertDialogBuilder builderSubMenu = new MaterialAlertDialogBuilder(context);
+                    builderSubMenu.setIcon(R.drawable.icon_alert);
+                    builderSubMenu.setTitle(R.string.menu_delete);
+                    builderSubMenu.setMessage(R.string.hint_database);
+                    builderSubMenu.setPositiveButton(R.string.app_ok, (dialog2, whichButton) -> {
+                        RecordAction action = new RecordAction(this);
+                        action.open(true);
+                        action.deleteURL(url, RecordUnit.TABLE_START);
+                        action.deleteURL(url, RecordUnit.TABLE_BOOKMARK);
+                        action.deleteURL(url, RecordUnit.TABLE_HISTORY);
+                        action.close();
+                        adapterSearch.notifyDataSetChanged();
+                        String text = Objects.requireNonNull(omniBox_text.getText()).toString();
+                        initSearch();
+                        omniBox_text.setText("");
+                        omniBox_text.setText(text);
+                        dialog.cancel();
+                    });
+                    builderSubMenu.setNegativeButton(R.string.app_cancel, (dialog2, whichButton) -> builderSubMenu.setCancelable(true));
+                    Dialog dialogSubMenu = builderSubMenu.create();
+                    dialogSubMenu.show();
+                    HelperUnit.setupDialog(context, dialogSubMenu);
                     break; }
         });
     }
@@ -1375,12 +1443,12 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         dialog.show();
         HelperUnit.setupDialog(context, dialog);
 
-        GridItem item_01 = new GridItem( getString(R.string.main_menu_new_tabOpen), 0);
-        GridItem item_02 = new GridItem( getString(R.string.main_menu_new_tab), 0);
-        GridItem item_03 = new GridItem( getString(R.string.main_menu_new_tabProfile), 0);
-        GridItem item_04 = new GridItem( getString(R.string.menu_share_link), 0);
-        GridItem item_05 = new GridItem( getString(R.string.menu_delete), 0);
-        GridItem item_06 = new GridItem( getString(R.string.menu_edit), 0);
+        GridItem item_01 = new GridItem( getString(R.string.main_menu_new_tabOpen), R.drawable.icon_tab_plus);
+        GridItem item_02 = new GridItem( getString(R.string.main_menu_new_tab), R.drawable.icon_tab_background);
+        GridItem item_03 = new GridItem( getString(R.string.main_menu_new_tabProfile), R.drawable.icon_profile_trusted);
+        GridItem item_04 = new GridItem( getString(R.string.menu_share_link), R.drawable.icon_link);
+        GridItem item_05 = new GridItem( getString(R.string.menu_delete), R.drawable.icon_delete);
+        GridItem item_06 = new GridItem( getString(R.string.menu_edit), R.drawable.icon_edit);
 
         final List<GridItem> gridList = new LinkedList<>();
 
@@ -1403,23 +1471,25 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
-            dialog.cancel();
             MaterialAlertDialogBuilder builderSubMenu;
             AlertDialog dialogSubMenu;
             switch (position) {
                 case 0:
-                    addAlbum(getString(R.string.app_name), url, true, false, "");
+                    addAlbum(getString(R.string.app_name), url, true, false, "", dialog);
+                    dialog.cancel();
                     hideOverview();
                     break;
                 case 1:
-                    addAlbum(getString(R.string.app_name), url, false, false, "");
+                    addAlbum(getString(R.string.app_name), url, false, false, "", dialog);
+                    dialog.cancel();
                     break;
                 case 2:
-                    addAlbum(getString(R.string.app_name), url, true, true, "");
+                    addAlbum(getString(R.string.app_name), url, true, true, "", dialog);
                     hideOverview();
                     break;
                 case 3:
                     shareLink(title, url);
+                    dialog.cancel();
                     break;
                 case 4:
                     builderSubMenu = new MaterialAlertDialogBuilder(context);
@@ -1436,6 +1506,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                         action.close();
                         recordList.remove(location);
                         adapterRecord.notifyDataSetChanged();
+                        dialog.cancel();
                     });
                     builderSubMenu.setNegativeButton(R.string.app_cancel, (dialog2, whichButton) -> builderSubMenu.setCancelable(true));
                     dialogSubMenu = builderSubMenu.create();
@@ -1537,6 +1608,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                             bottom_navigation.setSelectedItemId(R.id.page_1); }
                         HelperUnit.hideSoftKeyboard(editBottom, context);
                         dialogSubMenu.cancel();
+                        dialog.cancel();
                     });
                     break;
             }
@@ -2068,7 +2140,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         context.startActivity(Intent.createChooser(sharingIntent, (context.getString(R.string.menu_share_link))));
     }
 
-    private void postLink(String data) {
+    private void postLink(String data, Dialog dialogParent) {
         String urlForPosting = sp.getString("urlForPosting", "");
         String message = getString(R.string.menu_shareClipboard) + ": " + data;
 
@@ -2108,9 +2180,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             Objects.requireNonNull(clipboard).setPrimaryClip(clip);
             String text = getString(R.string.toast_copy_successful) + ": " + data;
             NinjaToast.show(this, text);
-            addAlbum("", shareTop, true, false, "");
+            addAlbum("", shareTop, true, false, "", dialog);
             HelperUnit.hideSoftKeyboard(editTop, context);
             dialog.cancel();
+            try {
+                dialogParent.cancel();
+            } catch (Exception e) {
+                Log.i(TAG, "shouldOverrideUrlLoading Exception:" + e);
+            }
         });
     }
 
@@ -2172,7 +2249,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 showOverview();
                 break;
             case "09":
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "");
+                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "", null);
                 break;
             case "10":
                 removeAlbum(currentAlbumController);
@@ -2256,7 +2333,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         else if ("postLink".equals(action)) {
             getIntent().setAction("");
             hideOverview();
-            postLink(url);
+            postLink(url, null);
             return; }
         else if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_PROCESS_TEXT)) {
             CharSequence text = getIntent().getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
@@ -2270,7 +2347,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             data = url; }
 
         if (!data.isEmpty()) {
-            addAlbum(null, data, true, false, "");
+            addAlbum(null, data, true, false, "", null);
             getIntent().setAction("");
             hideOverview();
             BrowserUnit.openInBackground(activity, intent, data);
@@ -2355,7 +2432,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         albumView.setOnLongClickListener(v -> {
 
-
             TextView textViewTitle = albumView.findViewById(R.id.titleView);
             TextView textViewUrl = albumView.findViewById(R.id.dateView);
             String titleDialog = textViewTitle.getText().toString();
@@ -2383,12 +2459,12 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             dialog.show();
             HelperUnit.setupDialog(context, dialog);
 
-            GridItem item_01 = new GridItem( context.getString(R.string.menu_share_link), 0);
-            GridItem item_02 = new GridItem( context.getString(R.string.menu_closeTab), 0);
+            GridItem item_01 = new GridItem( context.getString(R.string.menu_share_link), R.drawable.icon_link);
+            GridItem item_02 = new GridItem( context.getString(R.string.menu_closeTab), R.drawable.icon_tab_remove);
 
             final List<GridItem> gridList = new LinkedList<>();
-            gridList.add(gridList.size(), item_01);
             gridList.add(gridList.size(), item_02);
+            gridList.add(gridList.size(), item_01);
 
             GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
             GridAdapter gridAdapter = new GridAdapter(context, gridList);
@@ -2397,14 +2473,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             menu_grid.setOnItemClickListener((parent, view, position, id) -> {
                 dialog.cancel();
                 switch (position) {
-                    case 0:
+                    case 1:
                         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                         sharingIntent.setType("text/plain");
                         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, titleDialog);
                         sharingIntent.putExtra(Intent.EXTRA_TEXT, urlDialog);
                         context.startActivity(Intent.createChooser(sharingIntent, (context.getString(R.string.menu_share_link))));
                         break;
-                    case 1:
+                    case 0:
                         removeAlbum(currentAlbumController);
                         if (BrowserContainer.size() < 2) { hideOverview();}
                         break;
@@ -2415,15 +2491,15 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         updateOmniBox();
     }
 
-    private synchronized void addAlbum(String title, final String url, final boolean foreground, final boolean profileDialog, String profile) {
+    private synchronized void addAlbum(String title, final String url, final boolean foreground, final boolean profileDialog, String profile, Dialog dialogParent) {
 
         //restoreProfile from shared preferences if app got killed
         if (!profile.equals("")) sp.edit().putString("profile", profile).apply();
         if (profileDialog) {
-            GridItem item_01 = new GridItem(getString(R.string.setting_title_profiles_trusted), 0);
-            GridItem item_02 = new GridItem(getString(R.string.setting_title_profiles_standard), 0);
-            GridItem item_03 = new GridItem(getString(R.string.setting_title_profiles_protected), 0);
-            GridItem item_04 = new GridItem(getString(R.string.setting_title_profiles_changed), 0);
+            GridItem item_01 = new GridItem(getString(R.string.setting_title_profiles_trusted), R.drawable.icon_profile_trusted);
+            GridItem item_02 = new GridItem(getString(R.string.setting_title_profiles_standard), R.drawable.icon_profile_standard);
+            GridItem item_03 = new GridItem(getString(R.string.setting_title_profiles_protected), R.drawable.icon_profile_protected);
+            GridItem item_04 = new GridItem(getString(R.string.setting_title_profiles_changed), R.drawable.icon_profile_changed);
 
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
             View dialogView = View.inflate(context, R.layout.dialog_menu, null);
@@ -2455,6 +2531,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             menu_grid.setAdapter(gridAdapter);
             gridAdapter.notifyDataSetChanged();
             menu_grid.setOnItemClickListener((parent, view, position, id) -> {
+                dialogParent.cancel();
                 switch (position) {
                     case 0:
                         sp.edit().putString("profile", "profileTrusted").apply();

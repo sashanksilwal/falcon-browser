@@ -51,9 +51,9 @@ public class Fragment_settings_Privacy extends BasePreferenceFragment implements
         assert settings_profile != null;
         settings_profile.setOnPreferenceClickListener(preference -> {
 
-            GridItem item_01 = new GridItem(getString(R.string.setting_title_profiles_trusted), 0);
-            GridItem item_02 = new GridItem( getString(R.string.setting_title_profiles_standard), 0);
-            GridItem item_03 = new GridItem( getString(R.string.setting_title_profiles_protected), 0);
+            GridItem item_01 = new GridItem(getString(R.string.setting_title_profiles_trusted), R.drawable.icon_profile_trusted);
+            GridItem item_02 = new GridItem( getString(R.string.setting_title_profiles_standard), R.drawable.icon_profile_standard);
+            GridItem item_03 = new GridItem( getString(R.string.setting_title_profiles_protected), R.drawable.icon_profile_protected);
 
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
             View dialogView = View.inflate(context, R.layout.dialog_menu, null);

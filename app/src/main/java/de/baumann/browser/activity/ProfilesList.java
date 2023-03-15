@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -110,6 +111,8 @@ public class ProfilesList extends AppCompatActivity {
                 View v = super.getView(position, convertView, parent);
                 ImageView deleteEntry = v.findViewById(R.id.iconView);
                 deleteEntry.setVisibility(View.VISIBLE);
+                TextView textView = v.findViewById(R.id.dateView);
+                textView.setVisibility(View.GONE);
                 MaterialCardView cardView = v.findViewById(R.id.cardView);
                 cardView.setVisibility(View.GONE);
                 deleteEntry.setOnClickListener(v1 -> {
