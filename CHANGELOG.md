@@ -1,7 +1,10 @@
 ### v 9.11 (WIP)
 
 - new: context menu in tab overview
-
+- new: icons in menus
+- fix: layout
+- fix: menus
+- 
 
 ### v 9.10 "Durruti"
 
