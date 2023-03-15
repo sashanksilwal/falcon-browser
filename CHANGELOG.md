@@ -4,7 +4,7 @@
 - new: icons in menus
 - fix: layout
 - fix: menus
-- 
+
 
 ### v 9.10 "Durruti"
 
