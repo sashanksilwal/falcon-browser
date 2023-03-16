@@ -59,6 +59,9 @@ public class NinjaDownloadListener implements DownloadListener {
         Message msg = backgroundHandler.obtainMessage();
         webView.requestFocusNodeHref(msg);
         final String[] msgString = {(String) msg.getData().get("url")};
+        if (msgString[0] == null) {
+            msgString[0] = url;
+        }
 
         String filename = URLUtil.guessFileName(msgString[0], null, null);
         String text = context.getString(R.string.dialog_title_download) + " - " + filename;
@@ -97,16 +100,13 @@ public class NinjaDownloadListener implements DownloadListener {
                 case 0:
                     try {
                         Activity activity = (Activity) context;
-                        if (msgString[0] == null) {
-                            msgString[0] = url;
-                        }
-                        assert msgString[0] != null;
                         if (msgString[0].startsWith("data:")) {
                             DataURIParser dataURIParser = new DataURIParser(msgString[0]);
                             if (BackupUnit.checkPermissionStorage(context)) {
                                 File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename);
                                 FileOutputStream fos = new FileOutputStream(file);
-                                fos.write(dataURIParser.getImagedata()); }
+                                fos.write(dataURIParser.getImagedata());
+                                }
                             else BackupUnit.requestPermission(activity); }
                         else {
                             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(msgString[0]));

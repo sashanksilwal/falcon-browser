@@ -50,6 +50,7 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
@@ -174,14 +175,21 @@ public class HelperUnit {
                     NinjaToast.show(activity, activity.getString(R.string.toast_input_empty));
                 } else {
                     if (BackupUnit.checkPermissionStorage(activity)) {
-                        Uri source = Uri.parse(url);
-                        DownloadManager.Request request = new DownloadManager.Request(source);
-                        request.addRequestHeader("List_protected", CookieManager.getInstance().getCookie(url));
-                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename1);
-                        DownloadManager dm = (DownloadManager) activity.getSystemService(DOWNLOAD_SERVICE);
-                        assert dm != null;
-                        dm.enqueue(request);
+                        try {
+                            Uri source = Uri.parse(url);
+                            DownloadManager.Request request = new DownloadManager.Request(source);
+                            request.addRequestHeader("List_protected", CookieManager.getInstance().getCookie(url));
+                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
+                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename1);
+                            DownloadManager dm = (DownloadManager) activity.getSystemService(DOWNLOAD_SERVICE);
+                            assert dm != null;
+                            dm.enqueue(request);
+                        } catch (Exception e) {
+                            System.out.println("Error Downloading File: " + e);
+                            Toast.makeText(activity, activity.getString(R.string.app_error) + e.toString().substring(e.toString().indexOf(":")), Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+
                     } else {
                         BackupUnit.requestPermission(activity);
                     }

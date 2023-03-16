@@ -2,7 +2,7 @@
 
 - new: context menu in tab overview
 - new: icons in menus
-- new: delete entries from serach
+- new: delete entries from search
 - fix: layout
 - fix: menus
 - fix: onReceivedHttpAuthRequest password showing #1069
