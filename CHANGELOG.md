@@ -5,6 +5,7 @@
 - new: delete entries from serach
 - fix: layout
 - fix: menus
+- fix: onReceivedHttpAuthRequest password showing #1069
 
 
 ### v 9.10 "Durruti"
