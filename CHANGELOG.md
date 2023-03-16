@@ -2,6 +2,7 @@
 
 - new: context menu in tab overview
 - new: icons in menus
+- new: delete entries from serach
 - fix: layout
 - fix: menus
 

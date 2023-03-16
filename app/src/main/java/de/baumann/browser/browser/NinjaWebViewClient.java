@@ -28,6 +28,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayInputStream;
@@ -559,11 +560,11 @@ public class NinjaWebViewClient extends WebViewClient {
         TextInputLayout editBottomLayout = dialogView.findViewById(R.id.editBottomLayout);
         editBottomLayout.setHint(this.context.getString(R.string.dialog_sign_in_password));
 
-        EditText editTop = dialogView.findViewById(R.id.editTop);
-        EditText editBottom = dialogView.findViewById(R.id.editBottom);
+        TextInputEditText editTop = dialogView.findViewById(R.id.editTop);
+        TextInputEditText editBottom = dialogView.findViewById(R.id.editBottom);
         editTop.setText("");
         editTop.setHint(this.context.getString(R.string.dialog_sign_in_username));
-        editBottom.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        editBottom.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         editBottom.setText("");
         editBottom.setHint(this.context.getString(R.string.dialog_sign_in_password));
 
@@ -588,8 +589,8 @@ public class NinjaWebViewClient extends WebViewClient {
         Button ib_ok = dialogView.findViewById(R.id.editOK);
         ib_ok.setOnClickListener(v -> {
             HelperUnit.hideSoftKeyboard(editBottom, context);
-            String user = editTop.getText().toString().trim();
-            String pass = editBottom.getText().toString().trim();
+            String user = Objects.requireNonNull(editTop.getText()).toString().trim();
+            String pass = Objects.requireNonNull(editBottom.getText()).toString().trim();
             handler.proceed(user, pass);
             dialog.cancel();
         });
