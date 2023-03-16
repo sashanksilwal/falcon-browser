@@ -128,7 +128,7 @@ public class NinjaWebView extends WebView implements AlbumController {
             }
         };
         this.webChromeClient = new NinjaWebChromeClient(this);
-        this.downloadListener = new NinjaDownloadListener(this.context);
+        this.downloadListener = new NinjaDownloadListener(this.context, this);
 
         initWebView();
         initAlbum();

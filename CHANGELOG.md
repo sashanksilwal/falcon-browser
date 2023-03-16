@@ -6,6 +6,7 @@
 - fix: layout
 - fix: menus
 - fix: onReceivedHttpAuthRequest password showing #1069
+- fix: download names #1071
 
 
 ### v 9.10 "Durruti"
