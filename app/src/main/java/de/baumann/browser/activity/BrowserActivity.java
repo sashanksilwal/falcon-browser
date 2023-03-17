@@ -563,8 +563,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         super.onCreateContextMenu(menu, v, menuInfo);
         WebView.HitTestResult result = ninjaWebView.getHitTestResult();
         if (result.getExtra() != null) {
+            String domain = HelperUnit.domain(result.getExtra());
             if (result.getType() == SRC_ANCHOR_TYPE)
-                showContextMenuLink(result.getExtra(), result.getExtra(), SRC_ANCHOR_TYPE, false);
+                showContextMenuLink(domain, result.getExtra(), SRC_ANCHOR_TYPE, false);
             else if (result.getType() == SRC_IMAGE_ANCHOR_TYPE) {
                 // Create a background thread that has a Looper
                 HandlerThread handlerThread = new HandlerThread("HandlerThread");
@@ -574,11 +575,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 Message msg = backgroundHandler.obtainMessage();
                 ninjaWebView.requestFocusNodeHref(msg);
                 String url = (String) msg.getData().get("url");
-                showContextMenuLink(HelperUnit.domain(url), url, SRC_ANCHOR_TYPE, false); }
+                showContextMenuLink(domain, url, SRC_ANCHOR_TYPE, false); }
             else if (result.getType() == IMAGE_TYPE) {
-                showContextMenuLink(result.getExtra(), result.getExtra(), IMAGE_TYPE, false);
+                showContextMenuLink(domain, result.getExtra(), IMAGE_TYPE, false);
             }
-            else showContextMenuLink(result.getExtra(), result.getExtra(), 0, false); }
+            else showContextMenuLink(domain, result.getExtra(), 0, false); }
     }
 
     // Views
@@ -1301,18 +1302,21 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
 
-        TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
-        menuTitle.setText(url);
-        menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        menuTitle.setSingleLine(true);
-        menuTitle.setMarqueeRepeatLimit(1);
-        menuTitle.setSelected(true);
-        menuTitle.setOnClickListener(v -> {
-            menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            menuTitle.setSingleLine(true);
-            menuTitle.setMarqueeRepeatLimit(1);
-            menuTitle.setSelected(true);
+        LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+        TextView menuURL = dialogView.findViewById(R.id.menuURL);
+        menuURL.setText(url);
+        menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuURL.setSingleLine(true);
+        menuURL.setMarqueeRepeatLimit(1);
+        menuURL.setSelected(true);
+        textGroup.setOnClickListener(v -> {
+            menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURL.setSingleLine(true);
+            menuURL.setMarqueeRepeatLimit(1);
+            menuURL.setSelected(true);
         });
+        TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
+        menuTitle.setText(title);
         ImageView menu_icon = dialogView.findViewById(R.id.menu_icon);
 
         if (type == SRC_ANCHOR_TYPE) {
@@ -1426,18 +1430,21 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
 
-        TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
-        menuTitle.setText(url);
-        menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        menuTitle.setSingleLine(true);
-        menuTitle.setMarqueeRepeatLimit(1);
-        menuTitle.setSelected(true);
-        menuTitle.setOnClickListener(v -> {
-            menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            menuTitle.setSingleLine(true);
-            menuTitle.setMarqueeRepeatLimit(1);
-            menuTitle.setSelected(true);
+        LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+        TextView menuURL = dialogView.findViewById(R.id.menuURL);
+        menuURL.setText(url);
+        menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuURL.setSingleLine(true);
+        menuURL.setMarqueeRepeatLimit(1);
+        menuURL.setSelected(true);
+        textGroup.setOnClickListener(v -> {
+            menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURL.setSingleLine(true);
+            menuURL.setMarqueeRepeatLimit(1);
+            menuURL.setSelected(true);
         });
+        TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
+        menuTitle.setText(title);
 
         FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
         builder.setView(dialogView);
@@ -2445,18 +2452,21 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
             View dialogView = View.inflate(context, R.layout.dialog_menu, null);
 
-            TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
-            menuTitle.setText(urlDialog);
-            menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            menuTitle.setSingleLine(true);
-            menuTitle.setMarqueeRepeatLimit(1);
-            menuTitle.setSelected(true);
-            menuTitle.setOnClickListener(v2 -> {
-                menuTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                menuTitle.setSingleLine(true);
-                menuTitle.setMarqueeRepeatLimit(1);
-                menuTitle.setSelected(true);
+            LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+            TextView menuURL = dialogView.findViewById(R.id.menuURL);
+            menuURL.setText(urlDialog);
+            menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURL.setSingleLine(true);
+            menuURL.setMarqueeRepeatLimit(1);
+            menuURL.setSelected(true);
+            textGroup.setOnClickListener(v2 -> {
+                menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                menuURL.setSingleLine(true);
+                menuURL.setMarqueeRepeatLimit(1);
+                menuURL.setSelected(true);
             });
+            TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
+            menuTitle.setText(titleDialog);
 
             FaviconHelper.setFavicon(context, dialogView, urlDialog, R.id.menu_icon, R.drawable.icon_image_broken);
             builder.setView(dialogView);
