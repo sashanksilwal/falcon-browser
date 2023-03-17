@@ -1022,18 +1022,21 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         HelperUnit.setupDialog(context, dialog_overflow);
         FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
 
-        TextView overflow_title = dialogView.findViewById(R.id.overflow_title);
-        overflow_title.setText(url);
-        overflow_title.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        overflow_title.setSingleLine(true);
-        overflow_title.setMarqueeRepeatLimit(1);
-        overflow_title.setSelected(true);
-        overflow_title.setOnClickListener(v -> {
-            overflow_title.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            overflow_title.setSingleLine(true);
-            overflow_title.setMarqueeRepeatLimit(1);
-            overflow_title.setSelected(true);
+        LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+        TextView overflowURL = dialogView.findViewById(R.id.overflowURL);
+        overflowURL.setText(url);
+        overflowURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        overflowURL.setSingleLine(true);
+        overflowURL.setMarqueeRepeatLimit(1);
+        overflowURL.setSelected(true);
+        textGroup.setOnClickListener(v -> {
+            overflowURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            overflowURL.setSingleLine(true);
+            overflowURL.setMarqueeRepeatLimit(1);
+            overflowURL.setSelected(true);
         });
+        TextView overflowTitle = dialogView.findViewById(R.id.overflowTitle);
+        overflowTitle.setText(title);
 
         final GridView menu_grid_tab = dialogView.findViewById(R.id.overflow_tab);
         final GridView menu_grid_share = dialogView.findViewById(R.id.overflow_share);
@@ -1078,14 +1081,15 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         });
 
         menu_grid_tab.setOnItemClickListener((parent, view14, position, id) -> {
+            String favURL = Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki"));
             if (position == 0) {
-                ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")));
+                ninjaWebView.loadUrl(favURL);
                 dialog_overflow.cancel();
             }  else if (position == 1) {
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "", dialog_overflow);
+                addAlbum(getString(R.string.app_name), favURL, true, false, "", dialog_overflow);
                 dialog_overflow.cancel();
             } else if (position == 3) {
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, true, "", dialog_overflow);
+                addAlbum(HelperUnit.domain(favURL), favURL, true, true, "", dialog_overflow);
             } else if (position == 4) {
                 ninjaWebView.reload();
                 dialog_overflow.cancel();
