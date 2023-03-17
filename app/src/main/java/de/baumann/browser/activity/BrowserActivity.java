@@ -1551,12 +1551,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                         MaterialAlertDialogBuilder builderFilter = new MaterialAlertDialogBuilder(context);
                         View dialogViewFilter = View.inflate(context, R.layout.dialog_menu, null);
                         builderFilter.setView(dialogViewFilter);
+                        builderFilter.setTitle(R.string.menu_filter);
                         AlertDialog dialogFilter = builderFilter.create();
                         dialogFilter.show();
                         HelperUnit.setupDialog(context, dialogFilter);
-                        TextView menuTitleFilter = dialogViewFilter.findViewById(R.id.menuTitle);
-                        menuTitleFilter.setText(R.string.menu_filter);
-                        CardView cardView = dialogViewFilter.findViewById(R.id.cardView);
+                        CardView cardView = dialogViewFilter.findViewById(R.id.albumCardView);
                         cardView.setVisibility(View.GONE);
 
                         GridView menuEditFilter = dialogViewFilter.findViewById(R.id.menu_grid);
@@ -2009,13 +2008,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
         builder.setView(dialogView);
+        builder.setTitle(R.string.menu_filter);
         AlertDialog dialog = builder.create();
         dialog.show();
         HelperUnit.setupDialog(context, dialog);
-
-        TextView menuTitleFilter = dialogView.findViewById(R.id.menuTitle);
-        menuTitleFilter.setText(R.string.menu_filter);
-        CardView cardView = dialogView.findViewById(R.id.cardView);
+        CardView cardView = dialogView.findViewById(R.id.albumCardView);
         cardView.setVisibility(View.GONE);
 
         Button button_help = dialogView.findViewById(R.id.button_help);
