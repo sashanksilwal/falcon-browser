@@ -700,6 +700,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                         builder.setIcon(R.drawable.icon_alert);
                         builder.setTitle(R.string.menu_delete);
                         builder.setMessage(R.string.hint_database);
+                        builder.setIcon(R.drawable.icon_delete);
                         builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> {
                             if (overViewTab.equals(getString(R.string.album_title_home))) {
                                 BrowserUnit.clearHome(context);
@@ -1396,6 +1397,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     builderSubMenu.setIcon(R.drawable.icon_alert);
                     builderSubMenu.setTitle(R.string.menu_delete);
                     builderSubMenu.setMessage(R.string.hint_database);
+                    builderSubMenu.setIcon(R.drawable.icon_delete);
                     builderSubMenu.setPositiveButton(R.string.app_ok, (dialog2, whichButton) -> {
                         RecordAction action = new RecordAction(this);
                         action.open(true);
@@ -1495,6 +1497,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     builderSubMenu = new MaterialAlertDialogBuilder(context);
                     builderSubMenu.setIcon(R.drawable.icon_alert);
                     builderSubMenu.setTitle(R.string.menu_delete);
+                    builderSubMenu.setIcon(R.drawable.icon_delete);
                     builderSubMenu.setMessage(R.string.hint_database);
                     builderSubMenu.setPositiveButton(R.string.app_ok, (dialog2, whichButton) -> {
                         Record record = recordList.get(location);
@@ -1578,6 +1581,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                     builderSubMenu.setView(dialogViewSubMenu);
                     builderSubMenu.setTitle(getString(R.string.menu_edit));
+                    builderSubMenu.setIcon(R.drawable.icon_edit);
                     dialogSubMenu = builderSubMenu.create();
                     dialogSubMenu.show();
                     HelperUnit.setupDialog(context, dialogSubMenu);
@@ -2161,6 +2165,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         builder.setView(dialogViewSubMenu);
         builder.setTitle(getString(R.string.dialog_postOnWebsite));
         builder.setMessage(message);
+        builder.setIcon(R.drawable.icon_post);
 
         Dialog dialog = builder.create();
         dialog.show();
@@ -2178,7 +2183,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("text", data);
             Objects.requireNonNull(clipboard).setPrimaryClip(clip);
-            String text = getString(R.string.toast_copy_successful) + ": " + data;
+            String text = getString(R.string.toast_copy_successful) + " -  " + data;
             NinjaToast.show(this, text);
             addAlbum("", shareTop, true, false, "", dialog);
             HelperUnit.hideSoftKeyboard(editTop, context);

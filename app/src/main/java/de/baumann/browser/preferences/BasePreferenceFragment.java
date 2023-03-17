@@ -59,6 +59,7 @@ public class BasePreferenceFragment extends PreferenceFragmentCompat {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(preference.getTitle());
+        builder.setIcon(R.drawable.icon_edit);
         builder.setNegativeButton(R.string.app_cancel, null);
         builder.setPositiveButton(R.string.app_ok, (dialog, i) -> {
             String newValue = Objects.requireNonNull(input.getText()).toString();
