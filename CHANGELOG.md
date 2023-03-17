@@ -3,7 +3,7 @@
 - new: context menu in tab overview
 - new: icons in menus
 - new: delete entries from search
-- fix: layout
+- fix: layout in menus
 - fix: menus
 - fix: onReceivedHttpAuthRequest password showing #1069
 - fix: download names #1071
