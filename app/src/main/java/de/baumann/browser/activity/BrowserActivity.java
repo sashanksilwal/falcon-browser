@@ -1654,19 +1654,28 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
             TextView dialog_warning = dialogView.findViewById(R.id.dialog_titleDomain);
             dialog_warning.setText(HelperUnit.domain(url));
-            dialog_warning.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            dialog_warning.setSingleLine(true);
-            dialog_warning.setMarqueeRepeatLimit(1);
-            dialog_warning.setSelected(true);
-            dialog_warning.setOnClickListener(v -> {
-                dialog_warning.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                dialog_warning.setSingleLine(true);
-                dialog_warning.setMarqueeRepeatLimit(1);
-                dialog_warning.setSelected(true);
-            });
+            dialog_warning.setEllipsize(TextUtils.TruncateAt.END);
 
             TextView dialog_titleProfile = dialogView.findViewById(R.id.dialog_titleProfile);
             ninjaWebView.putProfileBoolean("", dialog_titleProfile, chip_profile_trusted, chip_profile_standard, chip_profile_protected, chip_profile_changed);
+
+            FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_image_broken);
+
+            LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+            TextView overflowURL = dialogView.findViewById(R.id.overflowURL);
+            overflowURL.setText(url);
+            overflowURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            overflowURL.setSingleLine(true);
+            overflowURL.setMarqueeRepeatLimit(1);
+            overflowURL.setSelected(true);
+            textGroup.setOnClickListener(v -> {
+                overflowURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                overflowURL.setSingleLine(true);
+                overflowURL.setMarqueeRepeatLimit(1);
+                overflowURL.setSelected(true);
+            });
+            TextView overflowTitle = dialogView.findViewById(R.id.overflowTitle);
+            overflowTitle.setText(ninjaWebView.getTitle());
 
             AlertDialog dialog = builder.create();
             dialog.show();

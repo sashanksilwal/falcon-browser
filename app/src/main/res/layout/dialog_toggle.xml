@@ -12,99 +12,161 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp">
+        android:padding="15dp">
 
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.Material3.CardView.Filled"
             android:id="@+id/albumCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="?attr/colorSecondaryContainer" >
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp">
-
-                <TextView
-                    android:id="@+id/dialog_titleDomain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/albumProfile"
-                    android:layout_centerInParent="true"
-                    android:textStyle="bold"
-                    android:textAppearance="?attr/textAppearanceBodyLarge"/>
-
-                <LinearLayout
-                    android:id="@+id/albumProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentEnd="true"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_setProfileTrusted"
-                        style="@style/Widget.Material3.Chip.Suggestion"
-                        android:layout_width="wrap_content"
-                        app:chipIcon="@drawable/icon_profile_trusted"
-                        app:chipIconEnabled="true"
-                        app:textEndPadding="0dp"
-                        app:textStartPadding="0dp"
-                        android:layout_height="wrap_content"
-                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                        app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_setProfileStandard"
-                        style="@style/Widget.Material3.Chip.Suggestion"
-                        android:layout_width="wrap_content"
-                        app:chipIcon="@drawable/icon_profile_standard"
-                        app:chipIconEnabled="true"
-                        app:textEndPadding="0dp"
-                        app:textStartPadding="0dp"
-                        android:layout_height="wrap_content"
-                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                        app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_setProfileProtected"
-                        style="@style/Widget.Material3.Chip.Suggestion"
-                        android:layout_width="wrap_content"
-                        app:chipIcon="@drawable/icon_profile_protected"
-                        app:chipIconEnabled="true"
-                        app:textEndPadding="0dp"
-                        app:textStartPadding="0dp"
-                        android:layout_height="wrap_content"
-                        app:chipBackgroundColor="@drawable/bg_chip_state_list"
-                        app:chipIconTint="@drawable/bg_chip_icon_state" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Material3.CardView.Filled"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:backgroundTint="?attr/colorSecondaryContainer" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="5dp">
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardView"
+                        style="@style/Widget.Material3.CardView.Filled"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@android:color/transparent"
+                        app:cardCornerRadius="3dp">
+
+                        <ImageView
+                            android:id="@+id/menu_icon"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:scaleType="fitCenter"
+                            tools:ignore="ContentDescription" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textGroup"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@id/cardView">
+
+                        <TextView
+                            android:id="@+id/overflowTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:textAppearance="?attr/textAppearanceBodyLarge"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/overflowURL"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:textAppearance="?attr/textAppearanceBodySmall"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/dialog_titleDomain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@id/albumProfile"
+                        android:layout_centerInParent="true"
+                        android:maxLines="1"
+                        android:textAppearance="?attr/textAppearanceBodyLarge"/>
+
+                    <LinearLayout
+                        android:id="@+id/albumProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_setProfileTrusted"
+                            style="@style/Widget.Material3.Chip.Suggestion"
+                            android:layout_width="wrap_content"
+                            app:chipIcon="@drawable/icon_profile_trusted"
+                            app:chipIconEnabled="true"
+                            app:textEndPadding="0dp"
+                            app:textStartPadding="0dp"
+                            android:layout_height="wrap_content"
+                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                            app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_setProfileStandard"
+                            style="@style/Widget.Material3.Chip.Suggestion"
+                            android:layout_width="wrap_content"
+                            app:chipIcon="@drawable/icon_profile_standard"
+                            app:chipIconEnabled="true"
+                            app:textEndPadding="0dp"
+                            app:textStartPadding="0dp"
+                            android:layout_height="wrap_content"
+                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                            app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_setProfileProtected"
+                            style="@style/Widget.Material3.Chip.Suggestion"
+                            android:layout_width="wrap_content"
+                            app:chipIcon="@drawable/icon_profile_protected"
+                            app:chipIconEnabled="true"
+                            app:textEndPadding="0dp"
+                            app:textStartPadding="0dp"
+                            android:layout_height="wrap_content"
+                            app:chipBackgroundColor="@drawable/bg_chip_state_list"
+                            app:chipIconTint="@drawable/bg_chip_icon_state" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="?attr/colorSecondaryContainer" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -217,14 +279,13 @@
             style="@style/Widget.Material3.CardView.Filled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:backgroundTint="?attr/colorSecondaryContainer">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="5dp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
