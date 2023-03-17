@@ -154,6 +154,7 @@ public class HelperUnit {
 
             builder.setView(dialogView);
             builder.setTitle(R.string.menu_save_as);
+            builder.setIcon(R.drawable.icon_save_as);
 
             AlertDialog dialog = builder.create();
             dialog.show();
@@ -178,7 +179,11 @@ public class HelperUnit {
                         try {
                             Uri source = Uri.parse(url);
                             DownloadManager.Request request = new DownloadManager.Request(source);
-                            request.addRequestHeader("List_protected", CookieManager.getInstance().getCookie(url));
+                            String cookies = CookieManager.getInstance().getCookie(url);
+                            request.addRequestHeader("cookie", cookies);
+                            request.addRequestHeader("Accept", "text/html, application/xhtml+xml, *" + "/" + "*");
+                            request.addRequestHeader("Accept-Language", "en-US,en;q=0.7,he;q=0.3");
+                            request.addRequestHeader("Referer", url);
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //Notify client once download is completed!
                             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename1);
                             DownloadManager dm = (DownloadManager) activity.getSystemService(DOWNLOAD_SERVICE);
