@@ -46,7 +46,7 @@ public class Settings_Activity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        getMenuInflater().inflate(R.menu.menu_help, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

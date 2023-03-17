@@ -117,7 +117,7 @@ public class ProfilesList extends AppCompatActivity {
                 cardView.setVisibility(View.GONE);
                 deleteEntry.setOnClickListener(v1 -> {
                     MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(ProfilesList.this);
-                    builder.setIcon(R.drawable.icon_alert);
+                    builder.setIcon(R.drawable.icon_delete);
                     builder.setTitle(R.string.menu_delete);
                     builder.setMessage(R.string.hint_database);
                     builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> {
@@ -147,7 +147,7 @@ public class ProfilesList extends AppCompatActivity {
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        Button button = findViewById(R.id.whitelist_add);
+        Button button = findViewById(R.id.profileListAdd);
         button.setOnClickListener(v -> {
             EditText editText = findViewById(R.id.whitelist_edit);
             String domain = editText.getText().toString().trim();
@@ -179,21 +179,11 @@ public class ProfilesList extends AppCompatActivity {
                 action1.close();
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_profile_list, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-
-        if (menuItem.getItemId() == android.R.id.home) finish();
-        else if (menuItem.getItemId() == R.id.menu_clear) {
+        Button profileListDelete = findViewById(R.id.profileListDelete);
+        profileListDelete.setOnClickListener(v -> {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
-            builder.setIcon(R.drawable.icon_alert);
+            builder.setIcon(R.drawable.icon_delete);
             builder.setTitle(R.string.menu_delete);
             builder.setMessage(R.string.hint_database);
             builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> {
@@ -215,7 +205,20 @@ public class ProfilesList extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
             HelperUnit.setupDialog(this, dialog);
-        } else if (menuItem.getItemId() == R.id.menu_help) {
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_help, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+
+        if (menuItem.getItemId() == android.R.id.home) finish();
+        else if (menuItem.getItemId() == R.id.menu_help) {
             Uri webpage = Uri.parse("https://github.com/scoute-dich/browser/wiki/Profile-list");
             BrowserUnit.intentURL(this, webpage);
         }

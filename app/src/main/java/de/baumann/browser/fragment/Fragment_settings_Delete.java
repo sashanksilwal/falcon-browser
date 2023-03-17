@@ -30,7 +30,7 @@ public class Fragment_settings_Delete extends BasePreferenceFragment {
         sp_deleteDatabase.setOnPreferenceClickListener(preference -> {
             final SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
-            builder.setIcon(R.drawable.icon_alert);
+            builder.setIcon(R.drawable.icon_delete);
             builder.setTitle(R.string.menu_delete);
             builder.setMessage(R.string.hint_database);
             builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> {

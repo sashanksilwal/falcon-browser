@@ -563,9 +563,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         super.onCreateContextMenu(menu, v, menuInfo);
         WebView.HitTestResult result = ninjaWebView.getHitTestResult();
         if (result.getExtra() != null) {
-            String domain = HelperUnit.domain(result.getExtra());
             if (result.getType() == SRC_ANCHOR_TYPE)
-                showContextMenuLink(domain, result.getExtra(), SRC_ANCHOR_TYPE, false);
+                showContextMenuLink("", result.getExtra(), SRC_ANCHOR_TYPE, false);
             else if (result.getType() == SRC_IMAGE_ANCHOR_TYPE) {
                 // Create a background thread that has a Looper
                 HandlerThread handlerThread = new HandlerThread("HandlerThread");
@@ -575,11 +574,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 Message msg = backgroundHandler.obtainMessage();
                 ninjaWebView.requestFocusNodeHref(msg);
                 String url = (String) msg.getData().get("url");
-                showContextMenuLink(domain, url, SRC_ANCHOR_TYPE, false); }
+                showContextMenuLink("", url, SRC_ANCHOR_TYPE, false); }
             else if (result.getType() == IMAGE_TYPE) {
-                showContextMenuLink(domain, result.getExtra(), IMAGE_TYPE, false);
+                showContextMenuLink("", result.getExtra(), IMAGE_TYPE, false);
             }
-            else showContextMenuLink(domain, result.getExtra(), 0, false); }
+            else showContextMenuLink("", result.getExtra(), 0, false); }
     }
 
     // Views
@@ -1297,11 +1296,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
     // Menus
 
-    public void showContextMenuLink(final String title, final String url, int type, boolean showAll) {
+    public void showContextMenuLink (String title, final String url, int type, boolean showAll) {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
 
+        if (title.isEmpty()) {
+            title = HelperUnit.domain(url);
+        }
         LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
         TextView menuURL = dialogView.findViewById(R.id.menuURL);
         menuURL.setText(url);
@@ -1361,18 +1363,19 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         GridAdapter gridAdapter = new GridAdapter(context, gridList);
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
+        String finalTitle = title;
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
             switch (position) {
                 case 0:
-                    addAlbum(getString(R.string.app_name), url, true, false, "", dialog);
+                    addAlbum(finalTitle, url, true, false, "", dialog);
                     dialog.cancel();
                     break;
                 case 1:
-                    addAlbum(getString(R.string.app_name), url, false, false, "", dialog);
+                    addAlbum(finalTitle, url, false, false, "", dialog);
                     dialog.cancel();
                     break;
                 case 2:
-                    addAlbum(getString(R.string.app_name), url, true, true, "", dialog);
+                    addAlbum(finalTitle, url, true, true, "", dialog);
                     break;
                 case 3:
                     shareLink(HelperUnit.domain(url), url);
@@ -1393,7 +1396,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     } else HelperUnit.saveAs(activity, url, null, dialog);
                     break;
                 case 7:
-                    save_atHome(title, url);
+                    save_atHome(finalTitle, url);
                     dialog.cancel();
                     break;
                 case 8:
@@ -1484,17 +1487,16 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             AlertDialog dialogSubMenu;
             switch (position) {
                 case 0:
-                    addAlbum(getString(R.string.app_name), url, true, false, "", dialog);
+                    addAlbum(title, url, true, false, "", dialog);
                     dialog.cancel();
                     hideOverview();
                     break;
                 case 1:
-                    addAlbum(getString(R.string.app_name), url, false, false, "", dialog);
+                    addAlbum(title, url, false, false, "", dialog);
                     dialog.cancel();
                     break;
                 case 2:
-                    addAlbum(getString(R.string.app_name), url, true, true, "", dialog);
-                    hideOverview();
+                    addAlbum(title, url, true, true, "", dialog);
                     break;
                 case 3:
                     shareLink(title, url);
@@ -2518,18 +2520,22 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             builder.setView(dialogView);
             AlertDialog dialog = builder.create();
             FaviconHelper.setFavicon(context, dialogView, url, R.id.menu_icon, R.drawable.icon_link);
-            TextView dialog_title = dialogView.findViewById(R.id.menuTitle);
-            dialog_title.setText(url);
-            dialog_title.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            dialog_title.setSingleLine(true);
-            dialog_title.setMarqueeRepeatLimit(1);
-            dialog_title.setSelected(true);
-            dialog_title.setOnClickListener(v -> {
-                dialog_title.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                dialog_title.setSingleLine(true);
-                dialog_title.setMarqueeRepeatLimit(1);
-                dialog_title.setSelected(true);
+
+            LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+            TextView menuURL = dialogView.findViewById(R.id.menuURL);
+            menuURL.setText(url);
+            menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURL.setSingleLine(true);
+            menuURL.setMarqueeRepeatLimit(1);
+            menuURL.setSelected(true);
+            textGroup.setOnClickListener(v -> {
+                menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                menuURL.setSingleLine(true);
+                menuURL.setMarqueeRepeatLimit(1);
+                menuURL.setSelected(true);
             });
+            TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
+            menuTitle.setText(title);
             dialog.show();
             HelperUnit.setupDialog(context, dialog);
 
@@ -2559,6 +2565,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                         break;
                 }
                 dialog.cancel();
+                hideOverview();
                 setWebView(title, url, foreground);
             });
         }
