@@ -74,7 +74,7 @@ public class NinjaDownloadListener implements DownloadListener {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         builder.setTitle(R.string.app_warning);
         builder.setMessage(text);
-        builder.setIcon(R.drawable.icon_alert);
+        builder.setIcon(R.drawable.icon_download);
 
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
         builder.setView(dialogView);
@@ -95,9 +95,9 @@ public class NinjaDownloadListener implements DownloadListener {
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
-            dialog.cancel();
             switch (position) {
                 case 0:
+                    dialog.cancel();
                     try {
                         Activity activity = (Activity) context;
                         if (msgString[0].startsWith("data:")) {
@@ -130,6 +130,7 @@ public class NinjaDownloadListener implements DownloadListener {
                         e.printStackTrace();}
                     break;
                 case 1:
+                    dialog.cancel();
                     try {
                         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                         sharingIntent.setType("text/plain");
@@ -145,6 +146,7 @@ public class NinjaDownloadListener implements DownloadListener {
                     HelperUnit.saveAs(activity, msgString[0], filename, dialog);
                     break;
                 case 3:
+                    dialog.cancel();
                     break;
             }
         });
