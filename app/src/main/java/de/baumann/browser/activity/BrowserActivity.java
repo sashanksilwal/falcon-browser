@@ -2447,9 +2447,11 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         if (!foreground) ninjaWebView.deactivate();
         else {
+            ninjaWebView.setBrowserController(this);
             ninjaWebView.activate();
             showAlbum(ninjaWebView);
-            ninjaWebView.reload(); }
+            ninjaWebView.reload();
+        }
 
         View albumView = ninjaWebView.getAlbumView();
         tab_container.addView(albumView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);

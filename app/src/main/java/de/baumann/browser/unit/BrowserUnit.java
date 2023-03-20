@@ -94,7 +94,7 @@ public class BrowserUnit {
 
     public static String queryWrapper(Context context, String query) {
 
-        if (isURL(query)) {
+        if (isURL(query) || query.equals("")) {
             if (query.startsWith(URL_SCHEME_ABOUT) || query.startsWith(URL_SCHEME_MAIL_TO)) {
                 return query;
             }
