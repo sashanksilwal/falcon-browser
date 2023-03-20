@@ -267,7 +267,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             public void onReceive(Context context, Intent intent) {
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
                 builder.setTitle(R.string.menu_download);
-                builder.setIcon(R.drawable.icon_alert);
+                builder.setIcon(R.drawable.icon_download);
                 builder.setMessage(R.string.toast_downloadComplete);
                 builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> startActivity(Intent.createChooser(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS), null)));
                 builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> dialog.cancel());
@@ -884,29 +884,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             if (Objects.requireNonNull(ninjaWebView.getTitle()).isEmpty())
                 omniBox_text.setText(url);
             else omniBox_text.setText(ninjaWebView.getTitle());
-
-            if (url.startsWith("https://") || url.contains("about:blank") || listTrusted.isWhite(url))
-                omniBox_tab.setOnClickListener(v -> showTabView());
-            else if (url.isEmpty()) {
-                omniBox_tab.setOnClickListener(v -> showTabView());
-                omniBox_text.setText(""); }
-            else {
-                omniBox_tab.setImageResource(R.drawable.icon_alert);
-                omniBox_tab.setOnClickListener(v -> {
-                    MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-                    builder.setIcon(R.drawable.icon_alert);
-                    builder.setTitle(R.string.app_warning);
-                    builder.setMessage(R.string.toast_unsecured);
-                    builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> ninjaWebView.loadUrl(url.replace("http://", "https://")));
-                    builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> {
-                        dialog.cancel();
-                        omniBox_tab.setOnClickListener(v2 -> showTabView());
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    HelperUnit.setupDialog(context, dialog);
-                });
-            }
         }
     }
 
@@ -2450,7 +2427,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             ninjaWebView.setBrowserController(this);
             ninjaWebView.activate();
             showAlbum(ninjaWebView);
-            ninjaWebView.reload();
         }
 
         View albumView = ninjaWebView.getAlbumView();

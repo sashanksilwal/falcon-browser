@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -18,10 +19,11 @@ import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -32,10 +34,12 @@ import java.util.List;
 import java.util.Objects;
 
 import de.baumann.browser.R;
+import de.baumann.browser.database.FaviconHelper;
 import de.baumann.browser.unit.BackupUnit;
 import de.baumann.browser.unit.HelperUnit;
 import de.baumann.browser.view.GridAdapter;
 import de.baumann.browser.view.GridItem;
+import de.baumann.browser.view.NinjaWebView;
 
 public class NinjaDownloadListener implements DownloadListener {
     private final Context context;
@@ -51,6 +55,8 @@ public class NinjaDownloadListener implements DownloadListener {
     @Override
     public void onDownloadStart(final String url, String userAgent, final String contentDisposition, final String mimeType, long contentLength) {
 
+        BrowserController browserController = NinjaWebView.getBrowserController();
+        browserController.updateProgress(100);
         // Create a background thread that has a Looper
         HandlerThread handlerThread = new HandlerThread("HandlerThread");
         handlerThread.start();
@@ -71,15 +77,30 @@ public class NinjaDownloadListener implements DownloadListener {
         GridItem item_03 = new GridItem( context.getString(R.string.menu_save_as), R.drawable.icon_save_as);
         GridItem item_04 = new GridItem( context.getString(R.string.app_cancel), R.drawable.icon_close);
 
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-        builder.setTitle(R.string.app_warning);
-        builder.setMessage(text);
-        builder.setIcon(R.drawable.icon_download);
-
         View dialogView = View.inflate(context, R.layout.dialog_menu, null);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+
+        LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+        TextView menuURL = dialogView.findViewById(R.id.menuURL);
+        menuURL.setText(url);
+        menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuURL.setSingleLine(true);
+        menuURL.setMarqueeRepeatLimit(1);
+        menuURL.setSelected(true);
+        textGroup.setOnClickListener(v -> {
+            menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURL.setSingleLine(true);
+            menuURL.setMarqueeRepeatLimit(1);
+            menuURL.setSelected(true);
+        });
+        TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
+        menuTitle.setText(HelperUnit.domain(url));
+        TextView message = dialogView.findViewById(R.id.message);
+        message.setVisibility(View.VISIBLE);
+        message.setText(text);
+        FaviconHelper.setFavicon(context, dialogView, null, R.id.menu_icon, R.drawable.icon_download);
         builder.setView(dialogView);
-        CardView cardView = dialogView.findViewById(R.id.albumCardView);
-        cardView.setVisibility(View.GONE);
+
         AlertDialog dialog = builder.create();
         dialog.show();
         HelperUnit.setupDialog(context, dialog);
@@ -95,11 +116,10 @@ public class NinjaDownloadListener implements DownloadListener {
         menu_grid.setAdapter(gridAdapter);
         gridAdapter.notifyDataSetChanged();
         menu_grid.setOnItemClickListener((parent, view, position, id) -> {
-
             Activity activity = (Activity) context;
-
             switch (position) {
                 case 0:
+                    dialog.cancel();
                     try {
                         if (msgString[0].startsWith("data:")) {
                             DataURIParser dataURIParser = new DataURIParser(msgString[0]);
