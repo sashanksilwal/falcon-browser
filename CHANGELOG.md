@@ -1,8 +1,9 @@
-### v 9.11 (WIP)
+### v 9.11 "Traven" (WIP)
 
 - new: context menu in tab overview
 - new: icons in menus
 - new: delete entries from search
+- new: http-warning before loading
 - fix: layout in menus
 - fix: menus
 - fix: onReceivedHttpAuthRequest password showing #1069

@@ -2,13 +2,11 @@ package de.baumann.browser.view;
 
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.content.ContentValues.TAG;
-import static android.content.Context.DOWNLOAD_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -20,14 +18,11 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
@@ -38,12 +33,10 @@ import android.webkit.WebView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationCompat;
 import androidx.preference.PreferenceManager;
 import androidx.webkit.WebSettingsCompat;
@@ -54,8 +47,6 @@ import com.google.android.material.color.MaterialColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -66,7 +57,6 @@ import de.baumann.browser.R;
 import de.baumann.browser.activity.BrowserActivity;
 import de.baumann.browser.browser.AlbumController;
 import de.baumann.browser.browser.BrowserController;
-import de.baumann.browser.browser.DataURIParser;
 import de.baumann.browser.browser.List_protected;
 import de.baumann.browser.browser.List_standard;
 import de.baumann.browser.browser.List_trusted;
@@ -76,7 +66,6 @@ import de.baumann.browser.browser.NinjaWebViewClient;
 import de.baumann.browser.database.FaviconHelper;
 import de.baumann.browser.database.Record;
 import de.baumann.browser.database.RecordAction;
-import de.baumann.browser.unit.BackupUnit;
 import de.baumann.browser.unit.BrowserUnit;
 import de.baumann.browser.unit.HelperUnit;
 
@@ -602,7 +591,7 @@ public class NinjaWebView extends WebView implements AlbumController {
             TextView message = dialogView.findViewById(R.id.message);
             message.setVisibility(View.VISIBLE);
             message.setText(R.string.toast_unsecured);
-            FaviconHelper.setFavicon(context, dialogView, null, R.id.menu_icon, R.drawable.icon_http);
+            FaviconHelper.setFavicon(context, dialogView, null, R.id.menu_icon, R.drawable.icon_alert);
             builder.setView(dialogView);
 
             AlertDialog dialog = builder.create();
@@ -618,7 +607,6 @@ public class NinjaWebView extends WebView implements AlbumController {
             menu_grid.setAdapter(gridAdapter);
             gridAdapter.notifyDataSetChanged();
             menu_grid.setOnItemClickListener((parent, view, position, id) -> {
-                Activity activity = (Activity) context;
                 switch (position) {
                     case 0:
                         dialog.cancel();
@@ -635,6 +623,7 @@ public class NinjaWebView extends WebView implements AlbumController {
                         break;
                     case 2:
                         dialog.cancel();
+                        super.loadUrl(BrowserUnit.queryWrapper(context, "about:blank"), getRequestHeaders());
                         break;
                 }
             });

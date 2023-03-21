@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Message;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
@@ -21,7 +22,8 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -35,6 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.util.Objects;
 
 import de.baumann.browser.R;
+import de.baumann.browser.database.FaviconHelper;
 import de.baumann.browser.database.Record;
 import de.baumann.browser.database.RecordAction;
 import de.baumann.browser.unit.BrowserUnit;
@@ -552,14 +555,12 @@ public class NinjaWebViewClient extends WebViewClient {
     public void onReceivedHttpAuthRequest(WebView view, @NonNull final HttpAuthHandler handler, String host, String realm) {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-
         View dialogView = View.inflate(context, R.layout.dialog_edit, null);
 
         TextInputLayout editTopLayout = dialogView.findViewById(R.id.editTopLayout);
         editTopLayout.setHint(this.context.getString(R.string.dialog_sign_in_username));
         TextInputLayout editBottomLayout = dialogView.findViewById(R.id.editBottomLayout);
         editBottomLayout.setHint(this.context.getString(R.string.dialog_sign_in_password));
-
         TextInputEditText editTop = dialogView.findViewById(R.id.editTop);
         TextInputEditText editBottom = dialogView.findViewById(R.id.editBottom);
         editTop.setText("");
@@ -569,9 +570,23 @@ public class NinjaWebViewClient extends WebViewClient {
         editBottom.setHint(this.context.getString(R.string.dialog_sign_in_password));
 
         builder.setView(dialogView);
-        builder.setTitle("HttpAuthRequest");
-        builder.setIcon(R.drawable.icon_alert);
-        builder.setMessage(view.getUrl());
+
+        LinearLayout textGroupEdit = dialogView.findViewById(R.id.textGroupEdit);
+        TextView menuURLEdit = dialogView.findViewById(R.id.menuURLEdit);
+        menuURLEdit.setText(view.getUrl());
+        menuURLEdit.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuURLEdit.setSingleLine(true);
+        menuURLEdit.setMarqueeRepeatLimit(1);
+        menuURLEdit.setSelected(true);
+        textGroupEdit.setOnClickListener(v -> {
+            menuURLEdit.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURLEdit.setSingleLine(true);
+            menuURLEdit.setMarqueeRepeatLimit(1);
+            menuURLEdit.setSelected(true);
+        });
+        TextView menuTitleEdit = dialogView.findViewById(R.id.menuTitleEdit);
+        menuTitleEdit.setText(view.getTitle());
+        FaviconHelper.setFavicon(context, dialogView, null, R.id.menu_icon, R.drawable.icon_alert);
 
         AlertDialog dialog = builder.create();
         dialog.show();

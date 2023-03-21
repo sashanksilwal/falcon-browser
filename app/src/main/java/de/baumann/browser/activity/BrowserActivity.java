@@ -1136,8 +1136,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 assert url != null;
                 if (url.startsWith("data:")) {
                     DataURIParser dataURIParser = new DataURIParser(url);
-                    HelperUnit.saveDataURI(activity, dataURIParser, dialog_overflow);
-                } else HelperUnit.saveAs(activity, url, null, dialog_overflow);
+                    HelperUnit.saveDataURI(activity, title, url, dataURIParser, dialog_overflow);
+                } else HelperUnit.saveAs(activity, title, url, null, dialog_overflow);
             }
         });
 
@@ -1373,8 +1373,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 case 6:
                     if (url.startsWith("data:")) {
                         DataURIParser dataURIParser = new DataURIParser(url);
-                        HelperUnit.saveDataURI(activity, dataURIParser, dialog);
-                    } else HelperUnit.saveAs(activity, url, null, dialog);
+                        HelperUnit.saveDataURI(activity, finalTitle, url, dataURIParser, dialog);
+                    } else HelperUnit.saveAs(activity, finalTitle,  url, null, dialog);
                     break;
                 case 7:
                     save_atHome(finalTitle, url);
@@ -1511,6 +1511,23 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
                     View dialogViewSubMenu = View.inflate(context, R.layout.dialog_edit, null);
 
+                    LinearLayout textGroupEdit = dialogViewSubMenu.findViewById(R.id.textGroupEdit);
+                    TextView menuURLEdit = dialogViewSubMenu.findViewById(R.id.menuURLEdit);
+                    menuURLEdit.setText(url);
+                    menuURLEdit.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                    menuURLEdit.setSingleLine(true);
+                    menuURLEdit.setMarqueeRepeatLimit(1);
+                    menuURLEdit.setSelected(true);
+                    textGroupEdit.setOnClickListener(v -> {
+                        menuURLEdit.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                        menuURLEdit.setSingleLine(true);
+                        menuURLEdit.setMarqueeRepeatLimit(1);
+                        menuURLEdit.setSelected(true);
+                    });
+                    TextView menuTitleEdit = dialogViewSubMenu.findViewById(R.id.menuTitleEdit);
+                    menuTitleEdit.setText(HelperUnit.domain(url));
+                    FaviconHelper.setFavicon(context, dialogViewSubMenu, null, R.id.menu_icon, R.drawable.icon_edit);
+
                     LinearLayout editButtonsLayout = dialogViewSubMenu.findViewById(R.id.editButtonsLayout);
                     editButtonsLayout.setVisibility(View.VISIBLE);
                     TextInputLayout editTopLayout = dialogViewSubMenu.findViewById(R.id.editTopLayout);
@@ -1569,8 +1586,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     HelperUnit.setFilterIcons(context, ib_icon, newIcon);
 
                     builderSubMenu.setView(dialogViewSubMenu);
-                    builderSubMenu.setTitle(getString(R.string.menu_edit));
-                    builderSubMenu.setIcon(R.drawable.icon_edit);
                     dialogSubMenu = builderSubMenu.create();
                     dialogSubMenu.show();
                     HelperUnit.setupDialog(context, dialogSubMenu);
@@ -2147,6 +2162,8 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         View dialogViewSubMenu = View.inflate(context, R.layout.dialog_edit, null);
 
+        CardView cardView = dialogViewSubMenu.findViewById(R.id.albumCardView);
+        cardView.setVisibility(View.GONE);
         TextInputLayout editTopLayout = dialogViewSubMenu.findViewById(R.id.editTopLayout);
         editTopLayout.setVisibility(View.GONE);
         TextInputLayout editBottomLayout = dialogViewSubMenu.findViewById(R.id.editBottomLayout);

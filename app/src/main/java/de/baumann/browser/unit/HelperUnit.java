@@ -39,6 +39,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -50,6 +51,8 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -72,6 +75,7 @@ import de.baumann.browser.R;
 import de.baumann.browser.activity.BrowserActivity;
 import de.baumann.browser.browser.BrowserController;
 import de.baumann.browser.browser.DataURIParser;
+import de.baumann.browser.database.FaviconHelper;
 import de.baumann.browser.view.GridItem;
 import de.baumann.browser.view.NinjaToast;
 import de.baumann.browser.view.NinjaWebView;
@@ -128,7 +132,7 @@ public class HelperUnit {
         }
     }
 
-    public static void saveAs(final Activity activity, final String url, final String name, Dialog dialogParent) {
+    public static void saveAs(final Activity activity, String titleMenu, final String url, final String name, Dialog dialogParent) {
 
         try {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
@@ -152,9 +156,24 @@ public class HelperUnit {
             editTop.setText(prefix);
             if (extension.length() <= 8) editBottom.setText(extension);
 
+            LinearLayout textGroupEdit = dialogView.findViewById(R.id.textGroupEdit);
+            TextView menuURLEdit = dialogView.findViewById(R.id.menuURLEdit);
+            menuURLEdit.setText(url);
+            menuURLEdit.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURLEdit.setSingleLine(true);
+            menuURLEdit.setMarqueeRepeatLimit(1);
+            menuURLEdit.setSelected(true);
+            textGroupEdit.setOnClickListener(v -> {
+                menuURLEdit.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                menuURLEdit.setSingleLine(true);
+                menuURLEdit.setMarqueeRepeatLimit(1);
+                menuURLEdit.setSelected(true);
+            });
+            TextView menuTitleEdit = dialogView.findViewById(R.id.menuTitleEdit);
+            menuTitleEdit.setText(titleMenu);
+            FaviconHelper.setFavicon(activity, dialogView, null, R.id.menu_icon, R.drawable.icon_save_as);
+
             builder.setView(dialogView);
-            builder.setTitle(R.string.menu_save_as);
-            builder.setIcon(R.drawable.icon_save_as);
 
             AlertDialog dialog = builder.create();
             dialog.show();
@@ -352,7 +371,7 @@ public class HelperUnit {
         }
     }
 
-    public static void saveDataURI(Activity activity, DataURIParser dataUriParser, Dialog dialogParent) {
+    public static void saveDataURI(Activity activity, String titleMenu, String url, DataURIParser dataUriParser, Dialog dialogParent) {
 
         byte[] imagedata = dataUriParser.getImagedata();
         String filename = dataUriParser.getFilename();
@@ -371,6 +390,23 @@ public class HelperUnit {
         if (extension.length() <= 8) {
             editBottom.setText(extension);
         }
+
+        LinearLayout textGroupEdit = dialogView.findViewById(R.id.textGroupEdit);
+        TextView menuURLEdit = dialogView.findViewById(R.id.menuURLEdit);
+        menuURLEdit.setText(url);
+        menuURLEdit.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuURLEdit.setSingleLine(true);
+        menuURLEdit.setMarqueeRepeatLimit(1);
+        menuURLEdit.setSelected(true);
+        textGroupEdit.setOnClickListener(v -> {
+            menuURLEdit.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURLEdit.setSingleLine(true);
+            menuURLEdit.setMarqueeRepeatLimit(1);
+            menuURLEdit.setSelected(true);
+        });
+        TextView menuTitleEdit = dialogView.findViewById(R.id.menuTitleEdit);
+        menuTitleEdit.setText(titleMenu);
+        FaviconHelper.setFavicon(activity, dialogView, null, R.id.menu_icon, R.drawable.icon_save_as);
 
         builder.setView(dialogView);
         builder.setTitle(R.string.menu_save_as);

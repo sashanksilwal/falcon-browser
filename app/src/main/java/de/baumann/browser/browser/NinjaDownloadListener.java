@@ -169,7 +169,7 @@ public class NinjaDownloadListener implements DownloadListener {
                         e.printStackTrace();}
                     break;
                 case 2:
-                    HelperUnit.saveAs(activity, msgString[0], filename, dialog);
+                    HelperUnit.saveAs(activity, HelperUnit.domain(url), msgString[0], filename, dialog);
                     break;
                 case 3:
                     dialog.cancel();
