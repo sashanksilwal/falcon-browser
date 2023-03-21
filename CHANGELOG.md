@@ -1,4 +1,4 @@
-### v 9.11 "Traven" (WIP)
+### v 9.11 "Traven"
 
 - new: context menu in tab overview
 - new: icons in menus
