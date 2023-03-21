@@ -127,11 +127,11 @@ import de.baumann.browser.view.SwipeTouchListener;
 public class BrowserActivity extends AppCompatActivity implements BrowserController {
 
     // Menus
-
     private static final int INPUT_FILE_REQUEST_CODE = 1;
     private AdapterRecord adapter;
     private RelativeLayout omniBox;
     private ImageButton omniBox_overview;
+    private int duration;
 
     // Views
     private TextInputEditText omniBox_text;
@@ -218,6 +218,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         activity = BrowserActivity.this;
         context = BrowserActivity.this;
         sp = PreferenceManager.getDefaultSharedPreferences(context);
+        duration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
         if (getSupportActionBar() != null) getSupportActionBar().hide();
         Window window = this.getWindow();
@@ -955,6 +956,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         setSelectedTab();
         bottomSheetDialog_OverView.setVisibility(View.VISIBLE);
         ObjectAnimator animation = ObjectAnimator.ofFloat(bottomSheetDialog_OverView, "translationY", 0);
+        animation.setDuration(duration);
         animation.start();
         bottomAppBar.setVisibility(View.GONE);
     }
@@ -962,6 +964,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
     public void hideOverview() {
         bottomSheetDialog_OverView.setVisibility(View.GONE);
         ObjectAnimator animation = ObjectAnimator.ofFloat(bottomSheetDialog_OverView, "translationY", bottomSheetDialog_OverView.getHeight());
+        animation.setDuration(duration);
         animation.start();
         bottomAppBar.setVisibility(View.VISIBLE);
     }
@@ -970,6 +973,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         bottom_navigation.setSelectedItemId(R.id.page_0);
         bottomSheetDialog_OverView.setVisibility(View.VISIBLE);
         ObjectAnimator animation = ObjectAnimator.ofFloat(bottomSheetDialog_OverView, "translationY", 0);
+        animation.setDuration(duration);
         animation.start();
         bottomAppBar.setVisibility(View.GONE);
     }
@@ -2022,14 +2026,6 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         CardView cardView = dialogView.findViewById(R.id.albumCardView);
         cardView.setVisibility(View.GONE);
 
-        Button button_help = dialogView.findViewById(R.id.button_help);
-        button_help.setVisibility(View.VISIBLE);
-        button_help.setOnClickListener(view -> {
-            dialog.cancel();
-            Uri webpage = Uri.parse("https://github.com/scoute-dich/browser/wiki/Filter-Dialog");
-            BrowserUnit.intentURL(this, webpage);
-        });
-
         GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
         final List<GridItem> gridList = new LinkedList<>();
         HelperUnit.addFilterItems(activity, gridList);
@@ -2403,12 +2399,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 if (sp.getBoolean("hideToolbar", true)) {
                     if (animation == null || !animation.isRunning()) {
                         animation = ObjectAnimator.ofFloat(bottomAppBar, "translationY", 0);
+                        animation.setDuration(duration);
                         animation.start(); }}}
 
             public void onSwipeTop() {
                 if (!ninjaWebView.canScrollVertically(0) && sp.getBoolean("hideToolbar", true)) {
                     if (animation == null || !animation.isRunning()) {
                         animation = ObjectAnimator.ofFloat(bottomAppBar, "translationY", bottomAppBar.getHeight());
+                        animation.setDuration(duration);
                         animation.start(); }}}
         };
 
@@ -2419,10 +2417,12 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                     if (scrollY > oldScrollY) {
                         if (animation == null || !animation.isRunning()) {
                             animation = ObjectAnimator.ofFloat(bottomAppBar, "translationY", bottomAppBar.getHeight());
+                            animation.setDuration(duration);
                             animation.start(); }}
                     else if (scrollY < oldScrollY) {
                         if (animation == null || !animation.isRunning()) {
                             animation = ObjectAnimator.ofFloat(bottomAppBar, "translationY", 0);
+                            animation.setDuration(duration);
                             animation.start(); }}}
             }
             if (scrollY == 0) ninjaWebView.setOnTouchListener(swipeTouchListener);
