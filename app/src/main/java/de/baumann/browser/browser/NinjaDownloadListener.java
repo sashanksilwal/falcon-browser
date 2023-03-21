@@ -49,12 +49,10 @@ public class NinjaDownloadListener implements DownloadListener {
         super();
         this.context = context;
         this.webView = webView;
-
     }
 
     @Override
     public void onDownloadStart(final String url, String userAgent, final String contentDisposition, final String mimeType, long contentLength) {
-
         BrowserController browserController = NinjaWebView.getBrowserController();
         browserController.updateProgress(100);
         // Create a background thread that has a Looper

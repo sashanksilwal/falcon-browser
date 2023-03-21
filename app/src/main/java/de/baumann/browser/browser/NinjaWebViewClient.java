@@ -502,15 +502,35 @@ public class NinjaWebViewClient extends WebViewClient {
 
     @Override
     public void onFormResubmission(WebView view, @NonNull final Message doNotResend, final Message resend) {
+
+        View dialogView = View.inflate(context, R.layout.dialog_menu, null);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-        builder.setTitle(R.string.app_warning);
-        builder.setIcon(R.drawable.icon_alert);
-        builder.setMessage(R.string.dialog_content_resubmission);
+
+        LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+        TextView menuURL = dialogView.findViewById(R.id.menuURL);
+        menuURL.setText(view.getUrl());
+        menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuURL.setSingleLine(true);
+        menuURL.setMarqueeRepeatLimit(1);
+        menuURL.setSelected(true);
+        textGroup.setOnClickListener(v -> {
+            menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURL.setSingleLine(true);
+            menuURL.setMarqueeRepeatLimit(1);
+            menuURL.setSelected(true);
+        });
+        TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
+        menuTitle.setText(HelperUnit.domain(view.getUrl()));
+        TextView messageView = dialogView.findViewById(R.id.message);
+        messageView.setVisibility(View.VISIBLE);
+        messageView.setText(R.string.dialog_content_resubmission);
+        FaviconHelper.setFavicon(context, dialogView, null, R.id.menu_icon, R.drawable.icon_alert);
+        builder.setView(dialogView);
         builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> resend.sendToTarget());
-        builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> dialog.cancel());
+        builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> doNotResend.sendToTarget());
         AlertDialog dialog = builder.create();
         dialog.show();
-        dialog.setOnCancelListener(dialog1 -> doNotResend.sendToTarget());
+        dialog.setOnCancelListener(d -> doNotResend.sendToTarget());
         HelperUnit.setupDialog(context, dialog);
     }
 
@@ -539,12 +559,32 @@ public class NinjaWebViewClient extends WebViewClient {
                 break;
         }
         String text = message + " - " + context.getString(R.string.dialog_content_ssl_error);
+
+        View dialogView = View.inflate(context, R.layout.dialog_menu, null);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
-        builder.setIcon(R.drawable.icon_alert);
-        builder.setTitle(R.string.app_warning);
-        builder.setMessage(text);
+
+        LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+        TextView menuURL = dialogView.findViewById(R.id.menuURL);
+        menuURL.setText(view.getUrl());
+        menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        menuURL.setSingleLine(true);
+        menuURL.setMarqueeRepeatLimit(1);
+        menuURL.setSelected(true);
+        textGroup.setOnClickListener(v -> {
+            menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            menuURL.setSingleLine(true);
+            menuURL.setMarqueeRepeatLimit(1);
+            menuURL.setSelected(true);
+        });
+        TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
+        menuTitle.setText(HelperUnit.domain(view.getUrl()));
+        TextView messageView = dialogView.findViewById(R.id.message);
+        messageView.setVisibility(View.VISIBLE);
+        messageView.setText(text);
+        FaviconHelper.setFavicon(context, dialogView, null, R.id.menu_icon, R.drawable.icon_alert);
+        builder.setView(dialogView);
         builder.setPositiveButton(R.string.app_ok, (dialog, whichButton) -> handler.proceed());
-        builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> dialog.cancel());
+        builder.setNegativeButton(R.string.app_cancel, (dialog, whichButton) -> handler.cancel());
         AlertDialog dialog = builder.create();
         dialog.show();
         dialog.setOnCancelListener(dialog1 -> handler.cancel());
