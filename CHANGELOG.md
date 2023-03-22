@@ -1,5 +1,4 @@
 ### v 9.11 "Traven"
-
 - new: context menu in tab overview
 - new: icons in menus
 - new: delete entries from search
@@ -11,7 +10,6 @@
 
 
 ### v 9.10 "Durruti"
-
 - new: Clipboard record preference thanks to @Bnyro
 - new: show url on link menus or when clicking menu title
 - new: show urls in lists
@@ -26,7 +24,6 @@
 
 
 ### v 9.6
-
 - removed: redirection for Instagram
 - fix: Redirect error from YouTube #991
 - fix: loading images fit screen width
@@ -54,14 +51,12 @@
 
 
 ### v 9.5
-
 - fix: can't open URL from outside, if it was closed before
 - fix: Active button colors on OLED theme #1006
 - new: hebrew translation
 
 
 ### v 9.4
-
 - new: "post on website" in sharing menu
 - new: Serbo-Croation translation
 - new: Support app split screen #937
@@ -71,7 +66,6 @@
 - removed: swipe to reload -> use gestures instead
 
 ### v 9.3.1
-
 - fix: Half screen after orientation change #919
 - fix: not all menu items accessible in landscape orientation
 - fix: Download dialog does not decode multibyte file name #917
@@ -80,7 +74,6 @@
 - fix: Persistent swipe issues #924
 
 ### v 9.2
-
 - fix: crash when sharing links #883
 - fix: no password field on webserver authentication #891
 - fix: some swiping issues #899 by Lakjdf
@@ -96,7 +89,6 @@
 - updated translations: *Now 21 languages are fully supported!*
 
 ### v 9.1
-
 - fix: removed unnecessary toasts in fastToggle
 - fix: Browser crash on search with "%" #861
 - fix: progressbar visible when searching
@@ -111,7 +103,6 @@
 - new: show number of tabs in overview
 
 ### v 9.0
-
 - fix: popup menu in Overview
 - fix: searchbar not hiding in back pressing #852
 - fix: edit favorites layout not scrolling #854
@@ -119,7 +110,6 @@
 - updated: translations
 
 ### v 8.9
-
 - fix: some webpages show half the screen #817
 - fix: Shortcut on the home screen #830
 - fix: crash on first start #829 #820
@@ -135,7 +125,6 @@
 - new: help buttons in most important UI-elements
 
 ### v 8.8
-
 - new: Wiki integrated in settings and menus
 - new: notification when playing audio on background #800
 - new: gestures
@@ -144,7 +133,6 @@
 - fix: play audio in background #800
 
 ### v 8.7
-
 - fix: dark theme in settings activities
 - fix: night mode (webView)
 - new: play audio on background
@@ -160,11 +148,9 @@
 - improved: close open tabs dialog after making selection
 
 ### v 8.6
-
 - skipped -
 
 ### v 8.5.1
-
 - fix: camera issue #729
 - fix: profile icon in toolbar #728
 - fix: cookie settings when switching tab
@@ -184,7 +170,6 @@
 - updated: build libraries
 
 ### v 8.4
-
 - new: camera use (thanks to @woheller69)
 - new: microphone use
 - new: webRTC support
@@ -197,7 +182,6 @@
 - updated: setting screens
 
 ### v 8.3
-
 - fix: Swipe to reload not working sometimes #654
 - fix: Restoring bookmarks does not work properly #653
 - fix: some force closes #642 #643
@@ -209,7 +193,6 @@
 - updated: translations
 
 ### v 8.2
-
 - fix: chip desktop, javascript, DOM should not be visible in settings when editing filter names (thanks to @woheller69)
 - fix: Sometimes Favicon is stored several times in database (thanks to @woheller69)
 - fix: permission problems
@@ -220,9 +203,7 @@
 - updated: Edit filter names (thanks to @woheller69)
 - updated: backup preference
 
-
 ### v 8.1
-
 - new: edit bookmark-url (thanks to @woheller69)
 - new: Reload on swipeDown when at top of webpage (thanks to @woheller69)
 - new: Added GlobalPrivacyControl (thanks to @woheller69)
@@ -238,7 +219,6 @@
 - fix: open link externally
 
 ### v 8.0
-
 - new: toggle mobile/desktop mode (thanks to @woheller69)
 - new: auto update of AdBlock-hosts (thanks to @woheller69)
 - new: save desktop mode/javascript/DOM content settings in bookmarks (thanks to @woheller69)
@@ -253,7 +233,6 @@
 - fix: toolbar input handling
 
 ### v 7.5
-
 - new: right to left layout support (thanks to @M3hdiRostami)
 - new: Farsi (Persian) language support (thanks to @M3hdiRostami)
 - updated: AdBlock
