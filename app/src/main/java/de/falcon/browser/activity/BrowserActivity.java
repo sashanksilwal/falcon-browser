@@ -309,7 +309,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         if (BrowserContainer.size() < 1) {
             if (sp.getBoolean("start_tabStart", false)) showOverview();
             addAlbum(getString(R.string.app_name), "", true, false, "", null);
-            ninjaWebView.loadUrl(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki"));
+            ninjaWebView.loadUrl(sp.getString("favoriteURL", "https://yasirzaki.net"));
         }
     }
 
@@ -445,7 +445,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         if (BrowserContainer.size() <= 1) {
             if (!sp.getBoolean("sp_reopenLastTab", false)) doubleTapsQuit();
             else {
-                ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")));
+                ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://yasirzaki.net")));
                 hideOverview(); }}
         else {
             closeTabConfirmation(() -> {
@@ -1062,7 +1062,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         });
 
         menu_grid_tab.setOnItemClickListener((parent, view14, position, id) -> {
-            String favURL = Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki"));
+            String favURL = Objects.requireNonNull(sp.getString("favoriteURL", "https://yasirzaki.net"));
             if (position == 0) {
                 ninjaWebView.loadUrl(favURL);
                 dialog_overflow.cancel();
@@ -1217,7 +1217,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 searchOnSite();
                 dialog_overflow.cancel();
             } else if (position == 1) {
-                Uri webpage = Uri.parse("https://github.com/scoute-dich/browser/wiki");
+                Uri webpage = Uri.parse("https://yasirzaki.net");
                 BrowserUnit.intentURL(this, webpage);
                 dialog_overflow.cancel();
             } else if (position == 2) {
@@ -2263,7 +2263,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 showOverview();
                 break;
             case "09":
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")), true, false, "", null);
+                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://yasirzaki.net")), true, false, "", null);
                 break;
             case "10":
                 removeAlbum(currentAlbumController);
@@ -2287,7 +2287,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 ninjaWebView.reload();
                 break;
             case "17":
-                ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://github.com/scoute-dich/browser/wiki")));
+                ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://yasirzaki.net")));
                 break;
             case "18":
                 bottom_navigation.setSelectedItemId(R.id.page_2);
