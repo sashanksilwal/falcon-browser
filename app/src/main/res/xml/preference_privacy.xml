@@ -61,7 +61,7 @@
 
     <PreferenceCategory android:title="@string/privacy_redirect">
 
-        <de.baumann.browser.preferences.EditTextSwitchPreference
+        <de.falcon.browser.preferences.EditTextSwitchPreference
             android:defaultValue="https://yewtu.be/"
             android:key="sp_youTube_string"
             android:selectable="true"
@@ -69,7 +69,7 @@
             app:editTextSwitchKey="sp_youTube_switch"
             app:useSimpleSummaryProvider="true" />
 
-        <de.baumann.browser.preferences.EditTextSwitchPreference
+        <de.falcon.browser.preferences.EditTextSwitchPreference
             android:defaultValue="https://nitter.net/"
             android:key="sp_twitter_string"
             android:selectable="true"
@@ -86,21 +86,21 @@
 
     <PreferenceCategory android:title="@string/setting_userScript">
 
-        <de.baumann.browser.preferences.EditTextSwitchPreference
+        <de.falcon.browser.preferences.EditTextSwitchPreference
             android:key="sp_onPageStarted"
             android:selectable="true"
             android:title="onPageStarted"
             app:editTextSwitchKey="onPageStarted"
             app:useSimpleSummaryProvider="true" />
 
-        <de.baumann.browser.preferences.EditTextSwitchPreference
+        <de.falcon.browser.preferences.EditTextSwitchPreference
             android:key="sp_onPageFinished"
             android:selectable="true"
             android:title="onPageFinished"
             app:editTextSwitchKey="onPageFinished"
             app:useSimpleSummaryProvider="true" />
 
-        <de.baumann.browser.preferences.EditTextSwitchPreference
+        <de.falcon.browser.preferences.EditTextSwitchPreference
             android:key="sp_onLoadResource"
             android:selectable="true"
             android:title="onLoadResource"

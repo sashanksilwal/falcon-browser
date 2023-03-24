@@ -1,4 +1,4 @@
-package de.baumann.browser.fragment;
+package de.falcon.browser.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,7 +12,7 @@ import androidx.preference.PreferenceGroup;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.preferences.BasePreferenceFragment;
+import de.falcon.browser.preferences.BasePreferenceFragment;
 
 public class Fragment_settings_UI extends BasePreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 

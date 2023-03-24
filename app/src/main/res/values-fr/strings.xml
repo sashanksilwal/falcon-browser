@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App -->
-    <string name="app_name">FOSS Browser</string>
+    <string name="app_name">Falcon Browser</string>
     <string name="app_ok">OK</string>
     <string name="app_help">Aide</string>
     <string name="app_cancel">Annuler</string>
@@ -177,8 +177,8 @@
     <string name="toast_input_empty">Vous n\'avez rien saisi.</string>
     <string name="toast_invalid_domain">Domaine non valide</string>
     <string name="toast_webview_forward">Impossible de charger le site suivant</string>
-    <string name="toast_restart">Vous devez redémarrer FOSS Browser pour appliquer les modifications. Fermer maintenant ?</string>
-    <string name="toast_quit">Voulez-vous quitter FOSS Browser ?</string>
+    <string name="toast_restart">Vous devez redémarrer Falcon Browser pour appliquer les modifications. Fermer maintenant ?</string>
+    <string name="toast_quit">Voulez-vous quitter Falcon Browser ?</string>
     <string name="toast_quit_TAB">Voulez-vous fermer l\'onglet ?</string>
     <string name="toast_downloadComplete">Téléchargement terminé. Ouvrir le gestionnaire de fichiers ?</string>
     <string name="toast_unsecured">Le site Web utilise une connexion non sécurisée (\"http\"). Essayez une connexion sécurisée (\"https\") ?</string>
@@ -199,8 +199,8 @@
     <string name="setting_title_tabsReload">Recharger les onglets</string>
     <string name="setting_title_tabsRestore">Restaurer les onglets</string>
     <string name="setting_title_userInterface">Interface utilisateur</string>
-    <string name="setting_summary_tabsReload">Recharger les derniers onglets ouverts lors du démarrage de FOSS Browser.</string>
-    <string name="setting_summary_tabsRestore">Restaurer les onglets quand FOSS Browser est tué par le système.</string>
+    <string name="setting_summary_tabsReload">Recharger les derniers onglets ouverts lors du démarrage de Falcon Browser.</string>
+    <string name="setting_summary_tabsRestore">Restaurer les onglets quand Falcon Browser est tué par le système.</string>
     <string name="hint_DRM_Media">Autoriser la lecture des médias protégés par le DRM ?</string>
     <string name="menu_reload">Recharger</string>
     <string name="menu_restart">Redémarrer et recharger les onglets</string>

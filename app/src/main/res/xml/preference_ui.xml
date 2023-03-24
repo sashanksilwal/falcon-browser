@@ -58,7 +58,7 @@
             android:key="useDynamicColor"
             android:summary="@string/setting_theme_wallpaper" />
 
-        <de.baumann.browser.preferences.ListSwitchPreference
+        <de.falcon.browser.preferences.ListSwitchPreference
             android:defaultValue="3"
             android:entries="@array/setting_entries_tab"
             android:entryValues="@array/setting_values_tab"

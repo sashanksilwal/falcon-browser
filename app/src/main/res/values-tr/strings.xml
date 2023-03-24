@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App -->
-    <string name="app_name">FOSS Tarayıcı</string>
+    <string name="app_name">Falcon Tarayıcı</string>
     <string name="app_ok">Tamam</string>
     <string name="app_help">Yardım</string>
     <string name="app_cancel">İptal et</string>
@@ -177,8 +177,8 @@
     <string name="toast_input_empty">Hiçbir şey girmediniz.</string>
     <string name="toast_invalid_domain">Geçersiz alan adı</string>
     <string name="toast_webview_forward">Sonraki site yüklenemiyor</string>
-    <string name="toast_restart">Değişiklikleri uygulamak için \"FOSS Tarayıcı\"sını yeniden başlatmalısınız. Şimdi kapatılsın mı?</string>
-    <string name="toast_quit">\"FOSS Tarayıcı\"sından çıkmak istiyor musunuz?</string>
+    <string name="toast_restart">Değişiklikleri uygulamak için \"Falcon Tarayıcı\"sını yeniden başlatmalısınız. Şimdi kapatılsın mı?</string>
+    <string name="toast_quit">\"Falcon Tarayıcı\"sından çıkmak istiyor musunuz?</string>
     <string name="toast_quit_TAB">Sekmeyi kapatmak istiyor musunuz?</string>
     <string name="toast_downloadComplete">İndirme tamamlandı. Dosya yöneticisi açılsın mı?</string>
     <string name="toast_unsecured">Web sitesi güvenli olmayan bir bağlantı (\"http\") kullanıyor. Güvenli bir bağlantı (\"https\") denensin mi?</string>
@@ -199,8 +199,8 @@
     <string name="setting_title_tabsReload">Sekmeleri yenile</string>
     <string name="setting_title_tabsRestore">Sekmeleri geri yükle</string>
     <string name="setting_title_userInterface">Kullanıcı arayüzü</string>
-    <string name="setting_summary_tabsReload">FOSS Tarayıcısı açılırken son açılan sekmeleri yeniler.</string>
-    <string name="setting_summary_tabsRestore">FOSS Tarayıcısı sistem tarafından durdurulduğunda sekmeleri geri yükler.</string>
+    <string name="setting_summary_tabsReload">Falcon Tarayıcısı açılırken son açılan sekmeleri yeniler.</string>
+    <string name="setting_summary_tabsRestore">Falcon Tarayıcısı sistem tarafından durdurulduğunda sekmeleri geri yükler.</string>
     <string name="hint_DRM_Media">DRM korumalı medya oynatmaya izin verilsin mi?</string>
     <string name="menu_reload">Yenile</string>
     <string name="menu_restart">Sekmeleri yeniden başlat</string>

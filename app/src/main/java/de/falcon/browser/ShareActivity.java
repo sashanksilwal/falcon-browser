@@ -1,10 +1,10 @@
-package de.baumann.browser;
+package de.falcon.browser;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import de.baumann.browser.activity.BrowserActivity;
+import de.falcon.browser.activity.BrowserActivity;
 
 public class ShareActivity extends Activity {
     @Override

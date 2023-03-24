@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App -->
-    <string name="app_name">דפדפן FOSS</string>
+    <string name="app_name">דפדפן Falcon</string>
     <string name="app_ok">בסדר</string>
     <string name="app_help">עזרה</string>
     <string name="app_cancel">בטל</string>
@@ -177,8 +177,8 @@
     <string name="toast_input_empty">לא הזנת כלום.</string>
     <string name="toast_invalid_domain">דומיין לא חוקי</string>
     <string name="toast_webview_forward">לא ניתן לטעון את האתר הבא</string>
-    <string name="toast_restart">עליך להפעיל מחדש את \"FOSS Browser\" כדי להחיל שינויים. לסגור עכשיו?</string>
-    <string name="toast_quit">האם ברצונך לצאת מ\"דפדפן FOSS\"?</string>
+    <string name="toast_restart">עליך להפעיל מחדש את \"Falcon Browser\" כדי להחיל שינויים. לסגור עכשיו?</string>
+    <string name="toast_quit">האם ברצונך לצאת מ\"דפדפן Falcon\"?</string>
     <string name="toast_quit_TAB">האם אתה רוצה לסגור את ה-TAB?</string>
     <string name="toast_downloadComplete">ההורדה הושלמה. לפתוח את מנהל הקבצים?</string>
     <string name="toast_unsecured">האתר משתמש בחיבור לא מאובטח (\"http\"). האם לנסות חיבור מאובטח (\"https\")?</string>
@@ -199,8 +199,8 @@
     <string name="setting_title_tabsReload">טען מחדש כרטיסיות</string>
     <string name="setting_title_tabsRestore">שחזר כרטיסיות</string>
     <string name="setting_title_userInterface">ממשק משתמש</string>
-    <string name="setting_summary_tabsReload">טען מחדש את הכרטיסיות שנפתחו לאחרונה, בעת הפעלת דפדפן FOSS.</string>
-    <string name="setting_summary_tabsRestore">שחזר כרטיסיות, כאשר דפדפן FOSS נהרג על ידי המערכת.</string>
+    <string name="setting_summary_tabsReload">טען מחדש את הכרטיסיות שנפתחו לאחרונה, בעת הפעלת דפדפן Falcon.</string>
+    <string name="setting_summary_tabsRestore">שחזר כרטיסיות, כאשר דפדפן Falcon נהרג על ידי המערכת.</string>
     <string name="hint_DRM_Media">האם לאפשר השמעת מדיה מוגנת ב-DRM?</string>
     <string name="menu_reload">טעינה חמחדש</string>
     <string name="menu_restart">הפעל מחדש וטען מחדש כרטיסיות</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App -->
-    <string name="app_name">Navegador FOSS</string>
+    <string name="app_name">Navegador Falcon</string>
     <string name="app_ok">Ok</string>
     <string name="app_help">Ayuda</string>
     <string name="app_cancel">Cancelar</string>
@@ -177,8 +177,8 @@
     <string name="toast_input_empty">No has introducido nada.</string>
     <string name="toast_invalid_domain">Dominio no válido</string>
     <string name="toast_webview_forward">No se puede cargar el sitio</string>
-    <string name="toast_restart">Debe reiniciar \"Navegador FOSS\" para aplicar cambios. ¿Cerrar ahora?</string>
-    <string name="toast_quit">¿Desea salir de \"Navegador FOSS\"?</string>
+    <string name="toast_restart">Debe reiniciar \"Navegador Falcon\" para aplicar cambios. ¿Cerrar ahora?</string>
+    <string name="toast_quit">¿Desea salir de \"Navegador Falcon\"?</string>
     <string name="toast_quit_TAB">¿Desea cerrar la pestaña?</string>
     <string name="toast_downloadComplete">Descarga completa. ¿Abrir el gestor de archivos?</string>
     <string name="toast_unsecured">El sitio web utiliza una conexión no segura (\"http\"). ¿Desea intentar una conexión segura (\"https\")?</string>
@@ -199,8 +199,8 @@
     <string name="setting_title_tabsReload">Recarga de pestañas</string>
     <string name="setting_title_tabsRestore">Restaurar pestañas</string>
     <string name="setting_title_userInterface">Interfaz de usuario</string>
-    <string name="setting_summary_tabsReload">Recarga de las últimas pestañas abiertas, al iniciar el navegador FOSS.</string>
-    <string name="setting_summary_tabsRestore">Restaurar pestañas, cuando el navegador FOSS es eliminado por el sistema.</string>
+    <string name="setting_summary_tabsReload">Recarga de las últimas pestañas abiertas, al iniciar el navegador Falcon.</string>
+    <string name="setting_summary_tabsRestore">Restaurar pestañas, cuando el navegador Falcon es eliminado por el sistema.</string>
     <string name="hint_DRM_Media">¿Desea permitir reproducción multimedia protegida por DRM?</string>
     <string name="menu_reload">Recargar</string>
     <string name="menu_restart">Reiniciar y recargar pestañas</string>

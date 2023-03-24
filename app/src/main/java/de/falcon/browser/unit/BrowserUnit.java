@@ -1,4 +1,4 @@
-package de.baumann.browser.unit;
+package de.falcon.browser.unit;
 
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -33,10 +33,10 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import de.baumann.browser.R;
-import de.baumann.browser.activity.BrowserActivity;
-import de.baumann.browser.database.RecordAction;
-import de.baumann.browser.objects.CustomRedirect;
-import de.baumann.browser.objects.CustomRedirectsHelper;
+import de.falcon.browser.activity.BrowserActivity;
+import de.falcon.browser.database.RecordAction;
+import de.falcon.browser.objects.CustomRedirect;
+import de.falcon.browser.objects.CustomRedirectsHelper;
 
 public class BrowserUnit {
 

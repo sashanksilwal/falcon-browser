@@ -1,9 +1,9 @@
-package de.baumann.browser.view;
+package de.falcon.browser.view;
 
-import static de.baumann.browser.database.RecordAction.BOOKMARK_ITEM;
-import static de.baumann.browser.database.RecordAction.CLIPBOARD_ITEM;
-import static de.baumann.browser.database.RecordAction.HISTORY_ITEM;
-import static de.baumann.browser.database.RecordAction.STARTSITE_ITEM;
+import static de.falcon.browser.database.RecordAction.BOOKMARK_ITEM;
+import static de.falcon.browser.database.RecordAction.CLIPBOARD_ITEM;
+import static de.falcon.browser.database.RecordAction.HISTORY_ITEM;
+import static de.falcon.browser.database.RecordAction.STARTSITE_ITEM;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 import de.baumann.browser.R;
-import de.baumann.browser.database.FaviconHelper;
-import de.baumann.browser.database.Record;
+import de.falcon.browser.database.FaviconHelper;
+import de.falcon.browser.database.Record;
 
 
 public class AdapterSearch extends BaseAdapter implements Filterable {

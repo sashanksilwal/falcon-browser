@@ -1,4 +1,4 @@
-package de.baumann.browser.fragment;
+package de.falcon.browser.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,13 +24,13 @@ import java.util.List;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.activity.ProfilesList;
-import de.baumann.browser.activity.Settings_Profile;
-import de.baumann.browser.browser.AdBlock;
-import de.baumann.browser.dialogs.CustomRedirectsDialog;
-import de.baumann.browser.preferences.BasePreferenceFragment;
-import de.baumann.browser.view.GridAdapter;
-import de.baumann.browser.view.GridItem;
+import de.falcon.browser.activity.ProfilesList;
+import de.falcon.browser.activity.Settings_Profile;
+import de.falcon.browser.browser.AdBlock;
+import de.falcon.browser.dialogs.CustomRedirectsDialog;
+import de.falcon.browser.preferences.BasePreferenceFragment;
+import de.falcon.browser.view.GridAdapter;
+import de.falcon.browser.view.GridItem;
 
 public class Fragment_settings_Privacy extends BasePreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 

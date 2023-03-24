@@ -1,4 +1,4 @@
-package de.baumann.browser.view;
+package de.falcon.browser.view;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import de.baumann.browser.R;
-import de.baumann.browser.objects.CustomRedirect;
+import de.falcon.browser.objects.CustomRedirect;
 
 public class AdapterCustomRedirect extends RecyclerView.Adapter<RedirectsViewHolder> {
     final private ArrayList<CustomRedirect> redirects;

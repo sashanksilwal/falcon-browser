@@ -1,4 +1,4 @@
-package de.baumann.browser.objects;
+package de.falcon.browser.objects;
 
 import android.content.Context;
 import android.content.SharedPreferences;

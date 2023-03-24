@@ -1,4 +1,4 @@
-package de.baumann.browser.view;
+package de.falcon.browser.view;
 
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 

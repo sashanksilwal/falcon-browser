@@ -1,4 +1,4 @@
-package de.baumann.browser.preferences;
+package de.falcon.browser.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,7 +16,7 @@ import androidx.preference.PreferenceViewHolder;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
 import de.baumann.browser.R;
-import de.baumann.browser.unit.HelperUnit;
+import de.falcon.browser.unit.HelperUnit;
 
 public class ListSwitchPreference extends ListPreference {
 

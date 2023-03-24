@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App -->
-    <string name="app_name">FOSS瀏覽器</string>
+    <string name="app_name">Falcon瀏覽器</string>
     <string name="app_ok">確定</string>
     <string name="app_help">說明</string>
     <string name="app_cancel">Cancel</string>
@@ -177,8 +177,8 @@
     <string name="toast_input_empty">你尚未輸入任何內容.</string>
     <string name="toast_invalid_domain">無效域名</string>
     <string name="toast_webview_forward">無法載入下個網頁</string>
-    <string name="toast_restart">你必需重啟FOSS瀏覽器以應用變更，現在關閉？</string>
-    <string name="toast_quit">是否退出FOSS瀏覽器？</string>
+    <string name="toast_restart">你必需重啟Falcon瀏覽器以應用變更，現在關閉？</string>
+    <string name="toast_quit">是否退出Falcon瀏覽器？</string>
     <string name="toast_quit_TAB">你想关闭TAB吗？</string>
     <string name="toast_downloadComplete">下載完成。是否開啟檔案管理器？</string>
     <string name="toast_unsecured">此網站使用不安全的連線（http），是否嘗試使用安全連線（https）？</string>
@@ -199,8 +199,8 @@
     <string name="setting_title_tabsReload">重新加载标签</string>
     <string name="setting_title_tabsRestore">恢复标签</string>
     <string name="setting_title_userInterface">用户界面</string>
-    <string name="setting_summary_tabsReload">重新加载最后打开的标签，当启动FOSS浏览器时。</string>
-    <string name="setting_summary_tabsRestore">恢复标签，当FOSS浏览器被系统杀死时。</string>
+    <string name="setting_summary_tabsReload">重新加载最后打开的标签，当启动Falcon浏览器时。</string>
+    <string name="setting_summary_tabsRestore">恢复标签，当Falcon浏览器被系统杀死时。</string>
     <string name="hint_DRM_Media">允许受DRM保护的媒体播放？</string>
     <string name="menu_reload">重新載入</string>
     <string name="menu_restart">重新啟動並重新載入分頁</string>

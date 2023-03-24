@@ -1,4 +1,4 @@
-package de.baumann.browser.activity;
+package de.falcon.browser.activity;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -29,15 +29,15 @@ import java.util.List;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.browser.List_protected;
-import de.baumann.browser.browser.List_standard;
-import de.baumann.browser.browser.List_trusted;
-import de.baumann.browser.database.RecordAction;
-import de.baumann.browser.unit.BrowserUnit;
-import de.baumann.browser.unit.HelperUnit;
-import de.baumann.browser.unit.RecordUnit;
-import de.baumann.browser.view.NinjaToast;
-import de.baumann.browser.view.AdapterProfileList;
+import de.falcon.browser.browser.List_protected;
+import de.falcon.browser.browser.List_standard;
+import de.falcon.browser.browser.List_trusted;
+import de.falcon.browser.database.RecordAction;
+import de.falcon.browser.unit.BrowserUnit;
+import de.falcon.browser.unit.HelperUnit;
+import de.falcon.browser.unit.RecordUnit;
+import de.falcon.browser.view.NinjaToast;
+import de.falcon.browser.view.AdapterProfileList;
 
 public class ProfilesList extends AppCompatActivity {
 

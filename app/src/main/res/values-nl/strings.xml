@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App -->
-    <string name="app_name">FOSS-browser</string>
+    <string name="app_name">Falcon-browser</string>
     <string name="app_ok">Oké</string>
     <string name="app_help">Hulp</string>
     <string name="app_cancel">Annuleren</string>
@@ -177,8 +177,8 @@
     <string name="toast_input_empty">Je hebt niks ingevoerd.</string>
     <string name="toast_invalid_domain">Ongeldig domein</string>
     <string name="toast_webview_forward">Volgende site kan niet worden geladen</string>
-    <string name="toast_restart">\"FOSS-browser\" moet worden herstart om de wijzigingen toe te passen. Wil je nu afsluiten?</string>
-    <string name="toast_quit">Wil je \"FOSS-browser\" afsluiten?</string>
+    <string name="toast_restart">\"Falcon-browser\" moet worden herstart om de wijzigingen toe te passen. Wil je nu afsluiten?</string>
+    <string name="toast_quit">Wil je \"Falcon-browser\" afsluiten?</string>
     <string name="toast_quit_TAB">Wilt u de TAB sluiten?</string>
     <string name="toast_downloadComplete">Downloaden voltooid. Wil je bestandsbeheer openen?</string>
     <string name="toast_unsecured">Deze website gebruikt een onbeveiligde verbinding (\"http\"). Wilt u een beveiligde verbinding (\"https\") proberen?</string>
@@ -199,8 +199,8 @@
     <string name="setting_title_tabsReload">Tabbladen vernieuwen</string>
     <string name="setting_title_tabsRestore">Tabbladen herstellen</string>
     <string name="setting_title_userInterface">Gebruikers-interface</string>
-    <string name="setting_summary_tabsReload">Herlaad laatst geopende tabbladen, bij het starten van de FOSS-browser.</string>
-    <string name="setting_summary_tabsRestore">Tabbladen herstellen wanneer de FOSS Browser wordt gedood door het systeem.</string>
+    <string name="setting_summary_tabsReload">Herlaad laatst geopende tabbladen, bij het starten van de Falcon-browser.</string>
+    <string name="setting_summary_tabsRestore">Tabbladen herstellen wanneer de Falcon Browser wordt gedood door het systeem.</string>
     <string name="hint_DRM_Media">DRM-beschermde media weergeven?</string>
     <string name="menu_reload">Herladen</string>
     <string name="menu_restart">Herstart en herlaad tabbladen</string>

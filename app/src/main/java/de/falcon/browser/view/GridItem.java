@@ -1,4 +1,4 @@
-package de.baumann.browser.view;
+package de.falcon.browser.view;
 
 public class GridItem {
     private final String title;

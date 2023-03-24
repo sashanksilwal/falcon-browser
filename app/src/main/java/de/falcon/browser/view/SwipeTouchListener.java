@@ -1,4 +1,4 @@
-package de.baumann.browser.view;
+package de.falcon.browser.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

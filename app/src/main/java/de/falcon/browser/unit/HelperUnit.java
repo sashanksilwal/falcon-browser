@@ -17,7 +17,7 @@
     If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.baumann.browser.unit;
+package de.falcon.browser.unit;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 import static android.graphics.drawable.Icon.createWithBitmap;
@@ -72,13 +72,13 @@ import java.util.Locale;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.activity.BrowserActivity;
-import de.baumann.browser.browser.BrowserController;
-import de.baumann.browser.browser.DataURIParser;
-import de.baumann.browser.database.FaviconHelper;
-import de.baumann.browser.view.GridItem;
-import de.baumann.browser.view.NinjaToast;
-import de.baumann.browser.view.NinjaWebView;
+import de.falcon.browser.activity.BrowserActivity;
+import de.falcon.browser.browser.BrowserController;
+import de.falcon.browser.browser.DataURIParser;
+import de.falcon.browser.database.FaviconHelper;
+import de.falcon.browser.view.GridItem;
+import de.falcon.browser.view.NinjaToast;
+import de.falcon.browser.view.NinjaWebView;
 
 public class HelperUnit {
 

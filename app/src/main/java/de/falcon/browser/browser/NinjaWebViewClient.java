@@ -1,4 +1,4 @@
-package de.baumann.browser.browser;
+package de.falcon.browser.browser;
 
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
@@ -37,13 +37,13 @@ import java.io.ByteArrayInputStream;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.database.FaviconHelper;
-import de.baumann.browser.database.Record;
-import de.baumann.browser.database.RecordAction;
-import de.baumann.browser.unit.BrowserUnit;
-import de.baumann.browser.unit.HelperUnit;
-import de.baumann.browser.unit.RecordUnit;
-import de.baumann.browser.view.NinjaWebView;
+import de.falcon.browser.database.FaviconHelper;
+import de.falcon.browser.database.Record;
+import de.falcon.browser.database.RecordAction;
+import de.falcon.browser.unit.BrowserUnit;
+import de.falcon.browser.unit.HelperUnit;
+import de.falcon.browser.unit.RecordUnit;
+import de.falcon.browser.view.NinjaWebView;
 
 public class NinjaWebViewClient extends WebViewClient {
 

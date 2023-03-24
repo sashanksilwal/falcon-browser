@@ -1,4 +1,4 @@
-package de.baumann.browser.view;
+package de.falcon.browser.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,9 +12,9 @@ import android.widget.TextView;
 import com.google.android.material.card.MaterialCardView;
 
 import de.baumann.browser.R;
-import de.baumann.browser.browser.AlbumController;
-import de.baumann.browser.browser.BrowserContainer;
-import de.baumann.browser.browser.BrowserController;
+import de.falcon.browser.browser.AlbumController;
+import de.falcon.browser.browser.BrowserContainer;
+import de.falcon.browser.browser.BrowserController;
 
 class AdapterTabs {
 

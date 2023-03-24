@@ -1,4 +1,4 @@
-package de.baumann.browser.view;
+package de.falcon.browser.view;
 
 import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.content.ContentValues.TAG;
@@ -54,20 +54,20 @@ import java.util.List;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.activity.BrowserActivity;
-import de.baumann.browser.browser.AlbumController;
-import de.baumann.browser.browser.BrowserController;
-import de.baumann.browser.browser.List_protected;
-import de.baumann.browser.browser.List_standard;
-import de.baumann.browser.browser.List_trusted;
-import de.baumann.browser.browser.NinjaDownloadListener;
-import de.baumann.browser.browser.NinjaWebChromeClient;
-import de.baumann.browser.browser.NinjaWebViewClient;
-import de.baumann.browser.database.FaviconHelper;
-import de.baumann.browser.database.Record;
-import de.baumann.browser.database.RecordAction;
-import de.baumann.browser.unit.BrowserUnit;
-import de.baumann.browser.unit.HelperUnit;
+import de.falcon.browser.activity.BrowserActivity;
+import de.falcon.browser.browser.AlbumController;
+import de.falcon.browser.browser.BrowserController;
+import de.falcon.browser.browser.List_protected;
+import de.falcon.browser.browser.List_standard;
+import de.falcon.browser.browser.List_trusted;
+import de.falcon.browser.browser.NinjaDownloadListener;
+import de.falcon.browser.browser.NinjaWebChromeClient;
+import de.falcon.browser.browser.NinjaWebViewClient;
+import de.falcon.browser.database.FaviconHelper;
+import de.falcon.browser.database.Record;
+import de.falcon.browser.database.RecordAction;
+import de.falcon.browser.unit.BrowserUnit;
+import de.falcon.browser.unit.HelperUnit;
 
 public class NinjaWebView extends WebView implements AlbumController {
 

@@ -1,4 +1,4 @@
-package de.baumann.browser.fragment;
+package de.falcon.browser.fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,8 +11,8 @@ import androidx.preference.Preference;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import de.baumann.browser.R;
-import de.baumann.browser.preferences.BasePreferenceFragment;
-import de.baumann.browser.unit.HelperUnit;
+import de.falcon.browser.preferences.BasePreferenceFragment;
+import de.falcon.browser.unit.HelperUnit;
 
 public class Fragment_settings_Delete extends BasePreferenceFragment {
 

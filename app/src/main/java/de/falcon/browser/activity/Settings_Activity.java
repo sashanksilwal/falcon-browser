@@ -1,4 +1,4 @@
-package de.baumann.browser.activity;
+package de.falcon.browser.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,9 +15,9 @@ import androidx.core.content.ContextCompat;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.fragment.Fragment_settings;
-import de.baumann.browser.unit.BrowserUnit;
-import de.baumann.browser.unit.HelperUnit;
+import de.falcon.browser.fragment.Fragment_settings;
+import de.falcon.browser.unit.BrowserUnit;
+import de.falcon.browser.unit.HelperUnit;
 
 public class Settings_Activity extends AppCompatActivity {
 

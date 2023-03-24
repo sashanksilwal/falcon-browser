@@ -1,4 +1,4 @@
-package de.baumann.browser.objects;
+package de.falcon.browser.objects;
 
 public class CustomRedirect {
     public String source;

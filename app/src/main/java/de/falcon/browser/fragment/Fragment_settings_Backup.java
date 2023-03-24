@@ -1,4 +1,4 @@
-package de.baumann.browser.fragment;
+package de.falcon.browser.fragment;
 
 import static android.os.Environment.DIRECTORY_DOCUMENTS;
 
@@ -33,10 +33,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import de.baumann.browser.R;
-import de.baumann.browser.preferences.BasePreferenceFragment;
-import de.baumann.browser.unit.BackupUnit;
-import de.baumann.browser.unit.HelperUnit;
-import de.baumann.browser.view.NinjaToast;
+import de.falcon.browser.preferences.BasePreferenceFragment;
+import de.falcon.browser.unit.BackupUnit;
+import de.falcon.browser.unit.HelperUnit;
+import de.falcon.browser.view.NinjaToast;
 
 public class Fragment_settings_Backup extends BasePreferenceFragment {
 

@@ -40,7 +40,7 @@
 
         <!-- BrowserActivity -->
         <activity
-            android:name="de.baumann.browser.activity.BrowserActivity"
+            android:name="de.falcon.browser.activity.BrowserActivity"
             android:configChanges="orientation|uiMode|screenSize|smallestScreenSize|screenLayout"
             android:exported="true"
             android:grantUriPermissions="true"
@@ -101,52 +101,52 @@
 
         <!-- Settings -->
         <activity
-            android:name="de.baumann.browser.activity.Settings_Activity"
+            android:name="de.falcon.browser.activity.Settings_Activity"
             android:label="@string/setting_label"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="de.baumann.browser.activity.ProfilesList"
+            android:name="de.falcon.browser.activity.ProfilesList"
             android:label="@string/setting_title_profiles_protectedList"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="de.baumann.browser.activity.Settings_General"
+            android:name="de.falcon.browser.activity.Settings_General"
             android:label="@string/setting_title_general"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="de.baumann.browser.activity.Settings_Delete"
+            android:name="de.falcon.browser.activity.Settings_Delete"
             android:label="@string/menu_delete"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="de.baumann.browser.activity.Settings_PrivacyActivity"
+            android:name="de.falcon.browser.activity.Settings_PrivacyActivity"
             android:label="@string/setting_title_profiles_privacy"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="de.baumann.browser.activity.Settings_Backup"
+            android:name="de.falcon.browser.activity.Settings_Backup"
             android:label="@string/setting_title_data"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="de.baumann.browser.activity.Settings_UI"
+            android:name="de.falcon.browser.activity.Settings_UI"
             android:label="@string/setting_title_ui"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="de.baumann.browser.activity.Settings_Gesture"
+            android:name="de.falcon.browser.activity.Settings_Gesture"
             android:label="@string/setting_gestures"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="de.baumann.browser.activity.Settings_Filter"
+            android:name="de.falcon.browser.activity.Settings_Filter"
             android:label="@string/setting_filter"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="de.baumann.browser.activity.Settings_Profile"
+            android:name="de.falcon.browser.activity.Settings_Profile"
             android:label="@string/setting_title_profiles_edit"
             android:theme="@style/AppTheme" />
 

@@ -1,4 +1,4 @@
-package de.baumann.browser.database;
+package de.falcon.browser.database;
 
 public class Record {
 

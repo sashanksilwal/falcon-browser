@@ -1,11 +1,11 @@
-package de.baumann.browser.activity;
+package de.falcon.browser.activity;
 
 import static android.content.ContentValues.TAG;
 import static android.webkit.WebView.HitTestResult.IMAGE_TYPE;
 import static android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE;
 import static android.webkit.WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
-import static de.baumann.browser.database.RecordAction.BOOKMARK_ITEM;
-import static de.baumann.browser.database.RecordAction.STARTSITE_ITEM;
+import static de.falcon.browser.database.RecordAction.BOOKMARK_ITEM;
+import static de.falcon.browser.database.RecordAction.STARTSITE_ITEM;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
@@ -103,26 +103,26 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import de.baumann.browser.R;
-import de.baumann.browser.browser.AlbumController;
-import de.baumann.browser.browser.BrowserContainer;
-import de.baumann.browser.browser.BrowserController;
-import de.baumann.browser.browser.DataURIParser;
-import de.baumann.browser.browser.List_protected;
-import de.baumann.browser.browser.List_standard;
-import de.baumann.browser.browser.List_trusted;
-import de.baumann.browser.database.FaviconHelper;
-import de.baumann.browser.database.Record;
-import de.baumann.browser.database.RecordAction;
-import de.baumann.browser.unit.BrowserUnit;
-import de.baumann.browser.unit.HelperUnit;
-import de.baumann.browser.unit.RecordUnit;
-import de.baumann.browser.view.AdapterSearch;
-import de.baumann.browser.view.GridAdapter;
-import de.baumann.browser.view.GridItem;
-import de.baumann.browser.view.NinjaToast;
-import de.baumann.browser.view.NinjaWebView;
-import de.baumann.browser.view.AdapterRecord;
-import de.baumann.browser.view.SwipeTouchListener;
+import de.falcon.browser.browser.AlbumController;
+import de.falcon.browser.browser.BrowserContainer;
+import de.falcon.browser.browser.BrowserController;
+import de.falcon.browser.browser.DataURIParser;
+import de.falcon.browser.browser.List_protected;
+import de.falcon.browser.browser.List_standard;
+import de.falcon.browser.browser.List_trusted;
+import de.falcon.browser.database.FaviconHelper;
+import de.falcon.browser.database.Record;
+import de.falcon.browser.database.RecordAction;
+import de.falcon.browser.unit.BrowserUnit;
+import de.falcon.browser.unit.HelperUnit;
+import de.falcon.browser.unit.RecordUnit;
+import de.falcon.browser.view.AdapterSearch;
+import de.falcon.browser.view.GridAdapter;
+import de.falcon.browser.view.GridItem;
+import de.falcon.browser.view.NinjaToast;
+import de.falcon.browser.view.NinjaWebView;
+import de.falcon.browser.view.AdapterRecord;
+import de.falcon.browser.view.SwipeTouchListener;
 
 public class BrowserActivity extends AppCompatActivity implements BrowserController {
 

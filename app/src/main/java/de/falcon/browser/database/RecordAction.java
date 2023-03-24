@@ -1,4 +1,4 @@
-package de.baumann.browser.database;
+package de.falcon.browser.database;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.unit.ClipboardUnit;
-import de.baumann.browser.unit.RecordUnit;
+import de.falcon.browser.unit.ClipboardUnit;
+import de.falcon.browser.unit.RecordUnit;
 
 public class RecordAction {
     public static final int HISTORY_ITEM = 0;

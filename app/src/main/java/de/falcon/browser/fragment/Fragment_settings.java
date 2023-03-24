@@ -1,4 +1,4 @@
-package de.baumann.browser.fragment;
+package de.falcon.browser.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,14 +13,14 @@ import androidx.preference.PreferenceGroup;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.activity.Settings_Backup;
-import de.baumann.browser.activity.Settings_Delete;
-import de.baumann.browser.activity.Settings_Filter;
-import de.baumann.browser.activity.Settings_General;
-import de.baumann.browser.activity.Settings_Gesture;
-import de.baumann.browser.activity.Settings_PrivacyActivity;
-import de.baumann.browser.activity.Settings_UI;
-import de.baumann.browser.preferences.BasePreferenceFragment;
+import de.falcon.browser.activity.Settings_Backup;
+import de.falcon.browser.activity.Settings_Delete;
+import de.falcon.browser.activity.Settings_Filter;
+import de.falcon.browser.activity.Settings_General;
+import de.falcon.browser.activity.Settings_Gesture;
+import de.falcon.browser.activity.Settings_PrivacyActivity;
+import de.falcon.browser.activity.Settings_UI;
+import de.falcon.browser.preferences.BasePreferenceFragment;
 
 public class Fragment_settings extends BasePreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 

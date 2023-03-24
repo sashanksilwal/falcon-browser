@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App -->
-    <string name="app_name">FOSS webbläsare</string>
+    <string name="app_name">Falcon webbläsare</string>
     <string name="app_ok">Ok</string>
     <string name="app_help">Hjälp</string>
     <string name="app_cancel">Avbryt</string>
@@ -177,8 +177,8 @@
     <string name="toast_input_empty">Du har inte skrivit något.</string>
     <string name="toast_invalid_domain">Ogiltig domän</string>
     <string name="toast_webview_forward">Kan inte ladda nästa webbplats</string>
-    <string name="toast_restart">Du måste starta om \"FOSS Browser\" för att tillämpa ändringar. Stäng nu?</string>
-    <string name="toast_quit">Vill du avsluta \"FOSS Browser\"?</string>
+    <string name="toast_restart">Du måste starta om \"Falcon Browser\" för att tillämpa ändringar. Stäng nu?</string>
+    <string name="toast_quit">Vill du avsluta \"Falcon Browser\"?</string>
     <string name="toast_quit_TAB">Vill du stänga FLIKEN?</string>
     <string name="toast_downloadComplete">Hämtning slutförd. Öppna filhanterare?</string>
     <string name="toast_unsecured">Webbplatsen använder en osäker anslutning (\"http\"). Vill du prova en säker anslutning (\"https\")?</string>
@@ -199,8 +199,8 @@
     <string name="setting_title_tabsReload">Uppdatera flikar</string>
     <string name="setting_title_tabsRestore">Återställ flikar</string>
     <string name="setting_title_userInterface">Användargränssnitt</string>
-    <string name="setting_summary_tabsReload">Ladda om senast öppnade flikar, när du startar FOSS webbläsare.</string>
-    <string name="setting_summary_tabsRestore">Återställ flikar, när FOSS webbläsare blir avstängd av systemet.</string>
+    <string name="setting_summary_tabsReload">Ladda om senast öppnade flikar, när du startar Falcon webbläsare.</string>
+    <string name="setting_summary_tabsRestore">Återställ flikar, när Falcon webbläsare blir avstängd av systemet.</string>
     <string name="hint_DRM_Media">Tillåt DRM-skyddad medieuppspelning?</string>
     <string name="menu_reload">Ladda om</string>
     <string name="menu_restart">Starta om och ladda om flikar</string>

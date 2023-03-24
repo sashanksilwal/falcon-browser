@@ -1,9 +1,9 @@
-package de.baumann.browser.fragment;
+package de.falcon.browser.fragment;
 
 import android.os.Bundle;
 
 import de.baumann.browser.R;
-import de.baumann.browser.preferences.BasePreferenceFragment;
+import de.falcon.browser.preferences.BasePreferenceFragment;
 
 public class Fragment_settings_General extends BasePreferenceFragment {
     @Override

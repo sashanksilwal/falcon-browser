@@ -1,9 +1,9 @@
-package de.baumann.browser.browser;
+package de.falcon.browser.browser;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import de.baumann.browser.view.NinjaWebView;
+import de.falcon.browser.view.NinjaWebView;
 
 public class BrowserContainer {
     private static final List<AlbumController> list = new LinkedList<>();

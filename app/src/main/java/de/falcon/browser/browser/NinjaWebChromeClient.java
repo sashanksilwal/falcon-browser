@@ -1,4 +1,4 @@
-package de.baumann.browser.browser;
+package de.falcon.browser.browser;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,9 +22,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.unit.BrowserUnit;
-import de.baumann.browser.unit.HelperUnit;
-import de.baumann.browser.view.NinjaWebView;
+import de.falcon.browser.unit.BrowserUnit;
+import de.falcon.browser.unit.HelperUnit;
+import de.falcon.browser.view.NinjaWebView;
 
 public class NinjaWebChromeClient extends WebChromeClient {
 

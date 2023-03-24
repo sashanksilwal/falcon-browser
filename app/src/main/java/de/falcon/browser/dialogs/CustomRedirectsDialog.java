@@ -1,4 +1,4 @@
-package de.baumann.browser.dialogs;
+package de.falcon.browser.dialogs;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.objects.CustomRedirect;
-import de.baumann.browser.objects.CustomRedirectsHelper;
-import de.baumann.browser.view.AdapterCustomRedirect;
+import de.falcon.browser.objects.CustomRedirect;
+import de.falcon.browser.objects.CustomRedirectsHelper;
+import de.falcon.browser.view.AdapterCustomRedirect;
 
 public class CustomRedirectsDialog extends DialogFragment {
     AdapterCustomRedirect adapter;

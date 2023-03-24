@@ -1,4 +1,4 @@
-package de.baumann.browser.view;
+package de.falcon.browser.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Locale;
 
 import de.baumann.browser.R;
-import de.baumann.browser.database.FaviconHelper;
-import de.baumann.browser.database.Record;
+import de.falcon.browser.database.FaviconHelper;
+import de.falcon.browser.database.Record;
 
 public class AdapterRecord extends ArrayAdapter<Record> {
     private final Context context;

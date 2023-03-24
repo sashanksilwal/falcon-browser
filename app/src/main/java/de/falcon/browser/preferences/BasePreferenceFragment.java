@@ -1,4 +1,4 @@
-package de.baumann.browser.preferences;
+package de.falcon.browser.preferences;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import de.baumann.browser.R;
-import de.baumann.browser.unit.HelperUnit;
+import de.falcon.browser.unit.HelperUnit;
 
 public class BasePreferenceFragment extends PreferenceFragmentCompat {
     @Override

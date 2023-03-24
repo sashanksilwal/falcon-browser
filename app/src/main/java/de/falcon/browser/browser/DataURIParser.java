@@ -1,4 +1,4 @@
-package de.baumann.browser.browser;
+package de.falcon.browser.browser;
 
 import android.util.Base64;
 import android.webkit.MimeTypeMap;
