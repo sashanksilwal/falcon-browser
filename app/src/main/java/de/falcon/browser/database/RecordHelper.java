@@ -29,9 +29,9 @@ class RecordHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         switch (oldVersion) {
             case 1:
-                database.execSQL(RecordUnit.CREATE_BOOKMARK);
+                // database.execSQL(RecordUnit.CREATE_BOOKMARK);
             case 2:
-                database.execSQL(RecordUnit.CREATE_STANDARD);
+                // database.execSQL(RecordUnit.CREATE_STANDARD);
             case 3:
                 // database.execSQL(RecordUnit.CREATE_TAB);
                 // we want all updates, so no break statement here...

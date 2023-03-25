@@ -39,4 +39,6 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     implementation 'androidx.webkit:webkit:1.6.0'
+    implementation 'org.jsoup:jsoup:1.14.2'
+
 }

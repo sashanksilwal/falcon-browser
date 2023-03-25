@@ -18,14 +18,17 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -33,6 +36,11 @@ import android.webkit.WebView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,14 +55,24 @@ import com.google.android.material.color.MaterialColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.w3c.dom.Document;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import de.baumann.browser.R;
 import de.falcon.browser.activity.BrowserActivity;
+import de.falcon.browser.activity.JsClassifier;
 import de.falcon.browser.browser.AlbumController;
 import de.falcon.browser.browser.BrowserController;
 import de.falcon.browser.browser.List_protected;
@@ -557,84 +575,203 @@ public class NinjaWebView extends WebView implements AlbumController {
         }
     }
 
-    @Override
-    public synchronized void loadUrl(@NonNull String url) {
-        InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
-        favicon = null;
-        stopped = false;
 
-        if (url.startsWith("http://")) {
 
-            GridItem item_01 = new GridItem("https://", R.drawable.icon_https);
-            GridItem item_02 = new GridItem( "http://", R.drawable.icon_http);
-            GridItem item_03 = new GridItem( context.getString(R.string.app_cancel), R.drawable.icon_close);
+//@Override
+//public synchronized void loadUrl(@NonNull String url) {
+//   // Middleware
+//   // make a http req to url
+//   // use the model to get rid of unnecessary js
+//   // get the final html
+//
+////   String data = "<h1>Sashank Silwal</h1>" +
+////           "<div id=\"hello\">" +
+////           "</div>" +
+////           "<script src=\"https://ayushpandey.com.np/files/sashank.js\"></script>";
+////   this.getSettings().setJavaScriptEnabled(true);
+////   this.loadData(data, "text/html; charset=utf-8", "UTF-8");
+//
+//
+//
+//   InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//   imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+//   favicon = null;
+//   stopped = false;
+//
+//   Set<String> jsLinks;
+//   String htmlContent = null;
+//
+//    // check if url is not empty and valid
+//    if (url != null && !url.trim().isEmpty() && URLUtil.isValidUrl(url) && !url.equals("about:blank")) {
+//        String urlCopy = url;
+//        // check if url starts with http or https
+//        if (!urlCopy.startsWith("http://") && !urlCopy.startsWith("https://")) {
+//            // if url does not start with http or https, add https:// to the url
+//            urlCopy = "https://" + urlCopy;
+//        }
+//        // log the url
+//        Log.i(TAG, "loadUrl: " + urlCopy);
+//
+//        // download the html from the url asynchronously
+//        try {
+//            DownloadHtmlTask downloadTask = new DownloadHtmlTask();
+//            htmlContent = downloadTask.execute(url).get();
+//            Log.i(TAG, "Downloaded HTML content: " + htmlContent);
+//            jsLinks = downloadTask.getJsLinks(htmlContent);
+//
+//            for (String link : jsLinks) {
+//                Log.i(TAG, "Found JavaScript link: " + link);
+//                new JsClassifier().downloadAndLogJs(link); // call downloadAndLogJs method
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    sp.edit().putString("urlToLoad", url).apply(); // clear the URL preference
+//    if(htmlContent != null) {
+//        // remove all the css design from the html
+//
+//        htmlContent = htmlContent.replaceAll("<style.*?>.*?</style>", "");
+//        initPreferences(BrowserUnit.queryWrapper(context, ""));
+//        String baseUrl = url; // set a dummy base URL
+//        super.loadDataWithBaseURL(baseUrl, htmlContent, "text/html", "UTF-8", baseUrl);
+//    }
+//    else{
+//        initPreferences(BrowserUnit.queryWrapper(context, url));
+//        super.loadUrl(BrowserUnit.queryWrapper(context, url), getRequestHeaders());
+//    }
+//}
 
-            View dialogView = View.inflate(context, R.layout.dialog_menu, null);
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
 
-            LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
-            TextView menuURL = dialogView.findViewById(R.id.menuURL);
-            menuURL.setText(url);
-            menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            menuURL.setSingleLine(true);
-            menuURL.setMarqueeRepeatLimit(1);
-            menuURL.setSelected(true);
-            textGroup.setOnClickListener(v -> {
-                menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                menuURL.setSingleLine(true);
-                menuURL.setMarqueeRepeatLimit(1);
-                menuURL.setSelected(true);
-            });
-            TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
-            menuTitle.setText(HelperUnit.domain(url));
-            TextView message = dialogView.findViewById(R.id.message);
-            message.setVisibility(View.VISIBLE);
-            message.setText(R.string.toast_unsecured);
-            FaviconHelper.setFavicon(context, dialogView, null, R.id.menu_icon, R.drawable.icon_alert);
-            builder.setView(dialogView);
+     @Override
+     public synchronized void loadUrl(@NonNull String url) {
+         // your middleware
+         // make a http req to url
+         // use the model to get rid of unnecessary js
+         // get the final html
 
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            HelperUnit.setupDialog(context, dialog);
 
-            GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
-            final List<GridItem> gridList = new LinkedList<>();
-            gridList.add(gridList.size(), item_01);
-            gridList.add(gridList.size(), item_02);
-            gridList.add(gridList.size(), item_03);
-            GridAdapter gridAdapter = new GridAdapter(context, gridList);
-            menu_grid.setAdapter(gridAdapter);
-            gridAdapter.notifyDataSetChanged();
-            menu_grid.setOnItemClickListener((parent, view, position, id) -> {
-                switch (position) {
-                    case 0:
-                        dialog.cancel();
-                        String finalURL = url.replace("http://", "https://");
-                        sp.edit().putString("urlToLoad", finalURL).apply();
-                        initPreferences(BrowserUnit.queryWrapper(context, finalURL));
-                        super.loadUrl(BrowserUnit.queryWrapper(context, finalURL), getRequestHeaders());
-                        break;
-                    case 1:
-                        dialog.cancel();
-                        sp.edit().putString("urlToLoad", url).apply();
-                        initPreferences(BrowserUnit.queryWrapper(context, url));
-                        super.loadUrl(BrowserUnit.queryWrapper(context, url), getRequestHeaders());
-                        break;
-                    case 2:
-                        dialog.cancel();
-                        super.loadUrl(BrowserUnit.queryWrapper(context, "about:blank"), getRequestHeaders());
-                        break;
-                }
-            });
-        } else {
+         InputMethodManager imm = (InputMethodManager) this.context.getSystemService(Context.INPUT_METHOD_SERVICE);
+         imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+         favicon = null;
+         stopped = false;
+
+         if (url.startsWith("http://")) {
+
+             GridItem item_01 = new GridItem("https://", R.drawable.icon_https);
+             GridItem item_02 = new GridItem( "http://", R.drawable.icon_http);
+             GridItem item_03 = new GridItem( context.getString(R.string.app_cancel), R.drawable.icon_close);
+
+             View dialogView = View.inflate(context, R.layout.dialog_menu, null);
+             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+
+             LinearLayout textGroup = dialogView.findViewById(R.id.textGroup);
+             TextView menuURL = dialogView.findViewById(R.id.menuURL);
+             menuURL.setText(url);
+             menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+             menuURL.setSingleLine(true);
+             menuURL.setMarqueeRepeatLimit(1);
+             menuURL.setSelected(true);
+             textGroup.setOnClickListener(v -> {
+                 menuURL.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                 menuURL.setSingleLine(true);
+                 menuURL.setMarqueeRepeatLimit(1);
+                 menuURL.setSelected(true);
+             });
+             TextView menuTitle = dialogView.findViewById(R.id.menuTitle);
+             menuTitle.setText(HelperUnit.domain(url));
+             TextView message = dialogView.findViewById(R.id.message);
+             message.setVisibility(View.VISIBLE);
+             message.setText(R.string.toast_unsecured);
+             FaviconHelper.setFavicon(context, dialogView, null, R.id.menu_icon, R.drawable.icon_alert);
+             builder.setView(dialogView);
+
+             AlertDialog dialog = builder.create();
+             dialog.show();
+             HelperUnit.setupDialog(context, dialog);
+
+             GridView menu_grid = dialogView.findViewById(R.id.menu_grid);
+             final List<GridItem> gridList = new LinkedList<>();
+             gridList.add(gridList.size(), item_01);
+             gridList.add(gridList.size(), item_02);
+             gridList.add(gridList.size(), item_03);
+             GridAdapter gridAdapter = new GridAdapter(context, gridList);
+             menu_grid.setAdapter(gridAdapter);
+             gridAdapter.notifyDataSetChanged();
+             menu_grid.setOnItemClickListener((parent, view, position, id) -> {
+                 switch (position) {
+                     case 0:
+                         dialog.cancel();
+                         String finalURL = url.replace("http://", "https://");
+                         loadUrlAndDownloadJs(url);
+//                         sp.edit().putString("urlToLoad", finalURL).apply();
+//                         initPreferences(BrowserUnit.queryWrapper(context, finalURL));
+//                         super.loadUrl(BrowserUnit.queryWrapper(context, finalURL), getRequestHeaders());
+                         break;
+                     case 1:
+                         dialog.cancel();
+                         sp.edit().putString("urlToLoad", url).apply();
+                         initPreferences(BrowserUnit.queryWrapper(context, url));
+                         super.loadUrl(BrowserUnit.queryWrapper(context, url), getRequestHeaders());
+                         break;
+                     case 2:
+                         dialog.cancel();
+                         super.loadUrl(BrowserUnit.queryWrapper(context, "about:blank"), getRequestHeaders());
+                         break;
+                 }
+             });
+         }
+       else if (url.startsWith("https://"))
+        {
+            loadUrlAndDownloadJs(url);
+         }
+        else {
             sp.edit().putString("urlToLoad", url).apply();
             initPreferences(BrowserUnit.queryWrapper(context, url));
             super.loadUrl(BrowserUnit.queryWrapper(context, url), getRequestHeaders());
         }
 
-    }
+     }
 
+     // SASHANK
+    private void loadUrlAndDownloadJs(String url) {
+        Set<String> jsLinks;
+        String htmlContent = null;
+
+        if (url != null && !url.trim().isEmpty() && URLUtil.isValidUrl(url) && !url.equals("about:blank")) {
+            // log the url
+            Log.i(TAG, "loadUrl: " + url);
+            // download the html from the url asynchronously
+            try {
+                DownloadHtmlTask downloadTask = new DownloadHtmlTask();
+                htmlContent = downloadTask.execute(url).get();
+                Log.i(TAG, "Downloaded HTML content: " + htmlContent);
+                jsLinks = downloadTask.getJsLinks(htmlContent);
+
+                for (String link : jsLinks) {
+                    Log.i(TAG, "Found JavaScript link: " + link);
+                    new JsClassifier().downloadAndLogJs(link); // call downloadAndLogJs method
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        sp.edit().putString("urlToLoad", url).apply(); // clear the URL preference
+        if(htmlContent != null) {
+            // remove all the css design from the html
+//            htmlContent = htmlContent.replaceAll("<style.*?>.*?</style>", "");
+            initPreferences(BrowserUnit.queryWrapper(context, ""));
+            String baseUrl = url; // set a dummy base URL
+            super.loadDataWithBaseURL(baseUrl, htmlContent, "text/html", "UTF-8", baseUrl);
+        } else {
+            // if htmlContent is null, load the URL as it is
+            sp.edit().putString("urlToLoad", url).apply();
+            initPreferences(BrowserUnit.queryWrapper(context, url));
+            super.loadUrl(BrowserUnit.queryWrapper(context, url), getRequestHeaders());
+        }
+    }
     @Override
     public View getAlbumView() {
         return album.getAlbumView();

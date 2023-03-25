@@ -52,6 +52,10 @@ public class NinjaWebViewClient extends WebViewClient {
     private final SharedPreferences sp;
     private final AdBlock adBlock;
 
+//    public NinjaWebView getWebView() {
+//        return this.ninjaWebView;
+//    }
+
 
     public NinjaWebViewClient(NinjaWebView ninjaWebView) {
         super();

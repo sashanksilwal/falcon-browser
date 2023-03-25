@@ -264,7 +264,7 @@ public class RecordAction {
         if (domain == null || domain.trim().isEmpty()) {
             return;
         }
-        database.execSQL("DELETE FROM " + table + " WHERE " + RecordUnit.COLUMN_DOMAIN + " = " + "\"" + domain.trim() + "\"");
+        // database.execSQL("DELETE FROM " + table + " WHERE " + RecordUnit.COLUMN_DOMAIN + " = " + "\"" + domain.trim() + "\"");
     }
 
     public List<String> listDomains(String table) {
@@ -316,11 +316,11 @@ public class RecordAction {
         if (domain == null || domain.trim().isEmpty()) {
             return;
         }
-        database.execSQL("DELETE FROM " + table + " WHERE " + RecordUnit.COLUMN_URL + " = " + "\"" + domain.trim() + "\"");
+        // database.execSQL("DELETE FROM " + table + " WHERE " + RecordUnit.COLUMN_URL + " = " + "\"" + domain.trim() + "\"");
     }
 
     public void clearTable(String table) {
-        database.execSQL("DELETE FROM " + table);
+        // database.execSQL("DELETE FROM " + table);
     }
 
     private Record getRecord(Cursor cursor, int type) {
