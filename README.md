@@ -35,3 +35,51 @@ This method downloads the HTML content from the given URL and returns it as a st
 *getJsLinks(String htmlContent)*
 
 This method takes HTML content as input and returns a set of all the JavaScript links present in that HTML content.
+
+## JsClassifier class
+
+The JsClassifier class is responsible for downloading JavaScript content from a given URL and classifying it using a JSModel.
+
+### How to use
+
+1. Create an instance of JsClassifier class, passing a `Context` object to the constructor.
+2. Call the `downloadAndLogJs` method with the URL you want to download as the parameter.
+3. The class will download the JavaScript content from the given URL and log it.
+
+### Class methods
+
+- `downloadAndLogJs(String url)`
+
+This method downloads the JavaScript content from the given URL and logs it.
+
+- `DownloadJsTask`
+
+This inner class is responsible for downloading the JavaScript content in the background using an `AsyncTask`. Once the download is complete, it logs the downloaded content.
+
+- `onPostExecute(String jsContent)`
+
+This method is called when the download is complete. It takes the downloaded JavaScript content as input and uses a `JSModel` to classify it. The classification results are then logged.
+
+
+## DownloadJsTask class
+The DownloadJsTask class is responsible for downloading JavaScript content from a given URL.
+
+### How to use
+1. Create an instance of DownloadJsTask class with a Context object.
+2. Call the execute method with the URL you want to download as the parameter.
+3. The class will download the JavaScript content from the given URL and return it as a string.
+4. The downloaded content can then be passed to a JSModel for classification.
+
+### Class methods
+- `DownloadJsTask(Context context)`
+
+This constructor initializes the DownloadJsTask object with a Context object.
+
+- `doInBackground(String... urls)`
+
+This method downloads the JavaScript content from the given URL and returns it as a string.
+
+- `onPostExecute(String jsContent)`
+
+This method logs the downloaded JavaScript content. It can be modified to perform classification using a JSModel.
+
