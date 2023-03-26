@@ -1,23 +1,39 @@
 package de.falcon.browser.activity;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
+
+import de.falcon.browser.view.JSModel;
 
 public class JsClassifier {
+    private final Context context;
 
+    public JsClassifier(Context context) {
+        this.context = context.getApplicationContext();
+
+    }
     private static final String TAG = "JsClassifier";
 
     public void downloadAndLogJs(String url) {
-        new DownloadJsTask().execute(url);
+        new DownloadJsTask(this.context).execute(url);
     }
 
     private class DownloadJsTask extends AsyncTask<String, Void, String> {
+
+        private Context context;
+
+        public DownloadJsTask(Context context) {
+            this.context = context;
+        }
         @Override
         protected String doInBackground(String... urls) {
             String url = urls[0];
@@ -51,9 +67,22 @@ public class JsClassifier {
 
             if (jsContent != null) {
                 Log.i(TAG, "Downloaded JavaScript content: " + jsContent);
+//                JSModel model = null;
+//                try {
+//                    JSModel jsModel = new JSModel(this.context.getApplicationContext());
+//
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                Map<String, String> results = model.classify(jsContent);
+//                String classificationLabel = results.get("classification");
+//                String clusteringLabel = results.get("clustering");
+//                Log.i(TAG, "Downloaded JavaScript content: " + classificationLabel+clusteringLabel);
             } else {
                 Log.e(TAG, "Failed to download JavaScript content.");
             }
         }
     }
 }
+
+

@@ -57,14 +57,27 @@ public class DownloadHtmlTask extends AsyncTask<String, Void, String> {
         }
     }
 
-    public Set<String> getJsLinks(String htmlContent) {
+    public Set<String> getJsLinks(String htmlContent, String baseUrl) {
         Set<String> jsLinks = new HashSet<>();
-        Document doc = Jsoup.parse(htmlContent);
+        Document doc = Jsoup.parse(htmlContent, baseUrl);
         Elements scripts = doc.getElementsByTag("script");
         for (Element script : scripts) {
             String src = script.attr("src");
             if (!src.isEmpty() && src.endsWith(".js")) {
-                jsLinks.add(src);
+                if (src.startsWith("http") || src.startsWith("https")) {
+                    // The link is already a direct link, add it to the set
+                    jsLinks.add(src);
+                } else {
+                    // The link is relative, make it a complete path and add it to the set
+                    URL url;
+                    try {
+                        url = new URL(baseUrl);
+                        URL absoluteUrl = new URL(url, src);
+                        jsLinks.add(absoluteUrl.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
         return jsLinks;

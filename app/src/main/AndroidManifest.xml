@@ -151,6 +151,11 @@
             android:label="@string/setting_title_profiles_edit"
             android:theme="@style/AppTheme" />
 
+        <!-- <meta-data
+            android:name="clustering_features.json"
+            android:resource="@raw/clustering_features" /> -->
+
+
     </application>
 
 </manifest>

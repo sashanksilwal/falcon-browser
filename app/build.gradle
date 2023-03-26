@@ -40,5 +40,10 @@ dependencies {
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     implementation 'androidx.webkit:webkit:1.6.0'
     implementation 'org.jsoup:jsoup:1.14.2'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'org.tensorflow:tensorflow-lite:2.7.0'
+    implementation 'commons-io:commons-io:2.11.0'
+
+
 
 }
