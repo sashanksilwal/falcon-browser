@@ -208,6 +208,7 @@ public class AdBlock {
         } catch (URISyntaxException u) {
             return false;
         }
+//        Log.w("Is an ad:", String.valueOf(hosts.contains(domain.toLowerCase(locale))));
         return hosts.contains(domain.toLowerCase(locale));
     }
 }
