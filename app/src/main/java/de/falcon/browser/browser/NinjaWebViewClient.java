@@ -497,6 +497,14 @@ public class NinjaWebViewClient extends WebViewClient {
                     BrowserUnit.URL_ENCODING,
                     new ByteArrayInputStream("".getBytes())
             );
+
+        String url = request.getUrl().toString();
+        if (url.endsWith(".js")) {
+             Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
+             
+             
+         }
+
         return super.shouldInterceptRequest(view, request);
     }
 
