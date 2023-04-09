@@ -5,6 +5,7 @@
 
     <!-- Permission -->
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.RECORD_VIDEO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -149,6 +150,11 @@
             android:name="de.falcon.browser.activity.Settings_Profile"
             android:label="@string/setting_title_profiles_edit"
             android:theme="@style/AppTheme" />
+
+        <!-- <meta-data
+            android:name="clustering_features.json"
+            android:resource="@raw/clustering_features" /> -->
+
 
     </application>
 

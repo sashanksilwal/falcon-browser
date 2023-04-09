@@ -1,44 +1,85 @@
 ## This is a repo clone of [FOSS Browser](https://github.com/scoute-dich/browser/)
  
+## loadUrlAndDownloadJs
+The loadUrlAndDownloadJs class is responsible for loading a given URL and downloading all the JavaScript files linked to that page.
 
-----
-### UI/Handling
+### How to use
 
-FOSS Browser uses the latest [Material You](https://m3.material.io/) design libraries. Following system day/night mode and a wallpaper based theme are just two features of this new library. The UI is optimized for one-hand-use. All UI-elements are at the bottom of the screen.
+1. Create an instance of loadUrlAndDownloadJs class.
+2. Call the loadUrl method with the URL you want to load as the parameter.
+3. The class will download the HTML content from the given URL, extract all the JavaScript links and download each of them using the DownloadHtmlTask class.
+4. After downloading all the JavaScript files, the class will load the HTML content in the web view.
+Dependencies
+5. The loadUrlAndDownloadJs class depends on the DownloadHtmlTask class, which is responsible for downloading HTML content and extracting JavaScript links.
+
+### Class methods
+*loadUrl(String url)*
+
+This method loads the given URL in the web view, downloads all the JavaScript files linked to that page and then loads the HTML content in the web view.
+
+## DownloadHtmlTask class
+The DownloadHtmlTask class is responsible for downloading HTML content from a given URL and extracting JavaScript links from it.
+
+### How to use
+
+1. Create an instance of DownloadHtmlTask class.
+2. Call the execute method with the URL you want to download as the parameter.
+3. The class will download the HTML content from the given URL and extract all the JavaScript links.
+
+### Class methods
+
+*execute(String url)*
+
+This method downloads the HTML content from the given URL and returns it as a string.
+
+*getJsLinks(String htmlContent)*
+
+This method takes HTML content as input and returns a set of all the JavaScript links present in that HTML content.
+
+## JsClassifier class
+
+The JsClassifier class is responsible for downloading JavaScript content from a given URL and classifying it using a JSModel.
+
+### How to use
+
+1. Create an instance of JsClassifier class, passing a `Context` object to the constructor.
+2. Call the `downloadAndLogJs` method with the URL you want to download as the parameter.
+3. The class will download the JavaScript content from the given URL and log it.
+
+### Class methods
+
+- `downloadAndLogJs(String url)`
+
+This method downloads the JavaScript content from the given URL and logs it.
+
+- `DownloadJsTask`
+
+This inner class is responsible for downloading the JavaScript content in the background using an `AsyncTask`. Once the download is complete, it logs the downloaded content.
+
+- `onPostExecute(String jsContent)`
+
+This method is called when the download is complete. It takes the downloaded JavaScript content as input and uses a `JSModel` to classify it. The classification results are then logged.
 
 
-_More features:_
+## DownloadJsTask class
+The DownloadJsTask class is responsible for downloading JavaScript content from a given URL.
 
-- Play audio on background.
-- Keep screen on.
-- Open links in background.
-- Restore tabs on restart.
+### How to use
+1. Create an instance of DownloadJsTask class with a Context object.
+2. Call the execute method with the URL you want to download as the parameter.
+3. The class will download the JavaScript content from the given URL and return it as a string.
+4. The downloaded content can then be passed to a JSModel for classification.
 
-----
-### Privacy
+### Class methods
+- `DownloadJsTask(Context context)`
 
-FOSS Browser uses profiles to protect your privacy. For each profile you can enable or disable: AdBlock, JavaScript, cookies, fingerprint protection and much more. Profiles can also be saved for domains ("github.com" ⇒ Trusted website). These saved domains always overwrite the currently used profile. So, for example, "github.com" will always open with the trusted profile, even if you are browsing in the protected mode.
+This constructor initializes the DownloadJsTask object with a Context object.
 
-_More privacy features:_
+- `doInBackground(String... urls)`
 
-- Built-in AdBlock, which updates automatically. You can decide which content to block. AdBlock hosts are taken from [Steven Black - AdBlock hosts](https://github.com/StevenBlack/hosts).
-- Third-party cookies can not be enabled.
-- Enable or disable Android-autofill.
-- Delete browser data (on app exit).
-- Choose between different search engines (or set a custom one).
-- FOSS Browser itself doesn't collect any data: [Privacy policy](https://github.com/scoute-dich/browser/blob/master/PRIVACY.md)
+This method downloads the JavaScript content from the given URL and returns it as a string.
 
-----
-### Bookmarks filter
+- `onPostExecute(String jsContent)`
 
-Organize your bookmarks with filters. You can set custom names for each filter. Long press the bookmark icon in the toolbar to get fast access to your favorite bookmarks.
+This method logs the downloaded JavaScript content. It can be modified to perform classification using a JSModel.
 
-----
-### Gestures
-
-You can assign nearly twenty different gestures to the toolbar and the toolbar buttons. Each in four directions. You can also trigger events by long pressing the toolbar buttons. So you have up to ten different gestures to control FOSS Browser. Supported is for example: load last website, switch tab, reload, open bookmarks, ... and many more.
-
-----
-### Backups
-
-Backup all your important data (bookmarks, history, trusted websites and so on) on your SD-card. You can also back up FOSS Browser settings. Backups can even be restored on a fresh install or another device (if you copy the backup files to the new device).

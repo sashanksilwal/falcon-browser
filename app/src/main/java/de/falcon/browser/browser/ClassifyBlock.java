@@ -28,14 +28,13 @@ import java.util.Locale;
 import java.util.Set;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class AdBlock {
-    private static final String FILE = "hosts.txt";
+public class ClassifyBlock {
+    private static final String FILE = "block.json";
     private static final Set<String> hosts = new HashSet<>();
     @SuppressLint("ConstantLocale")
     private static final Locale locale = Locale.getDefault();
 
-
-    public AdBlock(Context context) {
+    public ClassifyBlock(Context context) {
         File file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + FILE);
         if (!file.exists()) {
             //copy hosts.txt from assets if not available
@@ -118,7 +117,7 @@ public class AdBlock {
         Thread thread = new Thread(() -> {
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-            String hostURL = sp.getString("ab_hosts", "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts");
+            String hostURL = sp.getString("ab_hosts", "https://raw.githubusercontent.com/sashanksilwal/Capstone/main/block.json");
 
             try {
                 URL url = new URL(hostURL);
@@ -211,4 +210,6 @@ public class AdBlock {
 //        Log.w("Is an ad:", String.valueOf(hosts.contains(domain.toLowerCase(locale))));
         return hosts.contains(domain.toLowerCase(locale));
     }
+
+
 }
