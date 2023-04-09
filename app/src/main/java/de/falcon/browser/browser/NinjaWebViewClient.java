@@ -501,7 +501,51 @@ public class NinjaWebViewClient extends WebViewClient {
                     BrowserUnit.URL_ENCODING,
                     new ByteArrayInputStream("".getBytes())
             );
+
+         // Get the URL of the requested resource
+        String url = request.getUrl().toString();
+
+        // Check if the URL is in the database
+        boolean isUrlInDatabase = checkIfUrlInDatabase(url); 
+
+        // If the URL is in the database
+        if (isUrlInDatabase) {
+            // Get the classification value for the URL from the database
+            String classification = getClassificationForUrlFromDatabase(url);
+
+            // Check if the classification value indicates that the resource is not required
+            if ("not_required".equals(classification)) {
+                // Do not request the resource and return an empty response
+                return new WebResourceResponse(
+                        BrowserUnit.MIME_TYPE_TEXT_PLAIN,
+                        BrowserUnit.URL_ENCODING,
+                        new ByteArrayInputStream("".getBytes())
+                );
+            }
+        }
+        
+   
         return super.shouldInterceptRequest(view, request);
+    }
+
+    // Method to check if the URL is in the database
+    private boolean checkIfUrlInDatabase(String url) {
+        // Implementation to check if the URL is in the database
+        // Return true if the URL is in the database, else return false
+
+//        if (url.endsWith(".js")) {
+//            Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
+//            return true;
+//        }
+        return false;
+    }
+
+    // Method to get the classification value for the URL from the database
+    private String getClassificationForUrlFromDatabase(String url) {
+        // Implementation to get the classification value for the URL from the database
+        // Return the classification value as a String, or null if not found
+
+        return "not_required";
     }
 
     @Override

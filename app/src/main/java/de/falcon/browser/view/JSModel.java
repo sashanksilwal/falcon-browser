@@ -2,12 +2,28 @@ package de.falcon.browser.view;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.apache.commons.io.IOUtils;
-import org.tensorflow.lite.Interpreter;
+import ai.onnxruntime.NodeInfo;
+import ai.onnxruntime.OnnxTensor;
+import ai.onnxruntime.OrtEnvironment;
+import ai.onnxruntime.OrtException;
+import ai.onnxruntime.OrtSession;
+
+import ai.onnxruntime.OrtSession.SessionOptions;
+import ai.onnxruntime.OrtSession.Result;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,159 +43,215 @@ import de.baumann.browser.R;
 
 public class JSModel {
 
-    private static final String CLASSIFICATION_TFIDF_MODEL = "classification_tfidf_model";
-//    private static final String CLUSTERING_TFIDF_MODEL = "clustering_tfidf_model";
-    private static final String CLASSIFICATION_MODEL = "classification_model";
-//    private static final String CLUSTERING_MODEL = "clustering_model";
-    private static final String CLASSIFICATION_FEATURES_JSON = "classification_features.json";
-    private static final String CLUSTERING_FEATURES_JSON = "clustering_features.json";
+    // The ORT environment used to create the sessions for the classification models.
+    private OrtEnvironment env;
+    private OrtSession sessionClassification;
+    private OrtSession sessionClassificationTfidf;
 
-    private final Map<String, String> classificationLabels = new HashMap<String, String>() {{
-        put("0", "marketing");
-        put("1", "cdn");
-        put("2", "tag-manager");
-        put("3", "video");
-        put("4", "customer-success");
-        put("5", "utility");
-        put("6", "ads");
-        put("7", "analytics");
-        put("8", "hosting");
-        put("9", "content");
-        put("10", "social");
-        put("11", "other");
-    }};
-
-    private final Map<String, String> clusteringLabels = new HashMap<String, String>() {{
-        put("1", "noncritical");
-        put("0", "critical");
-    }};
-
-    private Interpreter classificationTfidfInterpreter;
-    private Interpreter clusteringTfidfInterpreter;
-    private Interpreter classificationInterpreter;
-    private Interpreter clusteringInterpreter;
+    // A set of keywords used to extract features from scripts for classification.
+    private Set<String> classificationKws;
+    // A vector of features used to classify scripts.
     private List<String> classificationFeatures;
-    private List<String> clusteringFeatures;
-    private List<String> classificationKws;
-    private List<String> clusteringKws;
 
-    public JSModel(Context context ) throws IOException {
-//        classificationTfidfInterpreter = new Interpreter(loadModelFile(context,CLASSIFICATION_TFIDF_MODEL));
+    private static final String CLASSIFICATION_FEATURES_JSON = "classification_features";
 
-//        clusteringTfidfInterpreter = new Interpreter(loadModelFile(CLUSTERING_TFIDF_MODEL));
-//        classificationInterpreter = new Interpreter(loadModelFile(CLASSIFICATION_MODEL));
-//        clusteringInterpreter = new Interpreter(loadModelFile(CLUSTERING_MODEL));
-//        classificationFeatures = loadJsonFile(CLASSIFICATION_FEATURES_JSON).get("features");
-        clusteringFeatures = loadJsonFile(context, CLUSTERING_FEATURES_JSON).get("features");
-//        classificationKws = getKwsFromFeatures(classificationFeatures);
-//        clusteringKws = getKwsFromFeatures(clusteringFeatures);
+    // A map containing the names of the categories that scripts can be classified into.
+    private static final Map<Integer, String> CLASSIFICATION_LABELS = new HashMap<Integer, String>() {{
+        put(0, "marketing");
+        put(1, "cdn");
+        put(2, "tag-manager");
+        put(3, "video");
+        put(4, "customer-success");
+        put(5, "utility");
+        put(6, "ads");
+        put(7, "analytics");
+        put(8, "hosting");
+        put(9, "content");
+        put(10, "social");
+        put(11, "other");
+    }};
+
+
+    public JSModel(Context context ) throws IOException, OrtException {
+        Log.i("Session", "Session Init");
+        env = OrtEnvironment.getEnvironment();
+
+        InputStream classificationInputStream = context.getResources().openRawResource(R.raw.classification);
+        InputStream classificationTfidfInputStream = context.getResources().openRawResource(R.raw.classification_tfidf);
+
+        byte[] classificationBytes = new byte[0];
+        byte[] classificationTfidfBytes = new byte[0];
+
+        try {
+            classificationBytes = new byte[classificationInputStream.available()];
+            classificationInputStream.read(classificationBytes);
+            classificationInputStream.close();
+            sessionClassification = env.createSession(classificationBytes);
+
+            classificationTfidfBytes = new byte[classificationTfidfInputStream.available()];
+            classificationTfidfInputStream.read(classificationTfidfBytes);
+            classificationTfidfInputStream.close();
+            sessionClassificationTfidf = env.createSession(classificationTfidfBytes);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (OrtException e) {
+            throw new RuntimeException(e);
+        }
+        for (NodeInfo i : sessionClassification.getInputInfo().values()){
+                Log.i("Dev", "====> "+i.toString());
+        }
+
+        classificationFeatures = loadJsonFile(context, CLASSIFICATION_FEATURES_JSON).get("features");
+        classificationKws = getKwsFromFeatures(classificationFeatures);
     }
-
-//    private MappedByteBuffer loadModelFile(Context c, String modelFilename) throws IOException {
-//        InputStream inputStream = c.getResources().openRawResource(R.raw.classification_tfidf_model);
-//        StringBuilder sb = new StringBuilder();
-//        byte[] buffer = new byte[1024];
-//        int bytesRead;
-//        while ((bytesRead = inputStream.read(buffer)) != -1) {
-//            sb.append(new String(buffer, 0, bytesRead));
-//        }
-//        Log.i("loadModelFile", "Input stream contents: " + sb.toString());
-//        if (inputStream == null) {
-//            Log.e("loadModelFile", "Failed to open resource file: " + modelFilename);
-//            throw new IOException("Failed to open resource file: " + modelFilename);
-//        } else {
-//            Log.i("loadModelFile", "Resource file: " + modelFilename);
-//
-//        }
-//        if (inputStream instanceof FileInputStream) {
-//            FileChannel fileChannel = ((FileInputStream) inputStream).getChannel();
-//            return fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
-//        } else {
-//            byte[] modelBuffer = IOUtils.toByteArray(inputStream);
-//            ByteBuffer buffer = ByteBuffer.allocateDirect(modelBuffer.length)
-//                    .order(ByteOrder.nativeOrder());
-//            buffer.put(modelBuffer);
-//            buffer.flip();
-//            return (MappedByteBuffer) buffer;
-//        }
-//    }
 
 
 
     private Map<String, List<String>> loadJsonFile(Context context, String jsonFilename) throws IOException {
         InputStream inputStream = context.getResources().openRawResource(
                 context.getResources().getIdentifier(jsonFilename, "raw", context.getPackageName()));
-//        byte[] buffer = new byte[inputStream.available()];
-//        inputStream.read(buffer);
-//        inputStream.close();
-//        String json = new String(buffer, "UTF-8");
-//        Gson gson = new Gson();
-//        TypeToken<Map<String, List<String>>> token = new TypeToken<Map<String, List<String>>>() {
-//        };
-//        Log.i("Contents of file {}: {}", jsonFilename + json);
+        byte[] buffer = new byte[inputStream.available()];
+        inputStream.read(buffer);
+        inputStream.close();
+        String json = new String(buffer, "UTF-8");
+        Gson gson = new Gson();
+        TypeToken<Map<String, List<String>>> token = new TypeToken<Map<String, List<String>>>() {
+        };
 
-//        return gson.fromJson(json, token.getType());
-        return null;
+
+        return gson.fromJson(json, token.getType());
+
     }
 
 
-    private List<String> getKwsFromFeatures(List<String> features) {
-        List<String> kws = new ArrayList<>();
-        for (String feature : features) {
-            String[] parts = feature.split("_");
-            if (parts.length > 1) {
-                String kw = parts[1].replaceAll("\\d", "");
-                if (!kws.contains(kw)) {
-                    kws.add(kw);
+    private Set<String> getKwsFromFeatures(List<String> features) {
+        Set<String> classification_kws = new HashSet<>();
+
+        // Iterate through each input string
+        for (String element : features) {
+            // Split the input string by the "|" character
+            String feature = element;
+            String delimiter = "\\|";
+            String token;
+
+            while (feature.indexOf(delimiter) != -1) {
+                // Extract the individual keyword from the input string
+                int pos = feature.indexOf(delimiter);
+                token = feature.substring(0, pos);
+                // Remove any spaces from the keyword
+                token = token.replaceAll(" ", "");
+
+                // Add the keyword to the classification_kws set
+                classification_kws.add(token);
+
+                // Remove the keyword from the input string
+                feature = feature.substring(pos + delimiter.length());
+            }
+
+            // Remove any remaining spaces from the input string
+            feature = feature.replaceAll(" ", "");
+
+            // Add the remaining keyword to the classification_kws set
+            classification_kws.add(feature);
+        }
+
+        return classification_kws;
+    }
+
+    public Map<Integer, Float> predict(String message) throws OrtException {
+        Map<Integer, Float> result = new HashMap<>();
+
+        String reducedScript = getScriptsClassificationFeatures(message, classificationKws, classificationFeatures);
+        String reducedScriptCopy = reducedScript;
+        System.out.println("reducedScript: " + sessionClassificationTfidf.getOutputInfo());
+        System.out.println("reducedScript: " + sessionClassification.getOutputInfo());
+
+
+        // Create an input tensor from the reducedScriptCopy
+        OnnxTensor inputTensor = OnnxTensor.createTensor(env, reducedScriptCopy);
+        // Create an output tensor
+        OnnxTensor outputTensor = OnnxTensor.createTensor(env, new long[]{1, 2});
+
+        // Run the classification model
+
+//        float[] outputValues = outputTensor.getFloatBuffer().array();
+//        for (int i = 0; i < outputValues.length; i++) {
+//            result.put(i, outputValues[i]);
+//        }
+
+        return result;
+
+    }
+
+    public static String getScriptsClassificationFeatures(String data, Set<String> classificationKws, List<String> classificationFeatures) {
+        List<String> features = getScriptsFeatures(data, classificationKws, classificationFeatures);
+        StringBuilder resultantFeatures = new StringBuilder();
+        for (String ft : features) {
+            resultantFeatures.append(ft).append(" ");
+        }
+        return resultantFeatures.toString();
+    }
+
+    public static List<String> getScriptsFeatures(String data, Set<String> kws, List<String> features) {
+        List<String> resultantFeatures = new ArrayList<>();
+        List<String> scriptsKws = new ArrayList<>();
+
+        for (String kw : kws) {
+            String kwNoSpaces = kw.replace(" ", ""); // remove spaces from kw
+            String kw1 = "." + kwNoSpaces + "(";
+
+            int pos = data.indexOf(kw1); // Find the first occurrence of kw1 in data
+
+            int count = 0;
+            while (pos != -1) { // Count the number of occurrences of kw1 in data
+                count++;
+                pos = data.indexOf(kw1, pos + 1);
+            }
+
+            for (int i = 0; i < count; i++) { // Add kw to scripts_kws for each occurrence of kw1 in data
+                scriptsKws.add(kwNoSpaces);
+            }
+        }
+
+        for (String ft : features) {
+            ft = ft.replace(" ", ""); // remove spaces from ft
+
+            if (!ft.contains("|")) {
+                int count = 0;
+                for (String kw : scriptsKws) {
+                    if (kw.equals(ft)) {
+                        count++;
+                    }
+                }
+                for (int i = 0; i < count; i++) {
+                    resultantFeatures.add(ft);
+                }
+            } else {
+                List<String> singularKws = new ArrayList<>();
+                String delimiter = "\\|";
+                String[] tokens = ft.split(delimiter);
+
+                for (String token : tokens) {
+                    singularKws.add(token);
+                }
+
+                int count = 0;
+                for (String kw : singularKws) {
+                    if (scriptsKws.contains(kw)) {
+                        count++;
+                    }
+                }
+                if (count == singularKws.size()) {
+                    resultantFeatures.add(ft);
                 }
             }
         }
-        Collections.sort(kws);
-        return kws;
-    }
-    public Map<String, Object> predict(String message) {
-        Map<String, Object> result = new HashMap<>();
-//        try {
-//            // tokenize the message
-//            String[] tokens = message.split("\\s+");
-//            // tfidf encoding of tokens
-//            byte[] classificationTfidfOutput = tfidfEncode(tokens, classificationFeatures, classificationTfidfInterpreter);
-//            byte[] clusteringTfidfOutput = tfidfEncode(tokens, clusteringFeatures, clusteringTfidfInterpreter);
-//
-//            // classification model inference
-//            float[] classificationModelOutput = new float[classificationLabels.size()];
-//            classificationInterpreter.run(classificationTfidfOutput, classificationModelOutput);
-//            int classificationIndex = argmax(classificationModelOutput);
-//
-//            // clustering model inference
-//            float[] clusteringModelOutput = new float[clusteringLabels.size()];
-//            clusteringInterpreter.run(clusteringTfidfOutput, clusteringModelOutput);
-//            int clusteringIndex = argmax(clusteringModelOutput);
-//
-//            // prepare results
-//            result.put("category", classificationLabels.get(String.valueOf(classificationIndex)));
-//            result.put("criticality", clusteringLabels.get(String.valueOf(clusteringIndex)));
-//            result.put("keywords", classificationKws);
-//        } catch (Exception e) {
-//            result.put("error", "Failed to predict category and criticality");
-//            e.printStackTrace();
-//        }
-        return result;
+
+        return resultantFeatures;
     }
 
-    private byte[] tfidfEncode(String[] tokens, List<String> features, Interpreter interpreter) {
-        byte[] input = new byte[features.size()];
-        Arrays.fill(input, (byte) 0.0f);
-        for (String token : tokens) {
-            if (features.contains("tf_" + token)) {
-                int index = features.indexOf("tf_" + token);
-                input[index] += 1.0f;
-            }
-        }
-        byte[] output = new byte[features.size()];
-        interpreter.run(ByteBuffer.wrap(input), ByteBuffer.wrap(output));
-        return output;
-    }
 
     private int argmax(float[] array) {
         int index = 0;

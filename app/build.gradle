@@ -41,7 +41,7 @@ dependencies {
     implementation 'androidx.webkit:webkit:1.6.0'
     implementation 'org.jsoup:jsoup:1.14.2'
     implementation 'com.google.code.gson:gson:2.8.8'
-    implementation 'org.tensorflow:tensorflow-lite:2.7.0'
+    implementation 'com.microsoft.onnxruntime:onnxruntime-android:latest.release'
     implementation 'commons-io:commons-io:2.11.0'
 
 

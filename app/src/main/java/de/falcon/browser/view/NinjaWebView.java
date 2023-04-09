@@ -63,6 +63,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -70,6 +71,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.baumann.browser.R;
 import de.falcon.browser.activity.BrowserActivity;
@@ -818,6 +821,7 @@ public class NinjaWebView extends WebView implements AlbumController {
      // SASHANK
     private void loadUrlAndDownloadJs(String url) {
         Set<String> jsLinks;
+        List<String> jsContent = new ArrayList<>();
         String htmlContent = null;
 
         if (url != null && !url.trim().isEmpty() && URLUtil.isValidUrl(url) && !url.equals("about:blank")) {
@@ -828,6 +832,18 @@ public class NinjaWebView extends WebView implements AlbumController {
                 DownloadHtmlTask downloadTask = new DownloadHtmlTask();
                 htmlContent = downloadTask.execute(url).get();
                 Log.i(TAG, "Downloaded HTML content: " + htmlContent);
+                // get the script content
+                Pattern pattern = Pattern.compile("<script[^>]*>(.*?)</script>", Pattern.DOTALL);
+                Matcher matcher = pattern.matcher(htmlContent);
+                while (matcher.find()) {
+                    String scriptContent = matcher.group(1);
+
+                    if (!scriptContent.isEmpty()){
+                        Log.i(TAG, "Found JavaScript content: " + scriptContent);
+                        jsContent.add(scriptContent);
+                    }
+
+                }
                 jsLinks = downloadTask.getJsLinks(htmlContent, url);
 
                 for (String link : jsLinks) {
