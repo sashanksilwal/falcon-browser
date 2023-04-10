@@ -54,6 +54,7 @@ public class NinjaWebViewClient extends WebViewClient {
     private final Context context;
     private final SharedPreferences sp;
     private final AdBlock adBlock;
+    private final ClassifyJS classifyJS;
 
 
     public NinjaWebViewClient(NinjaWebView ninjaWebView) {
@@ -62,6 +63,8 @@ public class NinjaWebViewClient extends WebViewClient {
         this.context = ninjaWebView.getContext();
         this.sp = PreferenceManager.getDefaultSharedPreferences(context);
         this.adBlock = new AdBlock(this.context);
+        this.classifyJS = new ClassifyJS(this.context);
+
     }
 
     @Override
@@ -503,24 +506,21 @@ public class NinjaWebViewClient extends WebViewClient {
             );
 
         String url = request.getUrl().toString();
+        // url not null and ends with .js
 
-
-
-        if (url.endsWith(".js")) {
-             Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
+        if (url != null && url.endsWith(".js")) {
+            Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
             // create class instance of classifyJS
             try {
-                ClassifyJS classifyJS = new ClassifyJS(this.context.getApplicationContext());
-                result =  classifyJS.predict(url);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                result = classifyJS.predict(url);
             } catch (OrtException e) {
-                throw new RuntimeException(e);
+                Log.e(TAG, "Error predicting JS classification: " + e.getMessage());
+     
+            }  catch (NullPointerException e) {
+                Log.e(TAG, "NullPointerException: " + e.getMessage());
             }
 
-             
         }
-
         Log.i(TAG, "checkIfUrlInDatabase: result " +  result);
 
        

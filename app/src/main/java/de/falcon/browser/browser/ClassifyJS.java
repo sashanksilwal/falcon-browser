@@ -78,7 +78,7 @@ public class ClassifyJS {
     }};
 
 
-    public ClassifyJS(Context context ) throws IOException, OrtException {
+    public ClassifyJS(Context context )   {
         Log.i("Session", "Session Init");
         env = OrtEnvironment.getEnvironment();
 
@@ -105,11 +105,23 @@ public class ClassifyJS {
         } catch (OrtException e) {
             throw new RuntimeException(e);
         }
-        for (NodeInfo i : sessionClassification.getInputInfo().values()) {
-            Log.i("Dev", "====> " + i.toString());
+        try 
+        {
+            for (NodeInfo i : sessionClassification.getInputInfo().values()) {
+                Log.i("Dev", "====> " + i.toString());
+            }
+
+            classificationFeatures = loadJsonFile(context, CLASSIFICATION_FEATURES_JSON).get("features");
+
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        } catch (OrtException e) {
+            throw new RuntimeException(e);
         }
 
-        classificationFeatures = loadJsonFile(context, CLASSIFICATION_FEATURES_JSON).get("features");
+
         classificationKws = getKwsFromFeatures(classificationFeatures);
 
 
@@ -212,12 +224,13 @@ public class ClassifyJS {
 
         // Run the classification model
 
-        float[] outputValues = outputTensor.getFloatBuffer().array();
-        for (int i = 0; i < outputValues.length; i++) {
-            result.put(i, outputValues[i]);
-        }
+//        float[] outputValues = outputTensor.getFloatBuffer().array();
+//        for (int i = 0; i < outputValues.length; i++) {
+//            result.put(i, outputValues[i]);
+//        }
 
         return result;
+
 
     }
 
