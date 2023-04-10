@@ -34,8 +34,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
+import ai.onnxruntime.OrtException;
 import de.baumann.browser.R;
 import de.falcon.browser.database.FaviconHelper;
 import de.falcon.browser.database.Record;
@@ -491,6 +494,7 @@ public class NinjaWebViewClient extends WebViewClient {
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+        Map<Integer, Float> result = null;
         if (ninjaWebView.isAdBlock() && adBlock.isAd(request.getUrl().toString()))
             return new WebResourceResponse(
                     BrowserUnit.MIME_TYPE_TEXT_PLAIN,
@@ -499,11 +503,28 @@ public class NinjaWebViewClient extends WebViewClient {
             );
 
         String url = request.getUrl().toString();
+
+
+
         if (url.endsWith(".js")) {
              Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
+            // create class instance of classifyJS
+            try {
+                ClassifyJS classifyJS = new ClassifyJS(this.context.getApplicationContext());
+                result =  classifyJS.predict(url);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (OrtException e) {
+                throw new RuntimeException(e);
+            }
+
              
-             
-         }
+        }
+
+        Log.i(TAG, "checkIfUrlInDatabase: result " +  result);
+
+       
+        
 
         return super.shouldInterceptRequest(view, request);
     }
