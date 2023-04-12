@@ -508,6 +508,9 @@ public class NinjaWebViewClient extends WebViewClient {
         String url = request.getUrl().toString();
         // url not null and ends with .js
 
+        // log url
+//        Log.i(TAG, "Requesting response: url " + url);
+
         if (url != null && url.endsWith(".js")) {
             Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
             // create class instance of classifyJS
@@ -521,7 +524,7 @@ public class NinjaWebViewClient extends WebViewClient {
             }
 
         }
-        Log.i(TAG, "checkIfUrlInDatabase: result " +  result);
+//        Log.i(TAG, "checkIfUrlInDatabase: result " +  result);
 
        
         
