@@ -39,4 +39,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     implementation 'androidx.webkit:webkit:1.6.0'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.microsoft.onnxruntime:onnxruntime-android:latest.release'
+    implementation 'commons-io:commons-io:2.11.0'
 }

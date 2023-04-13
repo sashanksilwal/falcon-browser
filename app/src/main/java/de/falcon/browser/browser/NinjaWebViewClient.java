@@ -13,6 +13,7 @@ import android.os.Message;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
@@ -36,6 +37,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.ByteArrayInputStream;
 import java.util.Objects;
 
+import ai.onnxruntime.OrtException;
 import de.baumann.browser.R;
 import de.falcon.browser.database.FaviconHelper;
 import de.falcon.browser.database.Record;
@@ -51,6 +53,7 @@ public class NinjaWebViewClient extends WebViewClient {
     private final Context context;
     private final SharedPreferences sp;
     private final AdBlock adBlock;
+    private final ClassifyJS classifyJS;
 
 
     public NinjaWebViewClient(NinjaWebView ninjaWebView) {
@@ -59,6 +62,8 @@ public class NinjaWebViewClient extends WebViewClient {
         this.context = ninjaWebView.getContext();
         this.sp = PreferenceManager.getDefaultSharedPreferences(context);
         this.adBlock = new AdBlock(this.context);
+        this.classifyJS = new ClassifyJS(this.context);
+
     }
 
     @Override
@@ -491,12 +496,42 @@ public class NinjaWebViewClient extends WebViewClient {
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-        if (ninjaWebView.isAdBlock() && adBlock.isAd(request.getUrl().toString()))
+        String url = request.getUrl().toString();
+
+        if (ninjaWebView.isAdBlock() && adBlock.isAd(url)) {
             return new WebResourceResponse(
                     BrowserUnit.MIME_TYPE_TEXT_PLAIN,
                     BrowserUnit.URL_ENCODING,
                     new ByteArrayInputStream("".getBytes())
             );
+        }
+
+        if (url.endsWith(".js")) {
+            try {
+                Pair<String, Float> result = classifyJS.predict(url);
+                if (result == null || result.second == 0f) {
+                    return super.shouldInterceptRequest(view, request);
+                }
+                Log.i(TAG, url + " " + result.first + " " + result.second + " " + "JS classification");
+                // if result.first is ads, customer-success, marketing and result.second is greater than 0.8 then block the request
+                if ((result.first.equals("ads") || result.first.equals("customer-success") || result.first.equals("marketing")) && result.second > 0.7) {
+                    // log the url of the blocked request
+                    Log.i(TAG, "Blocked JS request: " + url);
+                    return new WebResourceResponse(
+                            BrowserUnit.MIME_TYPE_TEXT_PLAIN,
+                            BrowserUnit.URL_ENCODING,
+                            new ByteArrayInputStream("".getBytes())
+                    );
+                }
+
+            } catch (OrtException e) {
+                Log.e(TAG, "Error predicting JS classification: " + e.getMessage());
+
+            }  catch (NullPointerException e) {
+                Log.e(TAG, "NullPointerException: " + e.getMessage());
+            }
+
+        }
         return super.shouldInterceptRequest(view, request);
     }
 
