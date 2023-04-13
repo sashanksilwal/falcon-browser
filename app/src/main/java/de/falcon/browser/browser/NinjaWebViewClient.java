@@ -35,8 +35,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.Map;
 import java.util.Objects;
 
 import ai.onnxruntime.OrtException;
@@ -498,38 +496,34 @@ public class NinjaWebViewClient extends WebViewClient {
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-        // pair of string and float
-        Pair<String, Float> result = null;
-        if (ninjaWebView.isAdBlock() && adBlock.isAd(request.getUrl().toString()))
+        String url = request.getUrl().toString();
+
+        if (ninjaWebView.isAdBlock() && adBlock.isAd(url)) {
             return new WebResourceResponse(
                     BrowserUnit.MIME_TYPE_TEXT_PLAIN,
                     BrowserUnit.URL_ENCODING,
                     new ByteArrayInputStream("".getBytes())
             );
+        }
 
-        String url = request.getUrl().toString();
-        // url not null and ends with .js
-        // log url
-        // Log.i(TAG, "Requesting response: url " + url);
-
-        if (url != null && url.endsWith(".js")) {
-            Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
-            // create class instance of classifyJS
+        if (url.endsWith(".js")) {
             try {
-                result = classifyJS.predict(url);
+                Pair<String, Float> result = classifyJS.predict(url);
+                if (result == null || result.second == 0f) {
+                    return super.shouldInterceptRequest(view, request);
+                }
+                Log.i(TAG, url + " " + result.first + " " + result.second + " " + "JS classification");
+                // if result.first is ads, customer-success, marketing and result.second is greater than 0.8 then block the request
+                if ((result.first.equals("ads") || result.first.equals("customer-success") || result.first.equals("marketing")) && result.second > 0.7) {
+                    // log the url of the blocked request
+                    Log.i(TAG, "Blocked JS request: " + url);
+                    return new WebResourceResponse(
+                            BrowserUnit.MIME_TYPE_TEXT_PLAIN,
+                            BrowserUnit.URL_ENCODING,
+                            new ByteArrayInputStream("".getBytes())
+                    );
+                }
 
-                // log the string and float of result separated by a space
-                Log.i(TAG, "checkIfUrlInDatabase: result " + result.first + " " + result.second);
-
-                // if result is not null and result is > 7 then block
-//                if (result != null && result.get(1) > 7) {
-//                    Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
-//                    return new WebResourceResponse(
-//                            BrowserUnit.MIME_TYPE_TEXT_PLAIN,
-//                            BrowserUnit.URL_ENCODING,
-//                            new ByteArrayInputStream("".getBytes())
-//                    );
-//                }
             } catch (OrtException e) {
                 Log.e(TAG, "Error predicting JS classification: " + e.getMessage());
 
@@ -538,11 +532,6 @@ public class NinjaWebViewClient extends WebViewClient {
             }
 
         }
-            //  Log.i(TAG, "checkIfUrlInDatabase: result " +  result);
-
-       
-        
-
         return super.shouldInterceptRequest(view, request);
     }
 
