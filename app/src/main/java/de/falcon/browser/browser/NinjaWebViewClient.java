@@ -13,6 +13,7 @@ import android.os.Message;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
@@ -497,7 +498,8 @@ public class NinjaWebViewClient extends WebViewClient {
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-        Map<Integer, Float> result = null;
+        // pair of string and float
+        Pair<String, Float> result = null;
         if (ninjaWebView.isAdBlock() && adBlock.isAd(request.getUrl().toString()))
             return new WebResourceResponse(
                     BrowserUnit.MIME_TYPE_TEXT_PLAIN,
@@ -515,20 +517,22 @@ public class NinjaWebViewClient extends WebViewClient {
             // create class instance of classifyJS
             try {
                 result = classifyJS.predict(url);
-                // TODO: cache the url and result
+
+                // log the string and float of result separated by a space
+                Log.i(TAG, "checkIfUrlInDatabase: result " + result.first + " " + result.second);
 
                 // if result is not null and result is > 7 then block
-                if (result != null && result.get(1) > 7) {
-                    Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
-                    return new WebResourceResponse(
-                            BrowserUnit.MIME_TYPE_TEXT_PLAIN,
-                            BrowserUnit.URL_ENCODING,
-                            new ByteArrayInputStream("".getBytes())
-                    );
-                }
+//                if (result != null && result.get(1) > 7) {
+//                    Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
+//                    return new WebResourceResponse(
+//                            BrowserUnit.MIME_TYPE_TEXT_PLAIN,
+//                            BrowserUnit.URL_ENCODING,
+//                            new ByteArrayInputStream("".getBytes())
+//                    );
+//                }
             } catch (OrtException e) {
                 Log.e(TAG, "Error predicting JS classification: " + e.getMessage());
-     
+
             }  catch (NullPointerException e) {
                 Log.e(TAG, "NullPointerException: " + e.getMessage());
             }

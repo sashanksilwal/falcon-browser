@@ -1,13 +1,16 @@
 package de.falcon.browser.browser;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
+import android.util.Pair;
 
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import ai.onnxruntime.OnnxSequence;
 import ai.onnxruntime.OnnxTensor;
 import ai.onnxruntime.OnnxValue;
 import ai.onnxruntime.OrtEnvironment;
@@ -80,7 +83,6 @@ public class ClassifyJS {
 
 
     public ClassifyJS(Context context )   {
-        Log.i("Session", "Session Init");
         // Create an OrtEnvironment instance
         env = OrtEnvironment.getEnvironment();
 
@@ -126,21 +128,21 @@ public class ClassifyJS {
         // Get the keywords from the features and store them in classificationKws variable
         classificationKws = getKwsFromFeatures(classificationFeatures);
 
-        File file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
-        if (!file.exists()) {
-            //copy blocks.txt from assets if not available
-            Log.d("Blocks file", "does not exist");
-            try {
-                AssetManager manager = context.getAssets();
-                copyFile(manager.open(CACHE_FILE), new FileOutputStream(file));
-                //downlaodClassificatons(context);  //try to update blocks.txt from internet
-            } catch (IOException e) {
-                Log.e("browser", "Failed to copy asset file", e);
-            }
-        }
-        if (blocks.isEmpty()) {
-            loadBlockClassifications(context);
-        }
+//        File file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
+//        if (!file.exists()) {
+//            //copy blocks.txt from assets if not available
+//            Log.d("Blocks file", "does not exist");
+//            try {
+//                AssetManager manager = context.getAssets();
+//                copyFile(manager.open(CACHE_FILE), new FileOutputStream(file));
+//                //downlaodClassificatons(context);  //try to update blocks.txt from internet
+//            } catch (IOException e) {
+//                Log.e("browser", "Failed to copy asset file", e);
+//            }
+//        }
+//        if (blocks.isEmpty()) {
+//            loadBlockClassifications(context);
+//        }
     }
 
     private static void loadBlockClassifications(final Context context) {
@@ -230,7 +232,7 @@ public class ClassifyJS {
         return classification_kws;
     }
 
-    public Map<Integer, Float> predict(String url) throws OrtException {
+    public Pair<String, Float> predict(String url) throws OrtException {
 
         // Use the URL to download JavaScript code
         try {
@@ -254,14 +256,9 @@ public class ClassifyJS {
             e.printStackTrace();
         }
 
-        // Log the downloaded JavaScript code
-        Log.i("JS-Link", url);
-        Log.i("JS-Content", message);
-
-        // write the downloaded JavaScript code to a file
-        
-
-        
+//        // Log the downloaded JavaScript code
+//        Log.i("JS-Link", url);
+//        Log.i("JS-Content", message);
 
         // Create a map to store the prediction results
         Map<Integer, Float> result = new HashMap<>();
@@ -270,9 +267,9 @@ public class ClassifyJS {
         String reducedScript = getScriptsClassificationFeatures(message, classificationKws, classificationFeatures);
         String reducedScriptCopy = reducedScript;
 
-        // Log information about the classification models
-        Log.i("Classification", sessionClassification.getOutputInfo().toString());
-        Log.i("ClassificationTfidf", sessionClassificationTfidf.getOutputInfo().toString());
+//        // Log information about the classification models
+//        Log.i("Classification", sessionClassification.getOutputInfo().toString());
+//        Log.i("ClassificationTfidf", sessionClassificationTfidf.getOutputInfo().toString());
 
         // Create an array to hold the input data for the first classification model
         String[] floatInputArray = new String[1];
@@ -322,26 +319,42 @@ public class ClassifyJS {
         // Run the second classification model and get the output tensor
         Result output_tensor2 = sessionClassification.run(Collections.singletonMap("float_input", inputTensor2));
 
-        OnnxValue outputTensor2 = output_tensor2.get(1);
-        ValueInfo mapInfo = outputTensor2.getInfo();
+        OnnxSequence outputTensor2 = (OnnxSequence) output_tensor2.get(1);
 
-        Object outputValue = output_tensor2.get(1).getValue();
-        String type = outputValue.getClass().getName();
+        List<OnnxValue> onnxValueList = (List<OnnxValue>) outputTensor2.getValue();
 
-        
-//        // values_ort.GetTensorMutableData<float>();
-//        // log the outputValue and outputTensor2
-//        Log.i("OutputValue", outputValue.toString());
-//        Log.i("OutputTensor2", outputTensor2.toString());
-//        Log.i("Output_Tensor2", output_tensor2.toString());
-//        // log type
-//        Log.i("Type-", type);
+        float index = 0;
 
-//        Log.d("HighestValue",   getHighestValue(result) );
+        // Loop through onnxValueList and get the values
+        for (OnnxValue onnxValue : onnxValueList) {
+            // Get the value of onnxValue
+            Map<String, Float> mapValue = (Map<String, Float>) onnxValue.getValue();
+            
+            // Loop through mapValue and get the values
+            for (Map.Entry<String, Float> entry : mapValue.entrySet()) {
+                // Get the value of entry
+                Float value = entry.getValue();
+                
+                
+                result.put((int) index, value);
+                index++;
 
-        return result;
+            }
+        }
+        // call method maxKey to get the key with the highest value
+        int maxKey = getHighestValue(result);
+        return new Pair<>(CLASSIFICATION_LABELS.get(maxKey), result.get(maxKey));
     }
 
+    // public void cachePrediction(String url, int result){
+    //     // cache the url and the prediction results in the database
+    //     ContentValues values = new ContentValues();
+    //     values.put("url", url);
+    //     values.put("result", result);
+    //     StringBuffer db;
+
+    //     db.insert("predictions", null, values);
+    // }
 
     public static String getScriptsClassificationFeatures(String data, Set<String> classificationKws, List<String> classificationFeatures) {
         List<String> features = getScriptsFeatures(data, classificationKws, classificationFeatures);
@@ -425,13 +438,15 @@ public class ClassifyJS {
 
     // function that takes Map<Integer, Float> result and returns the key with the highest value
     private int getHighestValue(Map<Integer, Float> result) {
-        int highestValue = 0;
+        int maxKey = 0;
+        float maxValue = 0;
         for (Map.Entry<Integer, Float> entry : result.entrySet()) {
-            if (entry.getValue() > highestValue) {
-                highestValue = entry.getKey();
+            if (entry.getValue() > maxValue) {
+                maxValue = entry.getValue();
+                maxKey = entry.getKey();
             }
         }
-        return highestValue;
+        return maxKey;
     }
     //    private static void loadHosts(final Context context) {
 //        Thread thread = new Thread(() -> {
