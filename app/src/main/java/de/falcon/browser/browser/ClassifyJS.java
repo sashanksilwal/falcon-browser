@@ -1,13 +1,13 @@
 package de.falcon.browser.browser;
 
 import android.content.Context;
-import android.os.Environment;
+import android.content.res.AssetManager;
 import android.util.Log;
+
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import ai.onnxruntime.MapInfo;
 import ai.onnxruntime.OnnxTensor;
 import ai.onnxruntime.OnnxValue;
 import ai.onnxruntime.OrtEnvironment;
@@ -18,8 +18,10 @@ import ai.onnxruntime.OrtSession.Result;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.FloatBuffer;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,6 +49,11 @@ public class ClassifyJS {
     private OrtSession sessionClassificationTfidf;
 
     String message = null;
+    private static final String CACHE_FILE = "blocks.txt";
+    private static final Set<String> blocks = new HashSet<>();
+
+    private static final Locale locale = Locale.getDefault();
+
 
     // A set of keywords used to extract features from scripts for classification.
     private Set<String> classificationKws;
@@ -117,6 +125,41 @@ public class ClassifyJS {
 
         // Get the keywords from the features and store them in classificationKws variable
         classificationKws = getKwsFromFeatures(classificationFeatures);
+
+        File file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
+        if (!file.exists()) {
+            //copy blocks.txt from assets if not available
+            Log.d("Blocks file", "does not exist");
+            try {
+                AssetManager manager = context.getAssets();
+                copyFile(manager.open(CACHE_FILE), new FileOutputStream(file));
+                //downlaodClassificatons(context);  //try to update blocks.txt from internet
+            } catch (IOException e) {
+                Log.e("browser", "Failed to copy asset file", e);
+            }
+        }
+        if (blocks.isEmpty()) {
+            loadBlockClassifications(context);
+        }
+    }
+
+    private static void loadBlockClassifications(final Context context) {
+        Thread thread = new Thread(() -> {
+            try {
+                File file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
+                FileReader in = new FileReader(file);
+                BufferedReader reader = new BufferedReader(in);
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.startsWith("#")) continue;
+                    blocks.add(line.toLowerCase(locale));
+                }
+                in.close();
+            } catch (IOException i) {
+                Log.w("browser", "Error loading adBlockHosts", i);
+            }
+        });
+        thread.start();
     }
 
 
@@ -144,6 +187,13 @@ public class ClassifyJS {
         return gson.fromJson(json, token.getType());
     }
 
+    private void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
+    }
 
 
     private Set<String> getKwsFromFeatures(List<String> features) {
@@ -248,7 +298,7 @@ public class ClassifyJS {
             if (floatArr[i] != 0) {
                 input_tensor_values[i] = floatArr[i];
                 // Log the non-zero float values
-//                Log.i("ClassificationTfidf", i + ": " + floatArr[i]);
+                // Log.i("ClassificationTfidf", i + ": " + floatArr[i]);
             }
         }
 
@@ -276,22 +326,18 @@ public class ClassifyJS {
         ValueInfo mapInfo = outputTensor2.getInfo();
 
         Object outputValue = output_tensor2.get(1).getValue();
-
-        // values_ort.GetTensorMutableData<float>();
-
-        output_tensor2.get(2);
-
-       
-
-   
         String type = outputValue.getClass().getName();
-        // log type
-        Log.i("Type-", type);
 
         
+//        // values_ort.GetTensorMutableData<float>();
+//        // log the outputValue and outputTensor2
+//        Log.i("OutputValue", outputValue.toString());
+//        Log.i("OutputTensor2", outputTensor2.toString());
+//        Log.i("Output_Tensor2", output_tensor2.toString());
+//        // log type
+//        Log.i("Type-", type);
 
-         
-
+//        Log.d("HighestValue",   getHighestValue(result) );
 
         return result;
     }
@@ -376,4 +422,96 @@ public class ClassifyJS {
         }
         return index;
     }
+
+    // function that takes Map<Integer, Float> result and returns the key with the highest value
+    private int getHighestValue(Map<Integer, Float> result) {
+        int highestValue = 0;
+        for (Map.Entry<Integer, Float> entry : result.entrySet()) {
+            if (entry.getValue() > highestValue) {
+                highestValue = entry.getKey();
+            }
+        }
+        return highestValue;
+    }
+    //    private static void loadHosts(final Context context) {
+//        Thread thread = new Thread(() -> {
+//            try {
+//                File file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
+//                FileReader in = new FileReader(file);
+//                BufferedReader reader = new BufferedReader(in);
+//                String line;
+//                while ((line = reader.readLine()) != null) {
+//                    if (line.startsWith("#")) continue;
+//                    blocks.add(line.toLowerCase(locale));
+//                }
+//                in.close();
+//            } catch (IOException i) {
+//                Log.w("browser", "Error loading adBlockHosts", i);
+//            }
+//        });
+//        thread.start();
+//    }
+
+//    public static void downlaodClassificatons(final Context context) {
+//        Thread thread = new Thread(() -> {
+//
+//            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+//            String hostURL = sp.getString("ab_hosts", "");
+//
+//            try {
+//                URL url = new URL(hostURL);
+//                Log.d("browser", "Download AdBlock hosts");
+//                URLConnection connection = url.openConnection();
+//                connection.setReadTimeout(5000);
+//                connection.setConnectTimeout(10000);
+//
+//                InputStream is = connection.getInputStream();
+//                BufferedInputStream inStream = new BufferedInputStream(is, 1024 * 5);
+//
+//                File tempfile = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/temp.txt");
+//
+//                if (tempfile.exists()) {
+//                    tempfile.delete();
+//                }
+//                tempfile.createNewFile();
+//
+//                FileOutputStream outStream = new FileOutputStream(tempfile);
+//                byte[] buff = new byte[5 * 1024];
+//
+//                int len;
+//                while ((len = inStream.read(buff)) != -1) {
+//                    outStream.write(buff, 0, len);
+//                }
+//
+//                outStream.flush();
+//                outStream.close();
+//                inStream.close();
+//
+//                //now remove leading 0.0.0.0 from file
+//                FileReader in = new FileReader(tempfile);
+//                BufferedReader reader = new BufferedReader(in);
+//                File outfile = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
+//                FileWriter out = new FileWriter(outfile);
+//                String line;
+//                while ((line = reader.readLine()) != null) {
+//                    if (line.startsWith("0.0.0.0 ")) {
+//                        line = line.substring(8);
+//                    }
+//                    out.write(line + "\n");
+//                }
+//                in.close();
+//                out.close();
+//
+//                tempfile.delete();
+//
+//                blocks.clear();
+//                loadHosts(context);  //reload hosts after update
+//                Log.w("browser", "AdBlock hosts updated");
+//
+//            } catch (IOException i) {
+//                Log.w("browser", "Error updating AdBlock hosts", i);
+//            }
+//        });
+//        thread.start();
+//    }
 }

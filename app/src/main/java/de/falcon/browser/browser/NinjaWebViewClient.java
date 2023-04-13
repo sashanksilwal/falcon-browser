@@ -507,15 +507,25 @@ public class NinjaWebViewClient extends WebViewClient {
 
         String url = request.getUrl().toString();
         // url not null and ends with .js
-
         // log url
-//        Log.i(TAG, "Requesting response: url " + url);
+        // Log.i(TAG, "Requesting response: url " + url);
 
         if (url != null && url.endsWith(".js")) {
             Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
             // create class instance of classifyJS
             try {
                 result = classifyJS.predict(url);
+                // TODO: cache the url and result
+
+                // if result is not null and result is > 7 then block
+                if (result != null && result.get(1) > 7) {
+                    Log.i(TAG, "checkIfUrlInDatabase: blocking " + url);
+                    return new WebResourceResponse(
+                            BrowserUnit.MIME_TYPE_TEXT_PLAIN,
+                            BrowserUnit.URL_ENCODING,
+                            new ByteArrayInputStream("".getBytes())
+                    );
+                }
             } catch (OrtException e) {
                 Log.e(TAG, "Error predicting JS classification: " + e.getMessage());
      
@@ -524,7 +534,7 @@ public class NinjaWebViewClient extends WebViewClient {
             }
 
         }
-//        Log.i(TAG, "checkIfUrlInDatabase: result " +  result);
+            //  Log.i(TAG, "checkIfUrlInDatabase: result " +  result);
 
        
         
