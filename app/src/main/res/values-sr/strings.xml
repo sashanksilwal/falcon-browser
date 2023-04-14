@@ -34,7 +34,8 @@
     <string name="main_omnibox_input_hint">Претражите или унесите адресу</string>
     <string name="menu_open_with">Отвори везу помоћу…</string>
     <string name="menu_quit">Изађи</string>
-    <string name="menu_openFav">Отвори почетну</string>
+    <string name="menu_openFav">Отвори почетну</string>    
+    <string name="menu_reportBroken">Report Broken Page</string>
     <string name="menu_delete">Избриши</string>
     <string name="menu_edit">Измени</string>
     <string name="menu_closeTab">Затвори језичак</string>
