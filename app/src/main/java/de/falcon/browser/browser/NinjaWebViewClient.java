@@ -500,8 +500,8 @@ public class NinjaWebViewClient extends WebViewClient {
 
         if (ninjaWebView.isAdBlock() && adBlock.isAd(url)) {
             return new WebResourceResponse(
-                    BrowserUnit.MIME_TYPE_TEXT_PLAIN,
-                    BrowserUnit.URL_ENCODING,
+                    "text/plain",
+                    "UTF-8",
                     new ByteArrayInputStream("".getBytes())
             );
         }
@@ -512,14 +512,14 @@ public class NinjaWebViewClient extends WebViewClient {
                 if (result == null || result.second == 0f) {
                     return super.shouldInterceptRequest(view, request);
                 }
-                Log.i(TAG, url + " " + result.first + " " + result.second + " " + "JS classification");
-                // if result.first is ads, customer-success, marketing and result.second is greater than 0.8 then block the request
-                if ((result.first.equals("ads") || result.first.equals("customer-success") || result.first.equals("marketing")) && result.second > 0.7) {
+                Log.i("JS classification", url + " " + result.first + " " + result.second);
+                // if result.first is ads, customer-success, marketing and result.second is greater than 0.65 then block the request
+                if ((result.first.equals("ads") || result.first.equals("customer-success") || result.first.equals("marketing")) && result.second > 0.85) {
                     // log the url of the blocked request
                     Log.i(TAG, "Blocked JS request: " + url);
                     return new WebResourceResponse(
-                            BrowserUnit.MIME_TYPE_TEXT_PLAIN,
-                            BrowserUnit.URL_ENCODING,
+                            "text/plain",
+                            "UTF-8",
                             new ByteArrayInputStream("".getBytes())
                     );
                 }
@@ -527,13 +527,14 @@ public class NinjaWebViewClient extends WebViewClient {
             } catch (OrtException e) {
                 Log.e(TAG, "Error predicting JS classification: " + e.getMessage());
 
-            }  catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 Log.e(TAG, "NullPointerException: " + e.getMessage());
             }
 
         }
         return super.shouldInterceptRequest(view, request);
     }
+
 
     @Override
     public void onFormResubmission(WebView view, @NonNull final Message doNotResend, final Message resend) {
