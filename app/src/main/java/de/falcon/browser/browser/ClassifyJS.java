@@ -18,6 +18,9 @@ import ai.onnxruntime.OrtSession;
 import ai.onnxruntime.OrtSession.Result;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -45,9 +48,11 @@ public class ClassifyJS {
     private OrtSession sessionClassification;
     private OrtSession sessionClassificationTfidf;
 
+    private File file;
+
     String message = null;
     private static final String CACHE_FILE = "blocks.txt";
-    private static final Set<String> blocks = new HashSet<>();
+    private static final HashMap<String, String> blocks = new HashMap<>();
 
     private static final Locale locale = Locale.getDefault();
 
@@ -105,20 +110,27 @@ public class ClassifyJS {
         // Get the keywords from the features and store them in classificationKws variable
         classificationKws = getKwsFromFeatures(classificationFeatures);
 
+        file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
+        // read the file contents to a hashmap if it exists. The file contains key and value pairs separated by a comma in each line
+        if (file.exists()) {
+            try{
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
 
-
-        /*File file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
-        if (!file.exists()) {
-            //copy blocks.txt from assets if not available
-            Log.d("Blocks file", "does not exist");
-            try {
-                AssetManager manager = context.getAssets();
-                copyFile(manager.open(CACHE_FILE), new FileOutputStream(file));
-                //downlaodClassificatons(context);  //try to update blocks.txt from internet
+                    String[] parts = line.split(",");
+                    blocks.put(parts[0], parts[1]+","+parts[2]);
+                }
+                br.close();
             } catch (IOException e) {
-                Log.e("browser", "Failed to copy asset file", e);
+                Log.e("browser", "Failed to read blocks.txt", e);
             }
+            // log the contents of the hashmap
+            // for (Map.Entry<String, String> entry : blocks.entrySet()) {
+            //     Log.d("Blocks file", entry.getKey() + " = " + entry.getValue());
+            // }
         }
+        /*
         if (blocks.isEmpty()) {
             loadBlockClassifications(context);
         }*/
@@ -172,6 +184,14 @@ public class ClassifyJS {
 
 
     public Pair<String, Float> predict(String url) throws OrtException {
+
+        // check if url in blocks hashmap
+        if (blocks.containsKey(url)) {
+            // log that the url was found in the hashmap and log the contents of the hashmap
+            String[] parts = blocks.get(url).split(",");
+            Log.d("Blocks file", "Found " + url + " in blocks file with data: "+parts[0]+","+parts[1]);
+            return new Pair<>(parts[0], Float.parseFloat(parts[1]));
+         }
 
         // Use the URL to download JavaScript code
         try {
@@ -228,24 +248,6 @@ public class ClassifyJS {
             }
         }
 
-        /*
-        try {
-
-            // create the file in the Download folder
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "js.txt");
-            FileWriter writer = new FileWriter(file);
-            // write the value of floatInputArray to the file
-
-            writer.append(message);
-            writer.append(floatArr.toString());
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-
-
         // Create an input tensor from the input_tensor_values for the second classification model
         OnnxTensor inputTensor2 = OnnxTensor.createTensor(env, FloatBuffer.wrap(input_tensor_values), inputShape);
 
@@ -273,6 +275,24 @@ public class ClassifyJS {
         }
         // call method maxKey to get the key with the highest value
         int maxKey = getHighestValue(result);
+        // add the url as key and the classification label and probability as value separated by comma to the blocks map
+        blocks.put(url, CLASSIFICATION_LABELS.get(maxKey) + "," + result.get(maxKey));
+
+        // add to the file the url and the classification label and probability separated by comma
+        try {
+            // create the file in the Download folder
+            FileWriter writer = new FileWriter(file, true);
+            // write the value of floatInputArray to the file in each in new line
+            writer.append(url).append(",").append(CLASSIFICATION_LABELS.get(maxKey)).append(",").append(result.get(maxKey).toString()).append("\n");
+            writer.flush();
+            writer.close();
+
+        } catch (IOException e) {
+
+            // log the exception
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+
         return new Pair<>(CLASSIFICATION_LABELS.get(maxKey), result.get(maxKey));
     }
 
