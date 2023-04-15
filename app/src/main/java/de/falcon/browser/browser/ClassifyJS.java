@@ -20,12 +20,14 @@ import ai.onnxruntime.OrtSession.Result;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.FloatBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -46,9 +48,11 @@ public class ClassifyJS {
     private OrtSession sessionClassification;
     private OrtSession sessionClassificationTfidf;
 
+    private File file;
+
     String message = null;
     private static final String CACHE_FILE = "blocks.txt";
-    private static final Set<String> blocks = new HashSet<>();
+    private static final HashMap<String, String> blocks = new HashMap<>();
 
     private static final Locale locale = Locale.getDefault();
 
@@ -77,86 +81,84 @@ public class ClassifyJS {
     }};
 
 
-    public ClassifyJS(Context context )   {
+    public ClassifyJS(Context context ) {
         // Create an OrtEnvironment instance
         env = OrtEnvironment.getEnvironment();
 
         // Load the classification and classification_tfidf model files from raw resources
-        InputStream classificationInputStream = context.getResources().openRawResource(R.raw.classification);
-        InputStream classificationTfidfInputStream = context.getResources().openRawResource(R.raw.classification_tfidf);
+        try (InputStream classificationInputStream = context.getResources().openRawResource(R.raw.classification);
+             InputStream classificationTfidfInputStream = context.getResources().openRawResource(R.raw.classification_tfidf)) {
 
-        byte[] classificationBytes = new byte[0];
-        byte[] classificationTfidfBytes = new byte[0];
-
-        try {
-            // Read the classification model file into a byte array and create an OrtSession instance
-            classificationBytes = new byte[classificationInputStream.available()];
+            byte[] classificationBytes = new byte[classificationInputStream.available()];
             classificationInputStream.read(classificationBytes);
-            classificationInputStream.close();
             sessionClassification = env.createSession(classificationBytes);
 
-            // Read the classification_tfidf model file into a byte array and create an OrtSession instance
-            classificationTfidfBytes = new byte[classificationTfidfInputStream.available()];
+            byte[] classificationTfidfBytes = new byte[classificationTfidfInputStream.available()];
             classificationTfidfInputStream.read(classificationTfidfBytes);
-            classificationTfidfInputStream.close();
             sessionClassificationTfidf = env.createSession(classificationTfidfBytes);
-        } catch (IOException e) {
+
+        } catch (IOException | OrtException e) {
             e.printStackTrace();
-        } catch (OrtException e) {
-            throw new RuntimeException(e);
         }
-        try 
-        {
+
+        try {
             classificationFeatures = loadJsonFile(context, CLASSIFICATION_FEATURES_JSON).get("features");
-        } 
-        catch (IOException e) 
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         // Get the keywords from the features and store them in classificationKws variable
         classificationKws = getKwsFromFeatures(classificationFeatures);
 
-        /*File file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
-        if (!file.exists()) {
-            //copy blocks.txt from assets if not available
-            Log.d("Blocks file", "does not exist");
-            try {
-                AssetManager manager = context.getAssets();
-                copyFile(manager.open(CACHE_FILE), new FileOutputStream(file));
-                //downlaodClassificatons(context);  //try to update blocks.txt from internet
+        file = new File(context.getDir("filesdir", Context.MODE_PRIVATE) + "/" + CACHE_FILE);
+        // read the file contents to a hashmap if it exists. The file contains key and value pairs separated by a comma in each line
+        if (file.exists()) {
+            try{
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+
+                    String[] parts = line.split(",");
+                    blocks.put(parts[0], parts[1]+","+parts[2]);
+                }
+                br.close();
             } catch (IOException e) {
-                Log.e("browser", "Failed to copy asset file", e);
+                Log.e("browser", "Failed to read blocks.txt", e);
             }
+            // log the contents of the hashmap
+            // for (Map.Entry<String, String> entry : blocks.entrySet()) {
+            //     Log.d("Blocks file", entry.getKey() + " = " + entry.getValue());
+            // }
         }
+        /*
         if (blocks.isEmpty()) {
             loadBlockClassifications(context);
         }*/
     }
 
 
+
     // Load a JSON file from raw resources and parse it into a Map<String, List<String>> object
     private Map<String, List<String>> loadJsonFile(Context context, String jsonFilename) throws IOException {
         // Open the JSON file from raw resources
-        InputStream inputStream = context.getResources().openRawResource(
-                context.getResources().getIdentifier(jsonFilename, "raw", context.getPackageName()));
-        
-        // Read the contents of the file into a byte array
-        byte[] buffer = new byte[inputStream.available()];
-        inputStream.read(buffer);
-        inputStream.close();
-        
-        // Convert the byte array into a UTF-8 encoded string
-        String json = new String(buffer, "UTF-8");
-        
-        // Create a Gson instance to parse the JSON string
-        Gson gson = new Gson();
-        
-        // Define a TypeToken to specify the target type of the JSON parsing
-        TypeToken<Map<String, List<String>>> token = new TypeToken<Map<String, List<String>>>() {};
-        
-        // Parse the JSON string into a Map<String, List<String>> object using Gson
-        return gson.fromJson(json, token.getType());
+        int resourceId = context.getResources().getIdentifier(jsonFilename, "raw", context.getPackageName());
+        try (InputStream inputStream = context.getResources().openRawResource(resourceId)) {
+            // Read the contents of the file into a byte array
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+
+            // Convert the byte array into a UTF-8 encoded string
+            String json = new String(buffer, StandardCharsets.UTF_8);
+
+            // Create a Gson instance to parse the JSON string
+            Gson gson = new Gson();
+
+            // Define a TypeToken to specify the target type of the JSON parsing
+            TypeToken<Map<String, List<String>>> token = new TypeToken<Map<String, List<String>>>() {};
+
+            // Parse the JSON string into a Map<String, List<String>> object using Gson
+            return gson.fromJson(json, token.getType());
+        }
     }
 
     private Set<String> getKwsFromFeatures(List<String> features) {
@@ -165,35 +167,31 @@ public class ClassifyJS {
         // Iterate through each input string
         for (String element : features) {
             // Split the input string by the "|" character
-            String feature = element;
-            String delimiter = "\\|";
-            String token;
+            String[] tokens = element.split("\\|");
 
-            while (feature.indexOf(delimiter) != -1) {
-                // Extract the individual keyword from the input string
-                int pos = feature.indexOf(delimiter);
-                token = feature.substring(0, pos);
+            // Iterate through the tokens and process each one
+            for (String token : tokens) {
                 // Remove any spaces from the keyword
-                token = token.replaceAll(" ", "");
+                String trimmedToken = token.trim();
 
                 // Add the keyword to the classification_kws set
-                classification_kws.add(token);
-
-                // Remove the keyword from the input string
-                feature = feature.substring(pos + delimiter.length());
+                classification_kws.add(trimmedToken);
             }
-
-            // Remove any remaining spaces from the input string
-            feature = feature.replaceAll(" ", "");
-
-            // Add the remaining keyword to the classification_kws set
-            classification_kws.add(feature);
         }
 
         return classification_kws;
     }
 
+
     public Pair<String, Float> predict(String url) throws OrtException {
+
+        // check if url in blocks hashmap
+        if (blocks.containsKey(url)) {
+            // log that the url was found in the hashmap and log the contents of the hashmap
+            String[] parts = blocks.get(url).split(",");
+            Log.d("Blocks file", "Found " + url + " in blocks file with data: "+parts[0]+","+parts[1]);
+            return new Pair<>(parts[0], Float.parseFloat(parts[1]));
+         }
 
         // Use the URL to download JavaScript code
         try {
@@ -250,24 +248,6 @@ public class ClassifyJS {
             }
         }
 
-        /*
-        try {
-
-            // create the file in the Download folder
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "js.txt");
-            FileWriter writer = new FileWriter(file);
-            // write the value of floatInputArray to the file
-
-            writer.append(message);
-            writer.append(floatArr.toString());
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-
-
         // Create an input tensor from the input_tensor_values for the second classification model
         OnnxTensor inputTensor2 = OnnxTensor.createTensor(env, FloatBuffer.wrap(input_tensor_values), inputShape);
 
@@ -295,6 +275,24 @@ public class ClassifyJS {
         }
         // call method maxKey to get the key with the highest value
         int maxKey = getHighestValue(result);
+        // add the url as key and the classification label and probability as value separated by comma to the blocks map
+        blocks.put(url, CLASSIFICATION_LABELS.get(maxKey) + "," + result.get(maxKey));
+
+        // add to the file the url and the classification label and probability separated by comma
+        try {
+            // create the file in the Download folder
+            FileWriter writer = new FileWriter(file, true);
+            // write the value of floatInputArray to the file in each in new line
+            writer.append(url).append(",").append(CLASSIFICATION_LABELS.get(maxKey)).append(",").append(result.get(maxKey).toString()).append("\n");
+            writer.flush();
+            writer.close();
+
+        } catch (IOException e) {
+
+            // log the exception
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+
         return new Pair<>(CLASSIFICATION_LABELS.get(maxKey), result.get(maxKey));
     }
 
@@ -315,16 +313,20 @@ public class ClassifyJS {
             String kwNoSpaces = kw.replace(" ", ""); // remove spaces from kw
             String kw1 = "." + kwNoSpaces + "(";
 
-            int pos = data.indexOf(kw1); // Find the first occurrence of kw1 in data
+            if (data != null) {
+                int pos = data.indexOf(kw1); // Find the first occurrence of kw1 in data
 
-            int count = 0;
-            while (pos != -1) { // Count the number of occurrences of kw1 in data
-                count++;
-                pos = data.indexOf(kw1, pos + 1);
-            }
+                if (pos != -1) { // If kw1 is found in data
+                    int count = 0;
+                    do {
+                        count++; // Count the number of occurrences of kw1 in data
+                        pos = data.indexOf(kw1, pos + 1);
+                    } while (pos != -1);
 
-            for (int i = 0; i < count; i++) { // Add kw to scripts_kws for each occurrence of kw1 in data
-                scriptsKws.add(kwNoSpaces);
+                    for (int i = 0; i < count; i++) { // Add kw to scripts_kws for each occurrence of kw1 in data
+                        scriptsKws.add(kwNoSpaces);
+                    }
+                }
             }
         }
 
@@ -342,13 +344,7 @@ public class ClassifyJS {
                     resultantFeatures.add(ft);
                 }
             } else {
-                List<String> singularKws = new ArrayList<>();
-                String delimiter = "\\|";
-                String[] tokens = ft.split(delimiter);
-
-                for (String token : tokens) {
-                    singularKws.add(token);
-                }
+                List<String> singularKws = Arrays.asList(ft.split("\\|")); // Use Arrays.asList() for efficiency
 
                 int count = 0;
                 for (String kw : singularKws) {
@@ -366,17 +362,6 @@ public class ClassifyJS {
     }
 
 
-    private int argmax(float[] array) {
-        int index = 0;
-        float max = array[index];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] > max) {
-                max = array[i];
-                index = i;
-            }
-        }
-        return index;
-    }
 
     // function that takes Map<Integer, Float> result and returns the key with the highest value
     private int getHighestValue(Map<Integer, Float> result) {

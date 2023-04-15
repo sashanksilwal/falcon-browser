@@ -35,6 +35,7 @@
     <string name="menu_open_with">Mở liên kết bằng …</string>
     <string name="menu_quit">Thoát</string>
     <string name="menu_openFav">Mở Yêu thích</string>
+    <string name="menu_reportBroken">Report Broken Page</string>
     <string name="menu_delete">Xoá</string>
     <string name="menu_edit">Sửa</string>
     <string name="menu_closeTab">Đóng tab</string>

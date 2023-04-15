@@ -34,6 +34,7 @@
     <string name="main_omnibox_input_hint">Поиск или ввод URL-адреса</string>
     <string name="menu_open_with">Открыть ссылку с …</string>
     <string name="menu_quit">Выход</string>
+    <string name="menu_reportBroken">Report Broken Page</string>
     <string name="menu_openFav">Открыть главную</string>
     <string name="menu_delete">Удалить</string>
     <string name="menu_edit">Изменить</string>

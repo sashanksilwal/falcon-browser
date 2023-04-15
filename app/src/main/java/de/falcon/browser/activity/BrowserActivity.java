@@ -95,6 +95,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -1031,15 +1036,18 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         // Tab
 
+        GridItem item_00 = new GridItem( getString(R.string.menu_reportBroken), R.drawable.icon_image_broken);
         GridItem item_01 = new GridItem( getString(R.string.menu_openFav), R.drawable.icon_star);
         GridItem item_02 = new GridItem( getString(R.string.main_menu_new_tabOpen), R.drawable.icon_tab_plus);
         GridItem item_03 = new GridItem( getString(R.string.main_menu_new_tabProfile), R.drawable.icon_profile_trusted);
         GridItem item_04 = new GridItem( getString(R.string.menu_reload), R.drawable.icon_refresh);
         GridItem item_05 = new GridItem( getString(R.string.menu_closeTab), R.drawable.icon_tab_remove);
         GridItem item_06 = new GridItem( getString(R.string.menu_quit), R.drawable.icon_close);
+        
 
         final List<GridItem> gridList_tab = new LinkedList<>();
 
+        gridList_tab.add(gridList_tab.size(), item_00);
         gridList_tab.add(gridList_tab.size(), item_01);
         gridList_tab.add(gridList_tab.size(), item_02);
         gridList_tab.add(gridList_tab.size(), item_05);
@@ -1052,32 +1060,38 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         gridAdapter_tab.notifyDataSetChanged();
 
         menu_grid_tab.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
-            if (position == 0) NinjaToast.show(context, item_01.getTitle());
-            else if (position == 1) NinjaToast.show(context, item_02.getTitle());
-            else if (position == 2) NinjaToast.show(context, item_03.getTitle());
-            else if (position == 3) NinjaToast.show(context, item_04.getTitle());
-            else if (position == 4) NinjaToast.show(context, item_05.getTitle());
-            else if (position == 5) NinjaToast.show(context, item_06.getTitle());
+            if (position == 0) NinjaToast.show(context, item_00.getTitle());
+            else if (position == 1) NinjaToast.show(context, item_01.getTitle());
+            else if (position == 2) NinjaToast.show(context, item_02.getTitle());
+            else if (position == 3) NinjaToast.show(context, item_03.getTitle());
+            else if (position == 4) NinjaToast.show(context, item_04.getTitle());
+            else if (position == 5) NinjaToast.show(context, item_05.getTitle());
+            else if (position == 6) NinjaToast.show(context, item_06.getTitle());
             return true;
         });
 
         menu_grid_tab.setOnItemClickListener((parent, view14, position, id) -> {
-            String favURL = Objects.requireNonNull(sp.getString("favoriteURL", "https://yasirzaki.net"));
+            String favURL = Objects.requireNonNull(sp.getString("favoriteURL", "https://nyuad.nyu.edu/en/"));
             if (position == 0) {
-                ninjaWebView.loadUrl(favURL);
+                // call and sendUrlToServer with the url
+                sendUrlToServer(url);
                 dialog_overflow.cancel();
             }  else if (position == 1) {
+                ninjaWebView.loadUrl(favURL);
+                dialog_overflow.cancel();
+            }
+            else if (position == 2) {
                 addAlbum(getString(R.string.app_name), favURL, true, false, "", dialog_overflow);
                 dialog_overflow.cancel();
-            } else if (position == 3) {
-                addAlbum(HelperUnit.domain(favURL), favURL, true, true, "", dialog_overflow);
             } else if (position == 4) {
+                addAlbum(HelperUnit.domain(favURL), favURL, true, true, "", dialog_overflow);
+            } else if (position == 5) {
                 ninjaWebView.reload();
                 dialog_overflow.cancel();
-            } else if (position == 2) {
+            } else if (position == 3) {
                 removeAlbum(currentAlbumController);
                 dialog_overflow.cancel();
-            } else if (position == 5) {
+            } else if (position == 6) {
                 doubleTapsQuit();
                 dialog_overflow.cancel();
             } });
@@ -2578,5 +2592,33 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             });
         }
         else setWebView(title, url, foreground);
+    }
+
+    // function that takes url and sends a request to the server (127.0.0.1) and sends the url 
+    // to the server to be added to the database
+    private void sendUrlToServer(String url) {
+        // create a new thread to send the url to the server
+       /* new Thread(() -> {
+            try {
+                // create a new socket to connect to the server
+                Socket socket = new Socket("127.0.0.1", 8080);
+                // create a new output stream to send data to the server
+                OutputStream outputStream = socket.getOutputStream();
+                // create a new print writer to send data to the server
+                PrintWriter printWriter = new PrintWriter(outputStream, true);
+                // send the url to the server
+                printWriter.println(url);
+                // close the socket
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        */
+
+        // print the url to the console
+        System.out.println("URL: " + url);
+        
+
     }
 }

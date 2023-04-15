@@ -35,6 +35,7 @@
     <string name="menu_open_with">Birlikte aç …</string>
     <string name="menu_quit">Çıkış yap</string>
     <string name="menu_openFav">Başlangıç sayfasını aç</string>
+    <string name="menu_reportBroken">Report Broken Page</string>
     <string name="menu_delete">Sil</string>
     <string name="menu_edit">Düzenle</string>
     <string name="menu_closeTab">Sekmeyi kapat</string>
