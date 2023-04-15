@@ -506,7 +506,10 @@ public class NinjaWebViewClient extends WebViewClient {
             );
         }
 
-        if (url.endsWith(".js")) {
+        // if url does not contain /player/ and ends with .js then classify the url
+        
+
+        if (!url.contains("/player/") && url.endsWith(".js")) {
             try {
                 Pair<String, Float> result = classifyJS.predict(url);
                 if (result == null || result.second == 0f) {
