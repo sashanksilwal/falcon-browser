@@ -33,6 +33,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import java.io.IOException;
@@ -44,21 +45,21 @@ import de.baumann.browser.R;
 public class ClassifyJS {
 
     // The ORT environment used to create the sessions for the classification models.
-    private OrtEnvironment env;
+    private final OrtEnvironment env;
     private OrtSession sessionClassification;
     private OrtSession sessionClassificationTfidf;
 
-    private File file;
+    private final File file;
 
     String message = null;
     private static final String CACHE_FILE = "blocks.txt";
     private static final HashMap<String, String> blocks = new HashMap<>();
 
-    private static final Locale locale = Locale.getDefault();
+    private static  Locale locale = Locale.getDefault();
 
 
     // A set of keywords used to extract features from scripts for classification.
-    private Set<String> classificationKws;
+    private final Set<String> classificationKws;
     // A vector of features used to classify scripts.
     private List<String> classificationFeatures;
 
@@ -125,10 +126,19 @@ public class ClassifyJS {
             } catch (IOException e) {
                 Log.e("browser", "Failed to read blocks.txt", e);
             }
-            // log the contents of the hashmap
-            // for (Map.Entry<String, String> entry : blocks.entrySet()) {
-            //     Log.d("Blocks file", entry.getKey() + " = " + entry.getValue());
-            // }
+            // log the contents of the hashmap and also the count of entries
+            Log.d("Blocks file", "Loaded " + blocks.size() + " entries");
+            for (Map.Entry<String, String> entry : blocks.entrySet()) {
+                Log.d("Blocks file", entry.getKey() + " = " + entry.getValue());
+            }
+        }else{
+            // if the file does not exist, create it
+            try {
+                Log.d("Blocks file", "Creating blocks.txt");
+                file.createNewFile();
+            } catch (IOException e) {
+                Log.e("browser", "Failed to create blocks.txt", e);
+            }
         }
         /*
         if (blocks.isEmpty()) {
@@ -188,8 +198,8 @@ public class ClassifyJS {
         // check if url in blocks hashmap
         if (blocks.containsKey(url)) {
             // log that the url was found in the hashmap and log the contents of the hashmap
-            String[] parts = blocks.get(url).split(",");
-            Log.d("Blocks file", "Found " + url + " in blocks file with data: "+parts[0]+","+parts[1]);
+            String[] parts = Objects.requireNonNull(blocks.get(url)).split(",");
+//            Log.d("Blocks file", "Found " + url + " in blocks file with data: "+parts[0]+","+parts[1]);
             return new Pair<>(parts[0], Float.parseFloat(parts[1]));
          }
 
@@ -377,13 +387,7 @@ public class ClassifyJS {
     }
 
     // TODO:
-     /* public void cachePrediction(String url, int result){
-         // cache the url and the prediction results in the database
-
-     }
-     */
-
-
+     
     /*private void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int read;

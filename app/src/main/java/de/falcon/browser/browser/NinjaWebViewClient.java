@@ -49,6 +49,7 @@ import de.falcon.browser.view.NinjaWebView;
 
 public class NinjaWebViewClient extends WebViewClient {
 
+    private  final float threshold = 0.75F;
     private final NinjaWebView ninjaWebView;
     private final Context context;
     private final SharedPreferences sp;
@@ -507,17 +508,16 @@ public class NinjaWebViewClient extends WebViewClient {
         }
 
         // if url does not contain /player/ and ends with .js then classify the url
-        
 
-        if (!url.contains("/player/") && url.endsWith(".js")) {
+        if (!url.contains("/player/") && (url.contains(".js"))) {
             try {
                 Pair<String, Float> result = classifyJS.predict(url);
                 if (result == null || result.second == 0f) {
                     return super.shouldInterceptRequest(view, request);
                 }
-                Log.i("JS classification", url + " " + result.first + " " + result.second);
+                Log.i("JS classification", url + " " + result.first + " " +  result.second);
                 // if result.first is ads,  marketing and result.second is greater than 0.80 then block the request
-                if ((result.first.equals("ads")   || result.first.equals("marketing")) && result.second > 0.85) {
+                if ((result.first.equals("ads")   || result.first.equals("analytics")  || result.first.equals("social")) && result.second > threshold  ) {
                     // log the url of the blocked request
                     Log.i(TAG, "Blocked JS request: " + url);
                     return new WebResourceResponse(
