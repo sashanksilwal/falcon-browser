@@ -144,6 +144,10 @@ public class ClassifyJS {
             } catch (IOException e) {
                 Log.e("browser", "Failed to create blocks.txt", e);
             }
+            // log the contents of the hashmap
+            // for (Map.Entry<String, String> entry : blocks.entrySet()) {
+            //     Log.d("Blocks file", entry.getKey() + " = " + entry.getValue());
+            // }
         }
        
     }
