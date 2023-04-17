@@ -528,10 +528,10 @@ public class NinjaWebViewClient extends WebViewClient {
                 }
 
             } catch (OrtException e) {
-                Log.e(TAG, "Error predicting JS classification: " + e.getMessage());
+                Log.w(TAG, "Error predicting JS classification: " + e.getMessage());
 
             } catch (NullPointerException e) {
-                Log.e(TAG, "NullPointerException: " + e.getMessage());
+                Log.w(TAG, "NullPointerException: " + e.getMessage());
             }
 
         }

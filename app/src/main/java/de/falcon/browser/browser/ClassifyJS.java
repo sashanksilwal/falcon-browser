@@ -131,28 +131,18 @@ public class ClassifyJS {
             }
             // log the contents of the hashmap and also the count of entries
             Log.d("Blocks file", "File exists and Loaded " + blocks.size() + " entries");
-//            for (Map.Entry<String, String> entry : blocks.entrySet()) {
-//                Log.d("Blocks file", entry.getKey() + " = " + entry.getValue());
-//            }
-        }else{
+        }else {
 
             try {
                 Log.d("Blocks file", "Creating blocks.txt");
                 file.createNewFile();
                 downloadFile("https://raw.githubusercontent.com/sashanksilwal/Capstone/main/Phase5/predictions.csv", file, context);
-                
+
             } catch (IOException e) {
                 Log.e("browser", "Failed to create blocks.txt", e);
             }
-            // log the contents of the hashmap
-            // for (Map.Entry<String, String> entry : blocks.entrySet()) {
-            //     Log.d("Blocks file", entry.getKey() + " = " + entry.getValue());
-            // }
         }
-       
     }
-
-
 
     // Load a JSON file from raw resources and parse it into a Map<String, List<String>> object
     private Map<String, List<String>> loadJsonFile(Context context, String jsonFilename) throws IOException {
@@ -194,7 +184,6 @@ public class ClassifyJS {
                 classification_kws.add(trimmedToken);
             }
         }
-
         return classification_kws;
     }
 
@@ -203,9 +192,7 @@ public class ClassifyJS {
 
         // check if url in blocks hashmap
         if (blocks.containsKey(url)) {
-            // log that the url was found in the hashmap and log the contents of the hashmap
             String[] parts = Objects.requireNonNull(blocks.get(url)).split(",");
-//            Log.d("Blocks file", "Found " + url + " in blocks file with data: "+parts[0]+","+parts[1]);
             return new Pair<>(parts[0], Float.parseFloat(parts[1]));
          }
 
