@@ -6,7 +6,7 @@
         android:title="@string/setting_title_general">
 
         <EditTextPreference
-            android:defaultValue="https://yasirzaki.net"
+            android:defaultValue="https://nyuad.nyu.edu/en/"
             android:key="favoriteURL"
             android:title="@string/setting_title_fav" />
 
