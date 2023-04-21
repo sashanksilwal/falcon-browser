@@ -49,6 +49,7 @@ import de.falcon.browser.view.NinjaWebView;
 
 public class NinjaWebViewClient extends WebViewClient {
 
+    private  final float threshold = 0.75F;
     private final NinjaWebView ninjaWebView;
     private final Context context;
     private final SharedPreferences sp;
@@ -518,6 +519,8 @@ public class NinjaWebViewClient extends WebViewClient {
                 // if result.first is ads,  marketing and result.second is greater than 0.80 then block the request
                 float threshold = 0.0F;
                 if ((result.first.equals("ads")   || result.first.equals("analytics")  || result.first.equals("social")) && result.second > threshold) {
+
+
                     // log the url of the blocked request
                     Log.i(TAG, "Blocked JS request: " + url);
                     return new WebResourceResponse(
