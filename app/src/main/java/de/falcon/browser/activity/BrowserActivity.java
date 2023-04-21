@@ -314,7 +314,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         if (BrowserContainer.size() < 1) {
             if (sp.getBoolean("start_tabStart", false)) showOverview();
             addAlbum(getString(R.string.app_name), "", true, false, "", null);
-            ninjaWebView.loadUrl(sp.getString("favoriteURL", "https://yasirzaki.net"));
+            ninjaWebView.loadUrl(sp.getString("favoriteURL", "https://nyuad.nyu.edu/en/"));
         }
     }
 
@@ -450,7 +450,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         if (BrowserContainer.size() <= 1) {
             if (!sp.getBoolean("sp_reopenLastTab", false)) doubleTapsQuit();
             else {
-                ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://yasirzaki.net")));
+                ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://nyuad.nyu.edu/en/")));
                 hideOverview(); }}
         else {
             closeTabConfirmation(() -> {
@@ -1231,7 +1231,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 searchOnSite();
                 dialog_overflow.cancel();
             } else if (position == 1) {
-                Uri webpage = Uri.parse("https://yasirzaki.net");
+                Uri webpage = Uri.parse("https://nyuad.nyu.edu/en/");
                 BrowserUnit.intentURL(this, webpage);
                 dialog_overflow.cancel();
             } else if (position == 2) {
@@ -2277,7 +2277,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 showOverview();
                 break;
             case "09":
-                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://yasirzaki.net")), true, false, "", null);
+                addAlbum(getString(R.string.app_name), Objects.requireNonNull(sp.getString("favoriteURL", "https://nyuad.nyu.edu/en/")), true, false, "", null);
                 break;
             case "10":
                 removeAlbum(currentAlbumController);
@@ -2301,7 +2301,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 ninjaWebView.reload();
                 break;
             case "17":
-                ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://yasirzaki.net")));
+                ninjaWebView.loadUrl(Objects.requireNonNull(sp.getString("favoriteURL", "https://nyuad.nyu.edu/en/")));
                 break;
             case "18":
                 bottom_navigation.setSelectedItemId(R.id.page_2);

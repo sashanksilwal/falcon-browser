@@ -517,7 +517,10 @@ public class NinjaWebViewClient extends WebViewClient {
                 }
                 Log.i("JS classification", url + " " + result.first + " " +  result.second);
                 // if result.first is ads,  marketing and result.second is greater than 0.80 then block the request
-                if ((result.first.equals("ads")   || result.first.equals("analytics")  || result.first.equals("social")) && result.second > threshold  ) {
+                float threshold = 0.0F;
+                if ((result.first.equals("ads")   || result.first.equals("analytics")  || result.first.equals("social")) && result.second > threshold) {
+
+
                     // log the url of the blocked request
                     Log.i(TAG, "Blocked JS request: " + url);
                     return new WebResourceResponse(
